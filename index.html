@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shqipollog. Malet dhe të folurit. Ki projekt mundohet t’ndajfe ta dokumentoje t’folmen e Tetovës me rrethinën.">
+    <title>Shqipollog</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        try {
+            const t = localStorage.getItem('shqipollog-theme');
+            document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        } catch (e) {
+            document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+    </script>
+    <style>
+        :root {
+            --forest: #06302c;
+            --forest-deep: #041f1c;
+            --earth: #5a2613;
+            --earth-hi: #76331a;
+            --earth-lo: #3a180a;
+            --cream: #fff4e2;
+            --stone: #d9c9b2;
+            --blaze: #ff3b5c;
+            --koha: #e9b872;
+            --fjala: #8fc1a9;
+            --shqiptim: #ff6b7f;
+            --shprehje: #c3cf86;
+            --peremra: #d7a6d0;
+
+            --bg: var(--forest);
+            --bg-rgb: 6, 48, 44;
+            --text: var(--cream);
+            --muted: var(--stone);
+            --line: rgba(217, 201, 178, .28);
+            --hover: rgba(255, 244, 226, .06);
+            --pressed: rgba(255, 244, 226, .1);
+            --card: linear-gradient(200deg, var(--earth-hi), var(--earth) 55%, #4a1f0e);
+            --card-shadow: -8px 10px 0 -2px rgba(0, 0, 0, .18), -16px 22px 34px rgba(0, 0, 0, .35);
+            --hl: #ff9a8a;
+            --link: #ffd9c2;
+            --hero-top: rgba(4, 31, 28, .55);
+            --title-shadow: 0 2px 30px rgba(4, 31, 28, .5);
+            --contour: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520' fill='none' stroke='%23a6e3cf' stroke-opacity='.07' stroke-width='1.2'%3E%3Cpath d='M260 120c70 0 140 40 150 110s-40 150-130 160-170-30-180-110 90-160 160-160z'/%3E%3Cpath d='M262 160c50 0 100 30 106 80s-30 106-92 112-118-22-124-78 60-114 110-114z'/%3E%3Cpath d='M264 200c30 0 60 18 63 48s-18 62-54 66-70-14-74-46 35-68 65-68z'/%3E%3Cpath d='M266 236c12 0 24 8 25 20s-8 24-22 25-27-6-28-18 13-27 25-27z'/%3E%3Cpath d='M-40 470c80-30 160-10 230 20s170 40 250 0 120-40 120-40'/%3E%3Cpath d='M-40 510c80-30 170-14 240 14s160 34 240-4 120-34 120-34'/%3E%3Cpath d='M-40 40c60 20 120 10 170-14s110-36 140-20'/%3E%3C/svg%3E");
+            --glow: rgba(150, 235, 215, .08);
+            --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+            --sans: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            --mono: 'IBM Plex Mono', ui-monospace, monospace;
+            color-scheme: dark;
+        }
+
+        :root[data-theme="light"] {
+            --bg: #ece3d3;
+            --bg-rgb: 236, 227, 211;
+            --text: #2a170d;
+            --muted: #6e5a46;
+            --line: rgba(90, 38, 19, .25);
+            --hover: rgba(90, 38, 19, .06);
+            --pressed: rgba(90, 38, 19, .1);
+            --card: linear-gradient(200deg, #fbf4e8, #f5ead8 55%, #efe2cc);
+            --card-shadow: -6px 8px 0 -2px rgba(90, 38, 19, .08), -14px 20px 30px rgba(90, 38, 19, .14);
+            --hl: #c2334b;
+            --link: #8a3517;
+            --koha: #9a6210;
+            --fjala: #2f6f5a;
+            --shqiptim: #c2334b;
+            --shprehje: #5d6a1c;
+            --peremra: #8a3f7d;
+            --hero-top: rgba(4, 31, 28, .35);
+            --title-shadow: none;
+            --contour: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520' fill='none' stroke='%235a2613' stroke-opacity='.08' stroke-width='1.2'%3E%3Cpath d='M260 120c70 0 140 40 150 110s-40 150-130 160-170-30-180-110 90-160 160-160z'/%3E%3Cpath d='M262 160c50 0 100 30 106 80s-30 106-92 112-118-22-124-78 60-114 110-114z'/%3E%3Cpath d='M264 200c30 0 60 18 63 48s-18 62-54 66-70-14-74-46 35-68 65-68z'/%3E%3Cpath d='M266 236c12 0 24 8 25 20s-8 24-22 25-27-6-28-18 13-27 25-27z'/%3E%3Cpath d='M-40 470c80-30 160-10 230 20s170 40 250 0 120-40 120-40'/%3E%3Cpath d='M-40 510c80-30 170-14 240 14s160 34 240-4 120-34 120-34'/%3E%3Cpath d='M-40 40c60 20 120 10 170-14s110-36 140-20'/%3E%3C/svg%3E");
+            --glow: rgba(255, 255, 255, .35);
+            color-scheme: light;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-padding-top: 80px; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            background-image: var(--contour), radial-gradient(ellipse 90% 60% at 85% 0%, var(--glow), transparent 70%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, p { margin: 0; }
+        a { color: inherit; }
+
+        .hero {
+            position: relative;
+            min-height: 460px;
+            height: 82svh;
+            max-height: 860px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 60%;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, var(--hero-top) 0%, transparent 28%),
+                linear-gradient(0deg, var(--bg) 0%, rgba(var(--bg-rgb), .86) 22%, rgba(var(--bg-rgb), .25) 55%, transparent 75%);
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            width: min(1080px, 100% - 32px);
+            margin: 0 auto;
+            padding-bottom: clamp(24px, 5vw, 56px);
+        }
+
+        .kicker {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: clamp(56px, 13vw, 150px);
+            line-height: .92;
+            letter-spacing: -.02em;
+            margin: 10px 0 16px;
+            text-shadow: var(--title-shadow);
+        }
+
+        .motto {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(20px, 3vw, 30px);
+            color: var(--muted);
+        }
+
+        .motto a { text-decoration: none; }
+        .motto a:hover { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+
+        .layout {
+            width: min(1080px, 100% - 32px);
+            margin: 0 auto;
+            padding: 24px 0 120px;
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 56px;
+            align-items: start;
+        }
+
+        .side {
+            position: sticky;
+            top: 24px;
+            display: grid;
+            gap: 28px;
+        }
+
+        .about { display: grid; gap: 10px; font-size: 16px; line-height: 1.55; }
+        .about .credit { font-size: 14px; color: var(--muted); }
+        .about .fine { font-size: 12px; line-height: 1.5; color: var(--muted); opacity: .85; margin-top: 4px; }
+
+        .links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .btn {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 14px;
+            border-radius: 6px;
+            color: var(--cream);
+            background: var(--earth);
+            text-decoration: none;
+            box-shadow: inset -1px 1px 0 rgba(255, 220, 190, .16), -3px 3px 0 var(--earth-lo);
+            transition: transform .08s, box-shadow .08s, background .12s;
+        }
+
+        button.btn { border: 0; cursor: pointer; }
+
+        .btn:hover { background: var(--earth-hi); }
+        .btn:active { transform: translate(-3px, 3px); box-shadow: inset -1px 1px 0 rgba(255, 220, 190, .12); }
+        .btn:focus-visible, .filter button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+        .filter-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .filter { display: grid; gap: 4px; }
+
+        .filter button {
+            all: unset;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-family: var(--sans);
+            font-size: 15px;
+            color: var(--muted);
+            transition: background .12s, color .12s;
+        }
+
+        .filter button:hover { background: var(--hover); color: var(--text); }
+        .filter button[aria-pressed="true"] { background: var(--pressed); color: var(--text); }
+
+        .filter button.sub { padding-left: 26px; font-size: 14px; }
+
+        .filter .n { margin-left: auto; font-family: var(--mono); font-size: 12px; opacity: .7; }
+
+        .tag.koha { --c: var(--koha); }
+        .tag.fjala { --c: var(--fjala); }
+        .tag.shprehje { --c: var(--shprehje); }
+        .tag.peremra { --c: var(--peremra); }
+        .tag.shqiptim { --c: var(--shqiptim); }
+
+        .trail { position: relative; display: grid; gap: 28px; }
+
+        .trail::before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 0;
+            border-left: 2px dashed var(--line);
+        }
+
+        .entry[hidden] { display: none; }
+
+        .entry::before {
+            content: "";
+            position: absolute;
+            left: -36px;
+            top: 24px;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            background: linear-gradient(var(--blaze) 0 33%, var(--cream) 33% 67%, var(--blaze) 67%);
+            box-shadow: 0 0 0 3px var(--bg);
+        }
+
+        .entry {
+            position: relative;
+            margin-left: 36px;
+            display: grid;
+            gap: 14px;
+            padding: clamp(18px, 3vw, 28px);
+            border-radius: 10px;
+            background: var(--card);
+            box-shadow: var(--card-shadow);
+        }
+
+        .entry .head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--c);
+        }
+
+        .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); opacity: .85; }
+
+        .entry h3 {
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: clamp(24px, 3.2vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.01em;
+        }
+
+        .std { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+        .entry h3 .def { font-weight: 400; font-style: italic; font-size: .72em; margin-left: .35em; }
+
+        .pos { font-style: italic; font-size: 15px; color: var(--muted); }
+
+        .lemma { display: grid; gap: 4px; }
+        .lemma h4 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2.4vw, 24px); line-height: 1.2; }
+
+        .forms { display: grid; gap: 14px; font-size: clamp(16px, 1.9vw, 18px); line-height: 1.5; }
+
+        .forms .cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 4px 28px;
+        }
+
+        .forms ul { list-style: none; margin: 0; padding: 0; }
+
+        .forms .note {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--muted);
+            padding-left: 12px;
+            border-left: 2px solid var(--line);
+        }
+
+        .rasat { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .rasa {
+            display: inline-block;
+            justify-self: start;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--peremra);
+            border: 1px dashed currentColor;
+        }
+
+        .forms .cols .rasa { margin-bottom: 6px; }
+
+        .hl { color: var(--hl); font-weight: 500; }
+
+        .caption { display: grid; gap: 8px; font-size: clamp(16px, 1.9vw, 18px); line-height: 1.6; }
+
+        .forms + .caption {
+            padding-top: 14px;
+            border-top: 2px dotted var(--line);
+        }
+
+        .entry a.post {
+            justify-self: start;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--link);
+            text-underline-offset: 3px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 0 16px 48px;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        @media (max-width: 860px) {
+            .layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+            .filter-wrap { min-width: 0; }
+            .side { position: static; }
+            .filter-wrap {
+                position: sticky;
+                top: 0;
+                z-index: 5;
+                margin: 0 -16px;
+                padding: 10px 16px;
+                background: rgba(var(--bg-rgb), .94);
+                backdrop-filter: blur(6px);
+            }
+            .filter-label { display: none; }
+            .filter { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+            .filter button, .filter button.sub { flex: none; padding: 7px 12px; font-size: 14px; background: var(--hover); }
+            .side { display: contents; }
+            .about { order: 0; }
+            .links { order: 1; }
+            .filter-wrap { order: 2; }
+            .layout > .trail { order: 3; }
+            .entry { margin-left: 26px; }
+            .entry::before { left: -26px; width: 14px; height: 14px; }
+            .trail::before { left: 6px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <img src="tetova.jpg" srcset="tetova-1200.jpg 1200w, tetova.jpg 2400w" sizes="100vw" alt="Tetova dhe fusha e Pollogut, parë nga mali">
+        <div class="hero-inner">
+            <p class="kicker">Malet dhe të folurit</p>
+            <h1>shqipollog</h1>
+            <p class="motto"><a href="https://www.instagram.com/p/DKEgJaItXPH/" target="_blank" rel="noopener noreferrer">Shipja</a> <a href="https://www.instagram.com/p/DKEgK6-Nbar/" target="_blank" rel="noopener noreferrer">meriton</a> <a href="https://www.instagram.com/p/DKEgMcfNTlp/" target="_blank" rel="noopener noreferrer">tngjohet</a></p>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="side">
+            <div class="about">
+                <p>⛰️ Malet jon fole e gjuhës.</p>
+                <p>Ki projekt mundohet t’ndajfe ta dokumentoje t’folmen e Tetovës me rrethinën.</p>
+                <p class="credit">Vënë re nga (vum roe pi) <a href="https://semism.github.io/space/">_semism_</a></p>
+                <p class="fine">Për shkaki tnatyrës tktij projekti, kit përmbajtja duket tkonsiderohet anekdotale. Mundohena tjena sa ma tsakt, nuk garantojm saktësi absolute se dijalektet jon relative.</p>
+            </div>
+
+            <div class="links">
+                <a class="btn" href="https://www.instagram.com/shqipollog/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+                <a class="btn" href="https://semism.github.io/space/">← _semism_</a>
+                <button class="btn" type="button" id="theme" aria-label="Ndrysho temën"></button>
+            </div>
+
+            <nav class="filter-wrap" aria-label="Kategoritë">
+                <p class="filter-label">Kategoritë</p>
+                <div class="filter" id="filter"></div>
+            </nav>
+        </aside>
+
+        <div class="trail" id="trail"></div>
+    </main>
+
+    <footer><a href="https://semism.github.io/space/">_semism_</a></footer>
+
+    <script>
+        const POSTS = [
+            {
+                sc: 'DUi7YHZjVwL', cat: 'fjala', sub: 'folje', date: '2026-02-09',
+                title: 'rrshes', pos: 'folje', std: 'std: rrëshqas',
+                forms: [['rrshes/rrëshes/rrishes', 'rr(ë/i)shet/rr(ë/i)shesësh', 'rr(ë/i)shet', 'rr(ë/i)shes(ë/i)m', 'rr(ë/i)sh(i/aj)tni', 'rr(ë/i)shes(ë/i)n']],
+                caption: ['A bon tvendosim si rrëshitet për termo?'],
+            },
+            {
+                sc: 'DTFaGJojeOp', cat: 'shprehje', date: '2026-01-04',
+                title: 'e madhe/i madh', std: '(si rrethanor sasie)',
+                forms: [['~ binte shom shaj 👍🏻', '~ binte shajvi madh 👌🏻'], ['~ kina këndau shaum 👍🏻', '~ ka kon e këndaumja madhe 👌🏻']],
+                caption: ['~ Gje kem n’darsëm, e lujtmja e këndaumja madhe.', '~ Ktau kona tajm i madh, su mirrka frajm.', '~ Shajfe ene ni park na dul. Nkët qytet kona jeshillajki madh.'],
+            },
+            {
+                sc: 'DSfLTLTiDz0', cat: 'shprehje', date: '2025-12-20',
+                title: '“di thom”', def: 'sarkazëm', std: 'std: do ti them',
+                forms: ['përdoret për t’kallxau se', ['- puna n’pytje nuk bohet', '- gjykimi n’pytje nuk o i vërtet'], 'Shpesh, i thujsh dikujt, ti those dikujt dënise. Dikushi atij dikushit qetër nuk i thot asnise.', '“Oni, di thom!” çaç xhi smban uj, merr kuptim kaeprapa.'],
+                caption: ['Shembuj qer:', 'Si jo - Nesër - Nesër n’saba - Ka sabahi kuç'],
+            },
+            {
+                sc: 'DSMwLqeDX7N', cat: 'fjala', sub: 'folje', date: '2025-12-13', place: 'Sellcë',
+                pos: 'folje',
+                forms: [
+                    { head: 'heci', std: 'std: ec' }, ['heci', 'hecish/hecën', 'hecën', 'hecim', 'hecni', 'hecin'],
+                    { head: 'ngares', std: 'std: vrapoj' }, ['ngares / ngarendi', 'ngaresësh / ngarendish', 'ngaret / ngarendën', 'ngaresëm / ngarendim', 'ngarendni', 'ngaresën / ngarendin'],
+                    { head: 'fjaroj', std: 'std: fluturoj' }, { cols: [['fjaroj', 'fjarojsh/fjaron', 'fjaron', 'fjarojm', 'fjarojni', 'fjarojn'], ['fjataroj', 'fjataron', 'fjataron', 'fjatarojm', 'fjataroni', 'fjatarojn']] },
+                ],
+                caption: ['Hapi fjetat, fjaro! 🪽🏃🏻‍♀️🚶🏼'],
+            },
+            {
+                sc: 'DOdcwgkiE6r', cat: 'fjala', sub: 'folje', date: '2025-09-11',
+                title: 'jom', pos: 'folje', std: 'std: jam',
+                forms: [['jom', 'ije/ie', 'o/osht/oshte', 'ina/imi', 'ini', 'jon']],
+            },
+            {
+                sc: 'DOb5GT3jSn3', cat: 'koha', date: '2025-09-10',
+                title: 'paskajorja',
+                forms: [{ head: '-për t-' }, ['për tu bo', 'për ta vazhdau', 'për t’shku'], { head: '-me-' }, ['para se me hongër, laj durët (e vetmja mbijetesë e paskajores me “me”)']],
+                caption: ['*Korigjim n’koment', 'Ndoshta njo pi fenomeneve ma di-ansore e ksaj tfolme. Ni letër nostalgjie, letër dashnoje ndamjes proto-shipes n’di cop. Shajfet se si paskajorja a zhduk njug. Kur motrat gege sot e ksaj dite i rujn kit format e paskajores me “me”. Kjo e folme u lakmohet tezakeve toske xhi e kan lon mbas. Megjithatë mbijeton, (ose tpaktën a mxhall prap) paskajorja xhi na mundson pregaditje. Para se **me** e hup paskajoren, a desht ta hupim çat “para se”. Majr xhi sën e kina hup :)'],
+            },
+            {
+                sc: 'DObwzvyDZnV', cat: 'fjala', sub: 'ndajfolje', date: '2025-09-10',
+                title: 'shtaj', pos: 'ndajfolje kohe', std: 'std: tash',
+                forms: ['variacion: shtahi', 'Ndajfolje kohe xhi e kallxon veprim xhi ndodhën n’momentin e t’folmes', 'Rrall shajfet ene n’form mbiemri: i shtajshëm/e shtajshme'],
+            },
+            {
+                sc: 'DObssjWDVdi', cat: 'fjala', sub: 'emra', date: '2025-09-10',
+                title: 'shaj', def: 'shajvi', pos: 'emër, gjinia mashkullore', std: 'std: shi',
+                forms: ['shqiptime kryesore: shæj/shaj/shoj', ['shaj (pashquar)', 'shajvi (shquar)', 'shajvit (dhan/gjinore)', 'shajvin (kallëzore)']],
+                caption: ['Në disa fshatra në kahje të Kosovës haset dhe si “shajni/shajnit” ne trajtën e shquar.'],
+            },
+            {
+                sc: 'DN5_rBmiPEa', cat: 'fjala', sub: 'emra', date: '2025-08-28',
+                title: 'macë', def: 'maca', pos: 'emër, gjinia femërore', std: 'std: mace',
+                forms: ['maca e zez'],
+                caption: ['ka gjasa tjet ene Maçor/Maçok/Dac 🐈‍⬛'],
+            },
+            {
+                sc: 'DNlXe8KI-iH', cat: 'fjala', sub: 'emra', date: '2025-08-20',
+                title: 'çen', def: 'çeni', pos: 'emër, gjinia mashkullore', std: 'std: qen',
+                forms: ['klishi i çenit'],
+            },
+            {
+                sc: 'DLwb9zpNx2f', cat: 'shqiptim', date: '2025-07-06', reel: true,
+                caption: ['⛰️🪹🗣️'],
+            },
+            {
+                sc: 'DKfSI8vNDP-', cat: 'koha', date: '2025-06-04',
+                title: 'e kryera e thjeshtë ene e kryera përbërë',
+                forms: [
+                    { cols: [['“Mbretnesha tha“', '[isha prezent ene e ndajva tu thon]'], ['“Mbretnesha ka thon”', '[e morra vesht se ka thon]']] },
+                    { cols: [['“Nuk msova”', '[fakti se s’msova pat pasoja]'], ['“Nuk kom msau”', '[fakti se skom msau dë kese pasoja]']] },
+                ],
+                caption: ['kan kalu tani (ka lidhje hala)', 'nuk u bë atëherë (ska lidhje mo)'],
+            },
+            {
+                sc: 'DKcys2CtAcl', cat: 'fjala', sub: 'numerore', date: '2025-06-03',
+                title: 'Numrat', pos: 'numërorë',
+                forms: [{ cols: [
+                    ['1. njo', '2. di', '3. tre', '4. katër', '5. pes', '6. xhash', '7. shtat', '8. tet', '9. nont', '10. dhajt', '11. nimdhajt', '12. dimdhajt', '13. tremdhajt', '14. katërm(dh)ajt', '15. pesm(dh)ajt', '16. xhashmajt', '17. shtatmajt', '18. tetmajt', '19. nonmajt', '20. nizet'],
+                    ['22. nistedi', '30. tredhajt', '33. trethtetre', '40. katërdhajt', '44. katërthtekatër', '50. pezdhajt', '55. pestepes', '60. xhazhdhajt', '66. xhashtexhash', '70. shtadhajt', '77. shtathteshtat', '80. tedhajt', '88. tethtetet', '90. nodhajt', '99. nothtenont'],
+                    ['100. niçin', '200. diçin', '300. treçin', '400. katërçin', '500. pesçin (pesshin)', '600. xhashçin (xhashshin)', '700. shtatçin', '800. tetçin', '900. nonçin', '1000. nimi', '1001111. nimilon e nimi e niçin e nimdhajt'],
+                ] }],
+                caption: ['Kjo ke pak ma rond për ta përpilau se gjajti asniher nuk përdoren germa për ti shkruj numrat, shifrat jon ma shkurt.'],
+            },
+            {
+                sc: 'DKZ7JvrIFEb', cat: 'fjala', sub: 'emra', date: '2025-06-02',
+                title: 'vdorë', def: 'vdora', pos: 'emër, gjinia femërore', std: 'std: bora',
+                forms: [{ cols: [['vdora', 'i/e vdorës', 'vdorës', 'vdorën', 'pi vdore'], ['vdorat', 'i/e vdorave', 'vdorave', 'vdorët', 'pi vdorve']] }, 'Ene sa vakët dë shkrohet vdora?'],
+                caption: ['Pi atine t’Kilimanxharos'],
+            },
+            {
+                sc: 'DKZ3-aWoaWe', cat: 'shqiptim', date: '2025-06-02', reel: true,
+                caption: ['ku bon çerdhe fjala'],
+            },
+            {
+                sc: 'DKU5ZTyo-fg', cat: 'shqiptim', date: '2025-05-31', reel: true,
+                title: 'video log 2',
+                caption: ['tu zdrip pi majës Pllatit'],
+            },
+            {
+                sc: 'DKUvr3foHWy', cat: 'shqiptim', date: '2025-05-31', reel: true,
+                title: 'video log 1',
+                caption: ['Kolt/Kolzit'],
+            },
+            {
+                sc: 'DKPy213Iwj9', cat: 'fjala', sub: 'emra', date: '2025-05-29',
+                title: 'Ditët e javës', pos: 'emra',
+                forms: [{ cols: [['e hon', 'e mart', 'e mërkur', 'e enjte (e injte)', 'e premte', 'e shtun (e shtaun)', 'e dell (e djell)'], ['t’honën', 't’martën', 't’mërkurën', 't’enjten (t’ijten) (t’injten)', 't’premten', 't’shtaunën (t’shtunën)', 't’dellën (t’djellën)']] }],
+                caption: ['ë-jat n’fund qëllimisht zgjedh mos i shkruj, xhi t’i pasqyroje ma majr regullat e pashkrume xhi “shkrujtsit” e ksaj t’folme i respektojn. Përndrajshe, t’i kishim shkrujt ë-jat n’fund dë e kishin pas tnjejtin efekt xhi e kan shom tfolme qera, ku ë-ja n’vend xhi vet tshqiptohet, e zgjatën zanoren paraprake.'],
+            },
+            {
+                sc: 'DKPwpSvI3Mv', cat: 'koha', date: '2025-05-29',
+                title: 'Mënyra habitore',
+                forms: [
+                    { cols: [['laj', 'lajkam', 'lajke', 'lajka', 'lajkim', 'lajki(t)*', 'lajkan'], ['lahem', 'u lajkam', 'u lajke', 'u lajka', 'u lajkim', 'u lajki(t)*', 'u lajkin']] },
+                    { note: '*t-ja vërehet te pak folës, shaum folës nuk e përdorin' },
+                    { note: 'pjesëza “{u}” këtu e merr rolin e njejtë që e ka në përcjellore me folje joveprore “qenka duke {u} larë”(“kona tu {u} la”)' },
+                ],
+                caption: ['Flasim për kohën e tashme të habitores. Joveprorja e përafërt me gjuhën standarde “laheshkam” gjithashtu shfaqet, është e paqartë nëse kjo paraqitet si thjesht ndikim i gjuhës standarde.'],
+            },
+            {
+                sc: 'DKNsEw0I-7m', cat: 'shqiptim', date: '2025-05-28', place: 'Kamjan',
+                title: 'diftong (zanore rreshqitëse)',
+                forms: ['zanorja e rrishet ka zanorja a për ta formau zanoren ea (shkruhet a)', 'Nuk dë v{a}je saunde, dë r{a}je der nesër.'],
+                caption: ['Ki diftong o bajgji rond për ta paraqit me alfabet latin. Po nëse e ngjoni vitin tu e thon mund ta dalloni se a-ja te llafi vaj, dallon pi a-jes te llafi ftajr/majr. Mund ene ta mendoni si dallimi midis si e thuni llafin shpaj në “vaj nshpaj” ene “boj ni shpaj”.', 'Fotoja e prapavijes o pi ke Ujvarat e Kamjanit.'],
+            },
+            {
+                sc: 'DKNqY0aIDaX', cat: 'peremra', date: '2025-05-28',
+                title: 'Peremrat pronorë', rasa: [{ t: 'dhanore' }],
+                forms: ['t’kujt ose t’kujve va ke dhon?', ['t’temit / t’temes', 't’tondit / t’tondes', 't’atij/t’asaj', 't’tonve / t’tonave', 't’tujve / t’tujave', 't’atinve']],
+            },
+            {
+                sc: 'DKNntQRIxfc', cat: 'peremra', date: '2025-05-28',
+                title: 'Përemrat vetorë',
+                forms: [{ heads: [{ t: 'dhanore' }, { t: 'kallëzore' }], cols: [['mu / m’', 'taj / t’', 'atij / asaj / i / e', 'neve / na', 'juve / vu ose ju', 'atine / u'], ['mu / m’', 'taj / t’', 'at / e', 'neve / na', 'juve / vu ose ju', 'ato / i']] }],
+            },
+            {
+                sc: 'DKKox_vNYa-', cat: 'koha', date: '2025-05-27',
+                title: 'E kryera e thjeshtë', std: 'std: “ndiej” geg: “nij”',
+                forms: [
+                    { cols: [['ndajva', 'ndajve', 'ndajv', 'ndajvëm', 'ndajvët', 'ndajvën'], ['ndajta', 'ndajte', 'ndajti', 'ndajtëm', 'ndajtët', 'ndajtën']] },
+                    { note: 'te disa folës bie “d”-ja mbas “n”-jës → najva / najta' },
+                    { note: 'sicëlla “a” e par nkët folje paraqet diftong → nd{ea}jva / nd{ea}jta' },
+                ],
+            },
+            {
+                sc: 'DKKmQDloX9r', cat: 'koha', date: '2025-05-27',
+                title: 'E tashmja (dëftore)', std: 'std “dëgjohem”',
+                forms: [{ cols: [['ngjohem', 'ngjohesh', 'ngjohet', 'ngjohena', 'ngjoheni', 'ngjohen'], ['', '', '', 'ngjona', 'ngjoni']] }],
+            },
+            {
+                sc: 'DKKlh6loF0U', cat: 'koha', date: '2025-05-27',
+                title: 'E tashme (dëftore)', std: 'std “dëgjoj”',
+                forms: [
+                    { cols: [['ngjoj', 'ngjojsh', 'ngjon', 'ngjojm', 'ngjoni', 'ngjojn'], ['', 'ngjon', '', 'ngjojna']] },
+                    ['nëgoj', 'nëgon', 'nëgon', 'nëgojm', 'nëgoni', 'nëgojn'],
+                    { note: 'shumica e folsve, ke veta e dit njëjës foljet i zgjedhojn ndrajshe pi vetës tret njëjës. (p.sh. taj shkojsh, aj shkon)' },
+                    { note: 'ni numër nga fshatrat jugore nuk bojn dallim midis ktine di vetave, (taj shkon, ajo shkon)' },
+                ],
+                caption: ['Kohë e tashme -> Vakët i shtajshëm'],
+            },
+            {
+                sc: 'DKIgZ0aIDLc', cat: 'fjala', sub: 'ndajfolje', date: '2025-05-26',
+                title: 'mapa', pos: 'ndajfolje kohe', std: 'std: pastaj',
+                forms: ['Fjalë që kanë kuptimin e njejtë me fjalën “pastaj”. Radhitur sipas shpeshtësisë.', ['mapa', 'ma mrapa', 'ma mbrapa', 'masaj', 'masanej', 'masani']],
+            },
+            {
+                sc: 'DKIfN9iIgq4', cat: 'koha', date: '2025-05-26',
+                title: 'Urdhërorja (e tashme)',
+                forms: [
+                    { cols: [['taj fajke', 'ju fajknja', 'asaj fajkjani', 'atine fajkvani'], ['taj shime', 'ju shimnja', 'atij shimjani', 'atine shimvani']] },
+                    { note: 'Ekuivalent të foljeve “fik” dhe “shkym/shemb”. Folësit e përdorin ose njërën ose tjetrën, jo të dyja. E dyta përdoret nga me pak folës, vetëm nga rradha e fshatrave deri në kufirin e Kosovës' },
+                ],
+            },
+            {
+                sc: 'DKIdVDqoLEr', cat: 'koha', date: '2025-05-26',
+                title: 'E kryera e përberë',
+                forms: [
+                    { cols: [['kom kon', 'ke kon', 'ka kon', 'kina kon', 'kini kon', 'kan kon'], ['', '', '', 'kimi kon', '', 'kajn kon'], ['', '', '', '', '', 'kën kon']] },
+                    { note: 'e tashmja e foljes ndihmëse “kam”, n’kataundet jugore (ka Gostivari) n’vetën e tret merr variant ma tosk (kimi). Gegësohet (kina) nëpër kataundet veriore (ka Kosova)' },
+                ],
+            },
+            {
+                sc: 'DKIZShiNykO', cat: 'koha', date: '2025-05-26',
+                title: 'E pakryera (dëftore)',
+                forms: [
+                    { cols: [['shkrujsha', 'shkrujshe', 'shkrunte', 'shkrujshim', 'shkrujshit', 'shkrujshin'], ['vajsha', 'vajshe', 'vajnte', 'vajshim', 'vajshit', 'vajshin'], ['çeshsha', 'çeshshe', 'çeshte', 'çeshshim', 'çeshshit', 'çeshshin']] },
+                    ['isha', 'ishe', 'aj isht/ajo ishte', 'ishim', 'ishit', 'ishin'],
+                    { note: 'disa folës e zdrojn t-jën pi n’fund t’vetës dit shumës (shkrujshi, vajshi, çeshshi, ishi)' },
+                ],
+            },
+            {
+                sc: 'DKIXB1FtLyd', cat: 'fjala', sub: 'mbiemra', date: '2025-05-26',
+                title: 'i vogël, i madh', pos: 'mbiemra', std: 'std: i vogël, i madh',
+                forms: [{ cols: [['e vogël', 'e madhe', 't’vogla', 't’mdhoja'], ['i vogël', 'i madh', 't’vogli', 't’mdhi']] }, { std: 'variacion' }, 'gjajti n’zhdukje:', ['i/e vëjl', 't’vëjl/t’vëjla']],
+            },
+            {
+                sc: 'DKFi_O4NfP6', cat: 'fjala', sub: 'ndajfolje', date: '2025-05-25',
+                title: 'Ndajfolje vendi', pos: 'ndajfolje vendi',
+                forms: [
+                    { cols: [['nalt', 'posht', 'ntgjatht', 'ntmajsht', 'perjasht', 'mbrenda*', 'dikund', 'asku', 'kanauk', 'kahmos'], ['agje', 'çagje', 'ktau', 'çektau', 'ataj', 'çataj', 'erfujti', 'sajpri', 'karshaj']] },
+                    { note: '*do folës e zdrojn “b”- jën kur vajn mbas “m” - jës. → mrenda**' },
+                    { note: '**do folës shkojn ene çat “d”- jën e zdrojn → mrena' },
+                ],
+            },
+            {
+                sc: 'DKFfu_6tUyh', cat: 'peremra', date: '2025-05-25',
+                title: 'Përemrat pronorë', rasa: [{ t: 'emërore' }],
+                forms: [
+                    { cols: [['e jemja', 'e jotja', 'e atij*/asaj', 'e jona', 'e juja', 'e atine'], ['i jemi', 'i joti', 'i atij*/asaj', 'i joni', 'i juji', 'i atine']] },
+                    { note: '*te disa folës ene si diftong i → aë atij → ataj (lexohet ataëj)' },
+                ],
+            },
+            {
+                sc: 'DKFc71noKd_', cat: 'koha', date: '2025-05-25',
+                title: 'Koha e ardhme',
+                forms: ['pjesëza “dë” para foljes + menyra lidhore e foljes pa pjesezën “të”', ['Un dë shkoj', 'Taj dë shkojsh', 'Aj/ajo dë shkoje', 'Ne dë shkojm', 'Ju dë shkoni', 'Ato dë shkojn']],
+                caption: ['përkurdër motrave gege xhi e perdorin foljen ndihmëse “kam”, kjo e folme e ka ni qasje pak ma ndrajshe kur vajn puna t’folim për t’ardhmen.'],
+            },
+            {
+                sc: 'DKElxa9Nvyy', cat: 'shqiptim', date: '2025-05-25',
+                title: 'Diftong (zanore rrëshqitëse)',
+                forms: ['zanorja “a” rrishet ka zanorja “e” për ta formau zanoren “æ”', 'shkruhet me “a”', 'm{a}jr e paske bo spata ft{a}jr ti thom'],
+            },
+        ];
+        const CATS = [
+            { id: 'all', label: 'Të gjitha' },
+            { id: 'koha', label: 'Kohë dhe mënyra' },
+            { id: 'fjala', label: 'Fjalë' },
+            { id: 'folje', label: 'Folje', parent: 'fjala' },
+            { id: 'emra', label: 'Emra', parent: 'fjala' },
+            { id: 'ndajfolje', label: 'Ndajfolje', parent: 'fjala' },
+            { id: 'mbiemra', label: 'Mbiemra', parent: 'fjala' },
+            { id: 'numerore', label: 'Numërorë', parent: 'fjala' },
+            { id: 'shprehje', label: 'Shprehje dhe përdorim' },
+            { id: 'peremra', label: 'Përemra' },
+            { id: 'shqiptim', label: 'Shqiptim' },
+        ];
+        const CAT_LABEL = Object.fromEntries(CATS.map((c) => [c.id, c.label]));
+
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const fmt = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\{(.+?)\}/g, '<span class="hl">$1</span>');
+        const day = (d) => new Date(d + 'T00:00:00').toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' });
+        const list = (items) => `<ul>${items.map((t) => `<li>${t ? fmt(t) : '&nbsp;'}</li>`).join('')}</ul>`;
+        const rasa = (r) => `<span class="rasa">${esc(r.t)}</span>`;
+        const block = (b) => {
+            if (typeof b === 'string') return `<p>${fmt(b)}</p>`;
+            if (Array.isArray(b)) return list(b);
+            if (b.cols) return `<div class="cols">${b.cols.map((c, i) => `<div>${b.heads ? rasa(b.heads[i]) : ''}${list(c)}</div>`).join('')}</div>`;
+            if (b.note) return `<p class="note">${fmt(b.note)}</p>`;
+            if (b.head) return `<div class="lemma"><h4>${fmt(b.head)}</h4>${b.std ? `<p class="std">${fmt(b.std)}</p>` : ''}</div>`;
+            if (b.std) return `<p class="std">${fmt(b.std)}</p>`;
+            return '';
+        };
+
+        const entry = (p) => `
+            <article class="entry" data-cat="${p.cat}" data-sub="${p.sub || ''}">
+                <div class="head">
+                    <span class="tag ${p.cat}">${CAT_LABEL[p.cat]}</span>
+                    <span class="meta">${day(p.date)}${p.place ? ', ' + esc(p.place) : ''}</span>
+                </div>
+                ${p.title ? `<h3>${fmt(p.title)}${p.def ? `<span class="def">${fmt(p.def)}</span>` : ''}</h3>` : ''}
+                ${p.pos ? `<p class="pos">${fmt(p.pos)}</p>` : ''}
+                ${p.std ? `<p class="std">${fmt(p.std)}</p>` : ''}
+                ${p.rasa ? `<div class="rasat">${p.rasa.map(rasa).join('')}</div>` : ''}
+                ${p.forms ? `<div class="forms">${p.forms.map(block).join('')}</div>` : ''}
+                ${p.caption ? `<div class="caption">${p.caption.map((t) => `<p>${fmt(t)}</p>`).join('')}</div>` : ''}
+                <a class="post" href="https://www.instagram.com/${p.reel ? 'reel' : 'p'}/${p.sc}/" target="_blank" rel="noopener noreferrer">${p.reel ? 'Shiko videon' : 'Shiko postimin'} ↗</a>
+            </article>`;
+
+        const trail = document.getElementById('trail');
+        trail.innerHTML = POSTS.map(entry).join('');
+
+        const filter = document.getElementById('filter');
+        filter.innerHTML = CATS.map((c) => {
+            const n = c.id === 'all' ? POSTS.length : POSTS.filter((p) => (c.parent ? p.sub : p.cat) === c.id).length;
+            return `<button type="button" data-cat="${c.id}"${c.parent ? ' class="sub"' : ''} aria-pressed="${c.id === 'all'}">${c.label}<span class="n">${n}</span></button>`;
+        }).join('');
+
+        const apply = (cat) => {
+            filter.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cat === cat)));
+            const on = filter.querySelector(`[data-cat="${cat}"]`);
+            if (on && filter.scrollWidth > filter.clientWidth) filter.scrollLeft = on.offsetLeft - filter.offsetLeft - 16;
+            trail.querySelectorAll('.entry').forEach((e) => { e.hidden = cat !== 'all' && e.dataset.cat !== cat && e.dataset.sub !== cat; });
+        };
+
+        filter.addEventListener('click', (e) => {
+            const b = e.target.closest('button');
+            if (!b) return;
+            apply(b.dataset.cat);
+            history.replaceState(null, '', b.dataset.cat === 'all' ? location.pathname : '#' + b.dataset.cat);
+            const top = trail.getBoundingClientRect().top + window.scrollY - 70;
+            if (window.scrollY > top) window.scrollTo({ top });
+        });
+
+        const themeBtn = document.getElementById('theme');
+        const setThemeLabel = () => { themeBtn.textContent = document.documentElement.dataset.theme === 'light' ? '☾' : '☀'; };
+        setThemeLabel();
+        themeBtn.addEventListener('click', () => {
+            const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            try { localStorage.setItem('shqipollog-theme', next); } catch (e) {}
+            setThemeLabel();
+        });
+
+        const start = location.hash.slice(1);
+        if (CATS.some((c) => c.id === start)) apply(start);
+    </script>
+</body>
+
+</html>

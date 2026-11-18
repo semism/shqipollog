@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shqipollog admin</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        try {
+            const t = localStorage.getItem('shqipollog-theme');
+            document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        } catch (e) {
+            document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+    </script>
+    <style>
+        :root {
+            --bg: #06302c;
+            --panel: #0a3a35;
+            --field: rgba(255, 244, 226, .06);
+            --field-focus: rgba(255, 244, 226, .11);
+            --text: #fff4e2;
+            --muted: #d9c9b2;
+            --faint: rgba(217, 201, 178, .55);
+            --line: rgba(217, 201, 178, .22);
+            --accent: #76331a;
+            --accent-text: #fff4e2;
+            --hover: rgba(255, 244, 226, .06);
+            --pressed: rgba(255, 244, 226, .12);
+            --draft: #e9b872;
+            --danger: #ff6b7f;
+            --ok: #8fc1a9;
+            --serif: 'Fraunces', Georgia, serif;
+            --sans: 'Space Grotesk', system-ui, sans-serif;
+            --mono: 'IBM Plex Mono', ui-monospace, monospace;
+            color-scheme: dark;
+        }
+        :root[data-theme="light"] {
+            --bg: #ece3d3;
+            --panel: #f5ecdd;
+            --field: rgba(90, 38, 19, .05);
+            --field-focus: rgba(90, 38, 19, .09);
+            --text: #2a170d;
+            --muted: #6e5a46;
+            --faint: rgba(110, 90, 70, .7);
+            --line: rgba(90, 38, 19, .2);
+            --accent: #76331a;
+            --hover: rgba(90, 38, 19, .06);
+            --pressed: rgba(90, 38, 19, .12);
+            --draft: #9a6210;
+            --danger: #c2334b;
+            --ok: #2f6f5a;
+            color-scheme: light;
+        }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 var(--sans); display: flex; flex-direction: column; }
+        button, input, select, textarea { font: inherit; color: inherit; }
+        button { cursor: pointer; }
+
+        .bar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); flex: none; }
+        .bar h1 { margin: 0; font: 600 20px var(--serif); }
+        .bar h1 span { font-weight: 400; color: var(--muted); }
+        .bar .grow { flex: 1; }
+        #status { color: var(--muted); font-size: 13px; }
+        #status.dirty { color: var(--draft); }
+        #status.err { color: var(--danger); }
+        #status.ok { color: var(--ok); }
+        .btn { border: 1px solid var(--line); background: var(--field); border-radius: 6px; padding: 5px 12px; }
+        .btn:hover { background: var(--pressed); }
+        .btn.primary { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+        .btn.primary:disabled { opacity: .5; cursor: default; }
+        .btn.small { padding: 1px 8px; font-size: 12px; }
+        .btn.danger { color: var(--danger); }
+        .x { border: 0; background: none; color: var(--faint); padding: 0 4px; font-size: 15px; line-height: 1; }
+        .x:hover { color: var(--danger); }
+
+        .app { flex: 1; min-height: 0; display: grid; grid-template-columns: 260px minmax(0, 1fr) minmax(320px, 40%); }
+        .app > * { min-height: 0; overflow: auto; scrollbar-color: var(--line) transparent; }
+
+        .list { border-right: 1px solid var(--line); padding: 12px; }
+        .list input { width: 100%; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--field); }
+        .filters { display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0; }
+        .filters button { border: 0; background: none; border-radius: 5px; padding: 2px 8px; color: var(--muted); font-size: 13px; }
+        .filters button[aria-pressed="true"] { background: var(--pressed); color: var(--text); }
+        .item { display: block; width: 100%; text-align: left; border: 0; background: none; border-radius: 6px; padding: 6px 8px; }
+        .item:hover { background: var(--hover); }
+        .item[aria-current="true"] { background: var(--pressed); }
+        .item b { font-weight: 500; }
+        .item small { display: block; color: var(--muted); font-size: 12px; }
+        .tag-draft { color: var(--draft); font-size: 11px; margin-left: 6px; font-family: var(--mono); }
+
+        .form { padding: 16px 24px 80px; }
+        .form h2 { margin: 0 0 4px; font: 600 26px var(--serif); }
+        .form .actions { display: flex; gap: 8px; margin: 8px 0 18px; }
+        .empty { color: var(--muted); padding: 40px 0; }
+        fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 0 0 14px; min-width: 0; }
+        legend { padding: 0 6px; color: var(--muted); font-size: 13px; display: flex; gap: 8px; align-items: center; }
+        .row { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 4px 10px; align-items: start; margin: 0 0 8px; }
+        .row > label, .lab { color: var(--muted); font-family: var(--mono); font-size: 12px; padding-top: 6px; }
+        .inline { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 0 0 8px; }
+        .inline .row { grid-template-columns: auto minmax(120px, 1fr); margin: 0; }
+        input[type="text"], input[type="date"], select, textarea {
+            width: 100%; border: 1px solid transparent; border-radius: 5px; background: var(--field); padding: 5px 8px;
+        }
+        select { width: auto; }
+        textarea { resize: vertical; min-height: 32px; display: block; overflow: hidden; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--line); background: var(--field-focus); }
+        .check { display: flex; gap: 6px; align-items: center; color: var(--muted); }
+        .check.draft { color: var(--draft); }
+        .lines > div { display: flex; gap: 4px; align-items: start; margin-bottom: 4px; }
+        .hint { color: var(--faint); font-size: 12px; margin: 2px 0 8px; }
+
+        .grid { border-collapse: collapse; margin: 4px 0 8px; }
+        .grid th { font: 12px var(--mono); color: var(--muted); font-weight: 400; text-align: left; padding: 2px 6px; white-space: nowrap; }
+        .grid td { padding: 2px 3px; min-width: 120px; }
+        .grid textarea { min-height: 30px; padding: 3px 7px; resize: none; }
+        .grid .gs { border-left: 1px solid var(--line); padding-left: 8px; }
+        .scroll { overflow-x: auto; }
+        .sub-box { border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 10px; }
+        .block { border-left: 2px solid var(--line); padding: 2px 0 2px 10px; margin: 0 0 12px; }
+        .block .bh { display: flex; gap: 6px; align-items: center; color: var(--muted); font: 12px var(--mono); margin-bottom: 4px; }
+        .block .bh .grow { flex: 1; }
+        .adds { display: flex; flex-wrap: wrap; gap: 6px; }
+        .bad { border-color: var(--danger) !important; }
+
+        .prev { border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+        .prev p { margin: 0; padding: 8px 14px; color: var(--muted); font-size: 12px; border-bottom: 1px solid var(--line); }
+        .prev iframe { flex: 1; width: 100%; border: 0; background: var(--bg); }
+
+        @media (max-width: 1000px) {
+            .app { grid-template-columns: 220px minmax(0, 1fr); }
+            .prev { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="bar">
+        <h1>shqipollog <span>admin</span></h1>
+        <span id="status"></span>
+        <span class="grow"></span>
+        <select id="new" aria-label="Hyrje e re">
+            <option value="">+ hyrje e re</option>
+            <option value="folje">folje</option>
+            <option value="emra">emër</option>
+            <option value="mbiemra">mbiemër</option>
+            <option value="ndajfolje">ndajfolje</option>
+            <option value="gramatike">gramatikë</option>
+            <option value="blog">blog</option>
+        </select>
+        <button class="btn" id="theme" type="button" title="Tema"></button>
+        <button class="btn primary" id="save" type="button" title="Ctrl+S">Ruaj</button>
+    </header>
+    <main class="app">
+        <nav class="list">
+            <input id="q" type="search" placeholder="Kërko…" autocomplete="off">
+            <div class="filters" id="filters"></div>
+            <div id="items"></div>
+        </nav>
+        <section class="form" id="form"></section>
+        <section class="prev">
+            <p>Parapamje, ashtu si del në faqe</p>
+            <iframe id="preview" title="Parapamje"></iframe>
+        </section>
+    </main>
+
+    <script src="/taxonomy.js"></script>
+    <script>
+        const TOKEN = '__TOKEN__';
+        const SERVED = !TOKEN.startsWith('__');
+
+        const ITEMS = TAXONOMY.gramatike.flatMap((g) => g.items.map((x) => ({ ...x, group: g.label })));
+        const PRONOUNS = ITEMS.filter((x) => x.group === 'Përemra').map((x) => x.id);
+        const KOHE = ITEMS.filter((x) => !PRONOUNS.includes(x.id) && x.id !== 'paskajorja');
+        const LABEL = Object.fromEntries([...TAXONOMY.fjalor, ...TAXONOMY.blog, ...ITEMS].map((x) => [x.id, x.label]));
+        const PERSONS = ['un', 'taj', 'aj', 'ne', 'ju', 'ato'];
+        const PLABEL = Object.fromEntries(PERSONS.map((k, i) => [k, TAXONOMY.persons[i]]));
+        const CASES = [['emerore', 'emërore'], ['gjinore', 'gjinore'], ['dhanore', 'dhanore'], ['kallezore', 'kallëzore'], ['rrjedhore', 'rrjedhore']];
+        const ORDER = ['id', 'type', 'sub', 'cat', 'koha', 'menyra', 'peremri', 'rasa', 'date', 'place', 'draft', 'title', 'word', 'gjinia', 'pos',
+            'std', 'shqiptime', 'video', 'intro', 'meaning', ...PERSONS, 'm', 'f', 'njejes', 'shumes', 'pashquar', 'shquar', ...CASES.map((c) => c[0]),
+            'variants', 'variantsNote', 'lakimi', 'words', 'zgjedhimi', 'examples', 'footnotes', 'text', 'body'];
+        const today = () => new Date().toLocaleDateString('sv');
+        const day = (d) => (d ? new Date(d + 'T00:00:00').toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+        const norm = (t) => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        const asList = (v) => (v === undefined || v === null || v === '' ? [] : Array.isArray(v) ? v : [v]);
+
+        let entries = [];
+        let cur = -1;
+        let dirty = false;
+        let filter = 'all';
+
+        // ---------- small DOM helper ----------
+        const h = (tag, attrs = {}, ...kids) => {
+            const el = document.createElement(tag);
+            for (const [k, v] of Object.entries(attrs)) {
+                if (v === undefined || v === null || v === false) continue;
+                if (k === 'class') el.className = v;
+                else if (k === 'value') el.value = v;
+                else if (k === 'checked') el.checked = !!v;
+                else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+                else el.setAttribute(k, v === true ? '' : v);
+            }
+            kids.flat(Infinity).forEach((c) => { if (c !== null && c !== undefined && c !== false) el.append(c.nodeType ? c : document.createTextNode(c)); });
+            return el;
+        };
+
+        // ---------- data cleanup (for save and preview) ----------
+        const order = (o) => {
+            const keys = Object.keys(o);
+            const rank = (k) => { const i = ORDER.indexOf(k === 'sub' && o.type === 'blog' ? 'title' : k) + (k === 'sub' && o.type === 'blog' ? 0.5 : 0); return i < 0 ? ORDER.length + keys.indexOf(k) : i; };
+            return Object.fromEntries(keys.sort((a, b) => rank(a) - rank(b)).map((k) => [k, o[k]]));
+        };
+        const clean = (v, key, top) => {
+            if (typeof v === 'string') { const t = v.trim(); return t === '' ? undefined : t; }
+            if (typeof v === 'boolean') return key === 'draft' && !v ? undefined : v;
+            if (Array.isArray(v)) {
+                const out = v.map((x) => clean(x, key)).filter((x) => x !== undefined);
+                return out.length ? out : undefined;
+            }
+            if (v && typeof v === 'object') {
+                const out = {};
+                for (const [k, x] of Object.entries(v)) { const c = clean(x, k); if (c !== undefined) out[k] = c; }
+                return Object.keys(out).length || top ? order(out) : undefined;
+            }
+            return v;
+        };
+        const cleaned = () => entries.map((e) => clean(e, null, true));
+
+        // ---------- titles ----------
+        const titleOf = (e) => {
+            if (e.type === 'gramatike') return `${LABEL[e.koha || e.peremri] || '(pa kohë)'}${e.menyra || e.rasa ? ', ' + (e.menyra || e.rasa) : ''}`;
+            if (e.type === 'fjale') return e.word || (e.words || []).map((w) => w.word).filter(Boolean).join(', ') || '(pa fjalë)';
+            return e.title || '(pa titull)';
+        };
+        const kindOf = (e) => (e.type === 'gramatike' ? 'Gramatikë' : e.type === 'fjale' ? LABEL[e.sub] : 'Blog, ' + (LABEL[e.cat] || ''));
+        const groupOf = (e) => (e.type === 'fjale' ? e.sub : e.type);
+
+        // ---------- status, preview ----------
+        const statusEl = document.getElementById('status');
+        const setStatus = (text, cls = '') => { statusEl.textContent = text; statusEl.className = cls; };
+        const iframe = document.getElementById('preview');
+        let previewTimer = 0;
+        const preview = () => {
+            clearTimeout(previewTimer);
+            previewTimer = setTimeout(() => { iframe.src = '/index.html?preview&t=' + Date.now(); }, 250);
+        };
+        window.addEventListener('message', (m) => {
+            if (m.origin !== location.origin || m.source !== iframe.contentWindow || m.data !== 'ready') return;
+            iframe.contentWindow.postMessage({ entries: cleaned(), focus: cur >= 0 ? cur : undefined }, location.origin);
+        });
+
+        const changed = () => {
+            dirty = true;
+            setStatus('Ndryshime të paruajtura', 'dirty');
+            renderList();
+            const t = document.getElementById('title');
+            if (t && entries[cur]) t.textContent = titleOf(entries[cur]);
+            preview();
+        };
+        const set = (obj, key, val) => {
+            if (val === '' || val === undefined || val === null || (Array.isArray(val) && !val.length)) delete obj[key];
+            else obj[key] = val;
+            changed();
+        };
+
+        // ---------- field builders ----------
+        const row = (label, input) => h('div', { class: 'row' }, h('label', {}, label), input);
+        const text = (obj, key, label = key, ph = '') => row(label, h('input', { type: 'text', value: obj[key] || '', placeholder: ph, oninput: (ev) => set(obj, key, ev.target.value) }));
+        const area = (obj, key, label = key) => row(label, h('textarea', { rows: 2, value: obj[key] || '', oninput: (ev) => set(obj, key, ev.target.value) }));
+        const choose = (obj, key, label, options, onchange) => row(label, h('select', {
+            onchange: (ev) => { if (onchange) onchange(ev.target.value); else set(obj, key, ev.target.value); },
+        }, options.map(([v, l]) => h('option', { value: v, selected: (obj[key] || '') === v }, l))));
+
+        // a list of strings, one box per item
+        const lines = (obj, key, label = key, hint) => {
+            const box = h('div', { class: 'lines' });
+            const draw = () => {
+                const arr = obj[key] || [];
+                box.replaceChildren(
+                    ...arr.map((t, i) => h('div', {},
+                        h('textarea', { rows: 1, value: t, oninput: (ev) => { arr[i] = ev.target.value; set(obj, key, arr); } }),
+                        h('button', { class: 'x', type: 'button', title: 'Hiqe', onclick: () => { arr.splice(i, 1); set(obj, key, arr); draw(); } }, '✕'))),
+                    h('button', { class: 'btn small', type: 'button', onclick: () => { obj[key] = [...arr, '']; changed(); draw(); box.querySelectorAll('textarea')[arr.length]?.focus(); } }, '+ shto'),
+                );
+            };
+            draw();
+            return row(label, h('div', {}, hint ? h('p', { class: 'hint' }, hint) : null, box));
+        };
+
+        // one cell that can hold several forms (one per line)
+        const cellInput = (obj, key) => h('textarea', {
+            rows: 1,
+            value: asList(obj[key]).join('\n'),
+            oninput: (ev) => {
+                const parts = ev.target.value.split('\n').filter((l) => l.trim());
+                set(obj, key, parts.length > 1 ? parts : parts[0] || '');
+            },
+        });
+
+        // persons grid: main forms plus variant columns
+        const personGrid = (target, redraw) => {
+            const vars = target.variants || [];
+            const head = h('tr', {}, h('th'), h('th', {}, 'forma'),
+                vars.map((v, i) => h('th', { class: 'gs' }, `variant ${i + 1} `,
+                    h('button', { class: 'x', type: 'button', title: 'Hiqe variantin', onclick: () => { vars.splice(i, 1); set(target, 'variants', vars); redraw(); } }, '✕'))),
+                h('th', {}, h('button', { class: 'btn small', type: 'button', onclick: () => { target.variants = [...vars, {}]; changed(); redraw(); } }, '+ variant')));
+            const body = PERSONS.map((p) => h('tr', {}, h('th', {}, PLABEL[p]), h('td', {}, cellInput(target, p)),
+                vars.map((v) => h('td', { class: 'gs' }, cellInput(v, p))), h('td')));
+            return h('div', { class: 'scroll' }, h('table', { class: 'grid' }, h('thead', {}, head), h('tbody', {}, body)),
+                h('p', { class: 'hint' }, 'Enter brenda një kutie = formë tjetër për të njëjtin person. Variantet mbushen vetëm aty ku ndryshojnë.'));
+        };
+
+        // m/f × njëjës/shumës grid for adjectives
+        const adjGrid = (w) => {
+            const put = (n, g, val) => { w[n] = w[n] || {}; set(w[n], g, val); if (!Object.keys(w[n]).length) delete w[n]; };
+            const inp = (n, g) => h('textarea', { rows: 1, value: (w[n] || {})[g] || '', oninput: (ev) => put(n, g, ev.target.value) });
+            return h('table', { class: 'grid' },
+                h('thead', {}, h('tr', {}, h('th'), h('th', {}, 'njëjës'), h('th', {}, 'shumës'))),
+                h('tbody', {}, [['m', 'mashkullore'], ['f', 'femërore']].map(([g, l]) => h('tr', {}, h('th', {}, l), h('td', {}, inp('njejes', g)), h('td', {}, inp('shumes', g))))));
+        };
+
+        // lakimi grid for nouns
+        const nounGrid = (e) => {
+            const cols = [['njejes', 'pashquar'], ['njejes', 'shquar'], ['shumes', 'pashquar'], ['shumes', 'shquar']];
+            const get = (n, d, k) => (((e.lakimi || {})[n] || {})[d] || {})[k] || '';
+            const put = (n, d, k, val) => {
+                e.lakimi = e.lakimi || {};
+                const L = e.lakimi;
+                L[n] = L[n] || {}; L[n][d] = L[n][d] || {};
+                if (val.trim()) L[n][d][k] = val; else delete L[n][d][k];
+                if (!Object.keys(L[n][d]).length) delete L[n][d];
+                if (!Object.keys(L[n]).length) delete L[n];
+                if (!Object.keys(L).length) delete e.lakimi;
+                changed();
+            };
+            return h('div', { class: 'scroll' }, h('table', { class: 'grid' },
+                h('thead', {},
+                    h('tr', {}, h('th'), h('th', { colspan: 2 }, 'njëjës'), h('th', { colspan: 2, class: 'gs' }, 'shumës')),
+                    h('tr', {}, h('th'), cols.map(([, d], i) => h('th', { class: i === 2 ? 'gs' : null }, d === 'shquar' ? 'e shquar' : 'e pashquar')))),
+                h('tbody', {}, CASES.map(([k, l]) => h('tr', {}, h('th', {}, l),
+                    cols.map(([n, d], i) => h('td', { class: i === 2 ? 'gs' : null }, h('textarea', { rows: 1, value: get(n, d, k), oninput: (ev) => put(n, d, k, ev.target.value) }))))))));
+        };
+
+        const section = (legend, ...kids) => h('fieldset', {}, h('legend', {}, legend), ...kids);
+        const removeBtn = (label, fn) => h('button', { class: 'x', type: 'button', title: label, onclick: fn }, '✕');
+
+        // ---------- per-type editors ----------
+        const metaFields = (e) => h('div', {},
+            h('div', { class: 'inline' },
+                row('date', h('input', { type: 'date', value: e.date || '', oninput: (ev) => set(e, 'date', ev.target.value) })),
+                row('place', h('input', { type: 'text', value: e.place || '', oninput: (ev) => set(e, 'place', ev.target.value) })),
+                h('label', { class: 'check draft' }, h('input', { type: 'checkbox', checked: e.draft, onchange: (ev) => set(e, 'draft', ev.target.checked || '') }), 'hamendje (nuk del në faqe)')),
+            h('details', {}, h('summary', { class: 'hint' }, 'id e linkut'), text(e, 'id', 'id', 'bosh = automatik')));
+
+        const STRUCT = { folje: 'words', mbiemra: 'words', emra: 'word', ndajfolje: 'word' };
+        const changeSub = (e, sub) => {
+            if (STRUCT[sub] !== STRUCT[e.sub]) {
+                const hasForms = e.lakimi || (e.words || []).some((w) => Object.keys(w).some((k) => k !== 'word' && k !== 'std'));
+                if (hasForms && !confirm('Ky ndryshim e fshin tabelën e formave. Vazhdo?')) return draw();
+                if (STRUCT[sub] === 'words') {
+                    e.words = [{ word: e.word || '', std: e.std }];
+                    delete e.word; delete e.std; delete e.lakimi; delete e.gjinia;
+                } else {
+                    e.word = (e.words || []).map((w) => w.word).filter(Boolean).join(', ');
+                    const s = (e.words || [])[0] && e.words[0].std;
+                    if (s) e.std = s;
+                    delete e.words;
+                }
+            }
+            e.sub = sub;
+            changed(); draw();
+        };
+
+        const verbEditor = (e) => {
+            e.words = e.words || [{}];
+            const box = h('div');
+            const redraw = () => box.replaceChildren(...e.words.map((w, wi) => section(
+                [`folja ${e.words.length > 1 ? wi + 1 : ''}`, e.words.length > 1 ? removeBtn('Hiqe foljen', () => { e.words.splice(wi, 1); changed(); redraw(); }) : null],
+                h('div', { class: 'inline' }, text(w, 'word', 'word'), text(w, 'std', 'std')),
+                (w.zgjedhimi = w.zgjedhimi || []).map((z, zi) => h('div', { class: 'sub-box' },
+                    h('div', { class: 'inline' },
+                        choose(z, 'koha', 'koha', KOHE.map((x) => [x.id, x.label])),
+                        choose(z, 'menyra', 'menyra', TAXONOMY.variants.slice(0, 6).map((v) => [v, v])),
+                        removeBtn('Hiqe këtë kohë', () => { w.zgjedhimi.splice(zi, 1); changed(); redraw(); })),
+                    personGrid(z, redraw))),
+                h('div', { class: 'adds sub-box' }, h('button', { class: 'btn small', type: 'button', onclick: () => {
+                    const used = w.zgjedhimi.map((z) => z.koha + z.menyra);
+                    const next = KOHE.find((k) => !used.includes(k.id + 'dëftore'));
+                    w.zgjedhimi.push({ koha: next ? next.id : 'tashmja', menyra: 'dëftore' });
+                    changed(); redraw();
+                } }, '+ kohë')),
+                h('p', { class: 'hint' }, 'Kohët që mungojnë këtu, faqja i merr vetë nga Gramatika nëse folja është atje (me të njëjtin word ose std).'),
+            ), h('button', { class: 'btn small', type: 'button', onclick: () => { e.words.push({ zgjedhimi: [] }); changed(); redraw(); } }, '+ folje tjetër në këtë kartë')));
+            redraw();
+            return box;
+        };
+
+        const adjEditor = (e) => {
+            e.words = e.words || [{}];
+            const box = h('div');
+            const redraw = () => box.replaceChildren(...e.words.map((w, wi) => section(
+                [`mbiemri ${e.words.length > 1 ? wi + 1 : ''}`, e.words.length > 1 ? removeBtn('Hiqe', () => { e.words.splice(wi, 1); changed(); redraw(); }) : null],
+                h('div', { class: 'inline' }, text(w, 'word', 'word'), text(w, 'std', 'std')),
+                adjGrid(w),
+                (w.variants || []).map((v, vi) => h('div', { class: 'sub-box' },
+                    h('div', { class: 'inline' }, text(v, 'word', 'variant'), removeBtn('Hiqe variantin', () => { w.variants.splice(vi, 1); set(w, 'variants', w.variants); redraw(); })),
+                    adjGrid(v))),
+                h('button', { class: 'btn small', type: 'button', onclick: () => { w.variants = [...(w.variants || []), {}]; changed(); redraw(); } }, '+ variant'),
+            ), h('button', { class: 'btn small', type: 'button', onclick: () => { e.words.push({}); changed(); redraw(); } }, '+ mbiemër tjetër në këtë kartë')));
+            redraw();
+            return box;
+        };
+
+        const fjaleEditor = (e) => {
+            const words = STRUCT[e.sub] === 'words';
+            return [
+                section('fjala',
+                    choose(e, 'sub', 'sub', TAXONOMY.fjalor.map((x) => [x.id, x.label]), (v) => changeSub(e, v)),
+                    words ? null : text(e, 'word', 'word'),
+                    e.sub === 'emra' ? choose(e, 'gjinia', 'gjinia', [['', '—'], ['mashkullore', 'mashkullore'], ['femërore', 'femërore'], ['asnjanëse', 'asnjanëse']]) : null,
+                    e.sub === 'ndajfolje' ? text(e, 'pos', 'pos', 'p.sh. ndajfolje kohe') : null,
+                    words ? null : text(e, 'std', 'std'),
+                    text(e, 'shqiptime', 'shqiptime')),
+                e.sub === 'folje' ? verbEditor(e) : null,
+                e.sub === 'mbiemra' ? adjEditor(e) : null,
+                e.sub === 'emra' ? section('lakimi', nounGrid(e)) : null,
+                section('tekst',
+                    lines(e, 'meaning', 'meaning'),
+                    lines(e, 'variants', 'variants', 'Fjalë variacion (lista nën “variacion”).'),
+                    text(e, 'variantsNote', 'variantsNote'),
+                    lines(e, 'examples', 'examples'),
+                    lines(e, 'footnotes', 'footnotes'),
+                    lines(e, 'text', 'text')),
+            ];
+        };
+
+        const gramEditor = (e) => {
+            const pron = !!e.peremri;
+            const itemId = e.koha || e.peremri || '';
+            const setItem = (id) => {
+                const v = e.menyra || e.rasa;
+                delete e.koha; delete e.peremri; delete e.menyra; delete e.rasa;
+                if (PRONOUNS.includes(id)) { e.peremri = id; if (v) e.rasa = v; } else { e.koha = id; if (v) e.menyra = v; }
+                changed(); draw();
+            };
+            const vKey = pron ? 'rasa' : 'menyra';
+            const box = h('div');
+            e.words = e.words || [];
+            const redraw = () => box.replaceChildren(...e.words.map((w, wi) => section(
+                [`fjala ${wi + 1}`, removeBtn('Hiqe', () => { e.words.splice(wi, 1); changed(); redraw(); })],
+                h('div', { class: 'inline' }, text(w, 'word', 'word'), text(w, 'std', 'std'),
+                    h('label', { class: 'check' }, h('input', { type: 'checkbox', checked: !!w.examples, onchange: (ev) => {
+                        if (ev.target.checked) w.examples = w.examples || []; else delete w.examples;
+                        changed(); redraw();
+                    } }), 'shembuj në vend të tabelës')),
+                w.examples ? lines(w, 'examples', 'examples') : personGrid(w, redraw),
+            ), h('button', { class: 'btn small', type: 'button', onclick: () => { e.words.push({}); changed(); redraw(); } }, '+ fjalë')));
+            redraw();
+            return [
+                section('gramatika',
+                    h('div', { class: 'inline' },
+                        row(pron ? 'peremri' : 'koha', h('select', { onchange: (ev) => setItem(ev.target.value) },
+                            TAXONOMY.gramatike.map((g) => h('optgroup', { label: g.label }, g.items.map((x) => h('option', { value: x.id, selected: x.id === itemId }, x.label)))))),
+                        choose(e, vKey, vKey, [['', '—'], ...TAXONOMY.variants.map((v) => [v, v])])),
+                    lines(e, 'intro', 'intro', 'Shpjegim mbi tabelë.')),
+                box,
+                section('tekst', lines(e, 'footnotes', 'footnotes'), lines(e, 'text', 'text')),
+            ];
+        };
+
+        const BLOCKS = [
+            ['paragraf', () => ''],
+            ['listë', () => ({ list: [] })],
+            ['kolona', () => ({ cols: [[], []] })],
+            ['shënim', () => ({ note: '' })],
+            ['nëntitull', () => ({ head: '', std: '' })],
+        ];
+        const blockKind = (b) => (typeof b === 'string' ? 'paragraf' : b.cols ? 'kolona' : b.list ? 'listë' : 'note' in b ? 'shënim' : 'head' in b ? 'nëntitull' : 'label' in b ? 'etiketë' : b.table ? 'tabelë' : 'std' in b ? 'std' : 'tjetër');
+        const linesArea = (arr, onset) => h('textarea', { rows: 3, value: arr.join('\n'), oninput: (ev) => onset(ev.target.value.split('\n')) });
+
+        const blogEditor = (e) => {
+            e.body = e.body || [];
+            const box = h('div');
+            const redraw = () => {
+                const B = e.body;
+                box.replaceChildren(...B.map((b, i) => {
+                    const kind = blockKind(b);
+                    const tools = h('div', { class: 'bh' }, kind, h('span', { class: 'grow' }),
+                        h('button', { class: 'x', type: 'button', title: 'Lart', disabled: i === 0, onclick: () => { [B[i - 1], B[i]] = [B[i], B[i - 1]]; changed(); redraw(); } }, '↑'),
+                        h('button', { class: 'x', type: 'button', title: 'Posht', disabled: i === B.length - 1, onclick: () => { [B[i + 1], B[i]] = [B[i], B[i + 1]]; changed(); redraw(); } }, '↓'),
+                        removeBtn('Hiqe', () => { B.splice(i, 1); changed(); redraw(); }));
+                    let ed;
+                    if (kind === 'paragraf') ed = h('textarea', { rows: 3, value: b, oninput: (ev) => { B[i] = ev.target.value; changed(); } });
+                    else if (kind === 'shënim') ed = h('textarea', { rows: 2, value: b.note, oninput: (ev) => { b.note = ev.target.value; changed(); } });
+                    else if (kind === 'listë') ed = h('div', {}, h('p', { class: 'hint' }, 'Një rresht për çdo element.'), linesArea(b.list, (v) => { b.list = v; changed(); }));
+                    else if (kind === 'kolona') ed = h('div', {}, h('p', { class: 'hint' }, 'Një rresht për çdo element, një kuti për çdo kolonë.'),
+                        h('div', { style: `display:grid;grid-template-columns:repeat(${b.cols.length},minmax(0,1fr)) auto;gap:6px;align-items:start` },
+                            b.cols.map((c, ci) => h('div', {}, linesArea(c, (v) => { b.cols[ci] = v; changed(); }),
+                                b.cols.length > 1 ? h('button', { class: 'btn small', type: 'button', onclick: () => { b.cols.splice(ci, 1); changed(); redraw(); } }, 'hiqe kolonën') : null)),
+                            h('button', { class: 'btn small', type: 'button', onclick: () => { b.cols.push([]); changed(); redraw(); } }, '+ kolonë')));
+                    else if (kind === 'nëntitull') ed = h('div', { class: 'inline' }, text(b, 'head', 'head'), text(b, 'std', 'std'));
+                    else if (kind === 'etiketë') ed = text(b, 'label', 'label');
+                    else if (kind === 'std') ed = text(b, 'std', 'std');
+                    else ed = h('textarea', { rows: 6, value: JSON.stringify(b, null, 1), oninput: (ev) => {
+                        try { B[i] = JSON.parse(ev.target.value); ev.target.classList.remove('bad'); changed(); } catch (err) { ev.target.classList.add('bad'); }
+                    } });
+                    return h('div', { class: 'block' }, tools, ed);
+                }), h('div', { class: 'adds' }, BLOCKS.map(([label, make]) => h('button', { class: 'btn small', type: 'button', onclick: () => { B.push(make()); changed(); redraw(); } }, '+ ' + label))));
+            };
+            redraw();
+            return [
+                section('postimi',
+                    h('div', { class: 'inline' }, choose(e, 'cat', 'cat', TAXONOMY.blog.map((x) => [x.id, x.label]))),
+                    text(e, 'title', 'title'), text(e, 'sub', 'sub', 'nëntitull'), text(e, 'std', 'std'),
+                    text(e, 'video', 'video', 'videos/emri, pa .mp4')),
+                section('body', box),
+            ];
+        };
+
+        // ---------- form, list ----------
+        const formEl = document.getElementById('form');
+        const draw = () => {
+            const e = entries[cur];
+            if (!e) { formEl.replaceChildren(h('p', { class: 'empty' }, 'Zgjidh një hyrje majtas, ose krijo një të re.')); return; }
+            formEl.replaceChildren(
+                h('h2', { id: 'title' }, titleOf(e)),
+                h('p', { class: 'hint' }, kindOf(e)),
+                h('div', { class: 'actions' },
+                    h('button', { class: 'btn small', type: 'button', onclick: duplicate }, 'Dupliko'),
+                    h('button', { class: 'btn small danger', type: 'button', onclick: remove }, 'Fshi')),
+                metaFields(e),
+                ...[e.type === 'fjale' ? fjaleEditor(e) : e.type === 'gramatike' ? gramEditor(e) : blogEditor(e)].flat(Infinity).filter(Boolean),
+            );
+        };
+
+        const FILTERS = [['all', 'Të gjitha'], ['gramatike', 'Gramatikë'], ...TAXONOMY.fjalor.map((x) => [x.id, x.label]), ['blog', 'Blog'], ['draft', 'Hamendje']];
+        const filtersEl = document.getElementById('filters');
+        const itemsEl = document.getElementById('items');
+        const qEl = document.getElementById('q');
+        const TYPE_RANK = { gramatike: 0, fjale: 1, blog: 2 };
+        const renderList = () => {
+            filtersEl.replaceChildren(...FILTERS.map(([id, label]) => h('button', { type: 'button', 'aria-pressed': String(filter === id), onclick: () => { filter = id; renderList(); } }, label)));
+            const q = norm(qEl.value.trim());
+            const idx = entries.map((e, i) => i)
+                .filter((i) => { const e = entries[i]; return filter === 'all' || (filter === 'draft' ? e.draft : groupOf(e) === filter); })
+                .filter((i) => !q || norm(JSON.stringify(entries[i])).includes(q))
+                .sort((a, b) => TYPE_RANK[entries[a].type] - TYPE_RANK[entries[b].type] || (entries[b].date || '').localeCompare(entries[a].date || ''));
+            itemsEl.replaceChildren(...idx.map((i) => {
+                const e = entries[i];
+                return h('button', { class: 'item', type: 'button', 'aria-current': String(i === cur), onclick: () => select(i) },
+                    h('b', {}, titleOf(e)), e.draft ? h('span', { class: 'tag-draft' }, 'hamendje') : null,
+                    h('small', {}, `${kindOf(e)}, ${day(e.date)}`));
+            }));
+        };
+        qEl.addEventListener('input', renderList);
+
+        const select = (i) => { cur = i; renderList(); draw(); preview(); formEl.scrollTop = 0; };
+
+        const TEMPLATES = {
+            folje: () => ({ type: 'fjale', sub: 'folje', date: today(), words: [{ word: '', zgjedhimi: [{ koha: 'tashmja', menyra: 'dëftore' }] }] }),
+            emra: () => ({ type: 'fjale', sub: 'emra', date: today(), word: '', gjinia: 'mashkullore' }),
+            mbiemra: () => ({ type: 'fjale', sub: 'mbiemra', date: today(), words: [{ word: '' }] }),
+            ndajfolje: () => ({ type: 'fjale', sub: 'ndajfolje', date: today(), word: '' }),
+            gramatike: () => ({ type: 'gramatike', koha: 'tashmja', menyra: 'dëftore', date: today(), words: [{}] }),
+            blog: () => ({ type: 'blog', cat: 'shprehje', date: today(), title: '', body: [''] }),
+        };
+        document.getElementById('new').addEventListener('change', (ev) => {
+            const make = TEMPLATES[ev.target.value];
+            ev.target.value = '';
+            if (!make) return;
+            entries.unshift(make());
+            filter = 'all';
+            changed();
+            select(0);
+            formEl.querySelector('input[type="text"]')?.focus();
+        });
+        function duplicate() {
+            const copy = structuredClone(entries[cur]);
+            delete copy.id;
+            copy.date = today();
+            entries.splice(cur, 0, copy);
+            changed();
+            select(cur);
+        }
+        function remove() {
+            if (!confirm(`Të fshihet “${titleOf(entries[cur])}”?`)) return;
+            entries.splice(cur, 1);
+            cur = Math.min(cur, entries.length - 1);
+            changed();
+            draw();
+        }
+
+        // ---------- save ----------
+        const saveBtn = document.getElementById('save');
+        const save = async () => {
+            if (!SERVED) return setStatus('Hape me: python3 serve.py', 'err');
+            saveBtn.disabled = true;
+            try {
+                const r = await fetch('/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Token': TOKEN },
+                    body: JSON.stringify(cleaned()),
+                });
+                const res = await r.json().catch(() => ({}));
+                if (!r.ok) throw new Error(res.error || r.status);
+                dirty = false;
+                setStatus(`Ruajtur, ${new Date().toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' })}`, 'ok');
+            } catch (err) {
+                setStatus('Nuk u ruajt: ' + err.message, 'err');
+            } finally {
+                saveBtn.disabled = false;
+            }
+        };
+        saveBtn.addEventListener('click', save);
+        window.addEventListener('keydown', (ev) => {
+            if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 's') { ev.preventDefault(); save(); }
+        });
+        window.addEventListener('beforeunload', (ev) => { if (dirty) { ev.preventDefault(); ev.returnValue = ''; } });
+
+        // ---------- theme ----------
+        const themeBtn = document.getElementById('theme');
+        const themeLabel = () => { themeBtn.textContent = document.documentElement.dataset.theme === 'light' ? '☾' : '☀'; };
+        themeLabel();
+        themeBtn.addEventListener('click', () => {
+            const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            try { localStorage.setItem('shqipollog-theme', next); } catch (err) {}
+            themeLabel();
+            preview();
+        });
+
+        // ---------- textareas grow with their text ----------
+        const grow = (t) => { t.style.height = 'auto'; t.style.height = t.scrollHeight + 2 + 'px'; };
+        document.addEventListener('input', (ev) => { if (ev.target.tagName === 'TEXTAREA') grow(ev.target); });
+        new MutationObserver(() => requestAnimationFrame(() => formEl.querySelectorAll('textarea').forEach(grow)))
+            .observe(formEl, { childList: true, subtree: true });
+
+        // ---------- start ----------
+        if (!SERVED) {
+            saveBtn.disabled = true;
+            setStatus('Vetëm lokalisht: hape me python3 serve.py', 'err');
+        }
+        fetch('/entries.json', { cache: 'no-store' })
+            .then((r) => r.json())
+            .then((list) => { entries = list; setStatus(SERVED ? `${list.length} hyrje` : statusEl.textContent, SERVED ? '' : 'err'); renderList(); draw(); })
+            .catch((err) => setStatus('Nuk u lexua entries.json: ' + err.message, 'err'));
+    </script>
+</body>
+</html>

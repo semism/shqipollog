@@ -30,18 +30,18 @@ const TAXONOMY = {
             items: [{ id: 'vetore', label: 'Përemrat vetorë' }, { id: 'pronore', label: 'Përemrat pronorë' }],
         },
     ],
-    // Every tense a verb can have, in order (used by the Zgjedhimi dropdown and the admin).
+    // Every tense a verb can have, in order (used by the Koha dropdown and the admin). pa: indefinite form, shown in the site's dropdown.
     kohet: [
-        { id: 'tashmja', label: 'E tashmja' },
-        { id: 'pakryera', label: 'E pakryera' },
-        { id: 'kryera-thjeshte', label: 'E kryera e thjeshtë' },
-        { id: 'kryera-perbere', label: 'E kryera e përbërë' },
-        { id: 'mese-kryera', label: 'Më se e kryera' },
-        { id: 'kryera-tejshkuar', label: 'E kryera e tejshkuar' },
-        { id: 'ardhmja', label: 'E ardhmja' },
-        { id: 'ardhmja-perparme', label: 'E ardhmja e përparme' },
-        { id: 'ardhmja-shkuar', label: 'E ardhmja e së shkuarës' },
-        { id: 'ardhmja-perparme-shkuar', label: 'E ardhmja e përparme e së shkuarës' },
+        { id: 'tashmja', label: 'E tashmja', pa: 'e tashme' },
+        { id: 'pakryera', label: 'E pakryera', pa: 'e pakryer' },
+        { id: 'kryera-thjeshte', label: 'E kryera e thjeshtë', pa: 'e kryer e thjeshtë' },
+        { id: 'kryera-perbere', label: 'E kryera e përbërë', pa: 'e kryer e përbërë' },
+        { id: 'mese-kryera', label: 'Më se e kryera', pa: 'më se e kryer' },
+        { id: 'kryera-tejshkuar', label: 'E kryera e tejshkuar', pa: 'e kryer e tejshkuar' },
+        { id: 'ardhmja', label: 'E ardhmja', pa: 'e ardhme' },
+        { id: 'ardhmja-perparme', label: 'E ardhmja e përparme', pa: 'e ardhme e përparme' },
+        { id: 'ardhmja-shkuar', label: 'E ardhmja e së shkuarës', pa: 'e ardhme e së shkuarës' },
+        { id: 'ardhmja-perparme-shkuar', label: 'E ardhmja e përparme e së shkuarës', pa: 'e ardhme e përparme e së shkuarës' },
     ],
     // Which tenses each mood has, and which persons (default: all six).
     menyrat: [

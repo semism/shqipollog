@@ -394,7 +394,7 @@
         .sect-note { font-style: italic; margin-left: 6px; }
         .sect ul { list-style: none; margin: 0; padding: 0; font-size: clamp(16px, 1.9vw, 18px); line-height: 1.5; }
 
-        .zg { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+        .zg { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; font-size: 13px; color: var(--muted); }
         .zg select {
             font: 15px var(--sans);
             color: var(--text);
@@ -402,9 +402,26 @@
             border: 1px solid var(--line);
             border-radius: 6px;
             padding: 6px 10px;
+            flex: 0 1 auto;
+            min-width: 0;
             max-width: 100%;
+            text-overflow: ellipsis;
         }
         .zg select:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+        .zg-m { display: flex; gap: 6px; flex-wrap: wrap; min-width: 0; }
+        .zg-m button {
+            all: unset;
+            cursor: pointer;
+            font: 14px var(--sans);
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: var(--muted);
+            background: var(--hover);
+        }
+        .zg-m button:hover { color: var(--text); }
+        .zg-m button[aria-pressed="true"] { background: var(--pressed); color: var(--text); }
+        .zg-m button.empty:not([aria-pressed="true"]) { opacity: .5; }
+        .zg-m button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
         .conj thead th.sub { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); padding-top: 0; }
         .conj thead th[colspan] { padding-bottom: 2px; }
@@ -731,7 +748,12 @@
             const verbSection = (e) => {
                 const has = (c) => e.words.some((w) => formsFor(w, c));
                 const cur = COMBOS.find((c) => comboKey(c) === zgState[e.id]) || COMBOS.find(has) || COMBOS[0];
-                const opts = [...new Set(COMBOS.map((c) => c.koha))].map((k) => `<optgroup label="${esc(LABEL[k] || k)}">${COMBOS.filter((c) => c.koha === k).map((c) => `<option value="${comboKey(c)}"${c === cur ? ' selected' : ''}>${esc(LABEL[c.koha] || c.koha)} (${esc(c.menyra)})${has(c) ? '' : unused(c, e) ? ' — nuk përdoret' : ' — mungojnë hyrje'}</option>`).join('')}</optgroup>`).join('');
+                const kohet = [...new Set(COMBOS.map((c) => c.koha))];
+                const PA = Object.fromEntries(TAXONOMY.kohet.map((k) => [k.id, k.pa]));
+                const tagOf = (k) => { const cs = COMBOS.filter((c) => c.koha === k); return !cs.some(has) && cs.every((c) => unused(c, e)) ? ' — nuk përdoret' : ''; };
+                const opts = kohet.map((k) => `<option value="${esc(k)}"${k === cur.koha ? ' selected' : ''}>${esc(PA[k] || LABEL[k] || k)}${tagOf(k)}</option>`).join('');
+                const moods = COMBOS.filter((c) => c.koha === cur.koha);
+                const chips = moods.length > 1 ? `<div class="zg-m" role="group" aria-label="Mënyra">${moods.map((c) => `<button type="button" data-zgm="${e.id}" data-combo="${esc(comboKey(c))}" aria-pressed="${c === cur}"${has(c) ? '' : ' class="empty"'}>${esc(c.menyra)}</button>`).join('')}</div>` : `<span>${esc(cur.menyra)}</span>`;
                 const multi = e.words.length > 1;
                 const body = has(cur)
                     ? table(personBlock(e.words.map((w) => { const f = formsFor(w, cur) || {}; return { word: multi ? w.word : '', std: multi ? w.std : '', forms: f, variants: f.variants }; }), personsOf(cur.menyra)))
@@ -739,7 +761,7 @@
                 const notes = e.words.flatMap((w) => { const f = formsFor(w, cur); return f ? f.footnotes || [] : []; });
                 const pj = e.words.map((w) => asList(w.pjesore).join(' / ')).filter(Boolean);
                 const pjLine = pj.length ? `<p class="std">pjesore: ${pj.map(fmt).join(', ')}</p>` : '';
-                return `${pjLine}<div class="sect"><label class="zg"><span>Zgjedhimi</span><select data-zg="${e.id}">${opts}</select></label>${body}${notes.map((n) => `<p class="note">${fmt(n)}</p>`).join('')}</div>`;
+                return `${pjLine}<div class="sect"><div class="zg"><label class="zg"><span>Koha</span><select data-zg="${e.id}" data-cur="${esc(comboKey(cur))}">${opts}</select></label>${chips}</div>${body}${notes.map((n) => `<p class="note">${fmt(n)}</p>`).join('')}</div>`;
             };
 
             const CASES = [['emerore', 'emërore'], ['gjinore', 'gjinore'], ['dhanore', 'dhanore'], ['kallezore', 'kallëzore'], ['rrjedhore', 'rrjedhore']];
@@ -911,19 +933,36 @@
                 }
             });
 
+            const redrawCard = (id, focusSel) => {
+                const card = document.getElementById(id);
+                const entry = byId[id];
+                if (!card || !entry) return;
+                const tmp = document.createElement('div');
+                tmp.innerHTML = wordCard(entry);
+                card.replaceWith(tmp.firstElementChild);
+                const again = document.querySelector(focusSel);
+                if (again) again.focus();
+            };
+
             view.addEventListener('change', (e) => {
                 const sel = e.target.closest('[data-zg]');
                 if (!sel) return;
-                zgState[sel.dataset.zg] = sel.value;
-                const card = document.getElementById(sel.dataset.zg);
-                const entry = byId[sel.dataset.zg];
-                if (card && entry) {
-                    const tmp = document.createElement('div');
-                    tmp.innerHTML = wordCard(entry);
-                    card.replaceWith(tmp.firstElementChild);
-                    const again = document.querySelector(`[data-zg="${entry.id}"]`);
-                    if (again) again.focus();
-                }
+                const id = sel.dataset.zg;
+                const entry = byId[id];
+                if (!entry) return;
+                const prev = (zgState[id] || sel.dataset.cur || '').split('|')[1];
+                const has = (c) => entry.words.some((w) => formsFor(w, c));
+                const cs = COMBOS.filter((c) => c.koha === sel.value);
+                const next = cs.find((c) => c.menyra === prev) || cs.find(has) || cs[0];
+                if (next) zgState[id] = comboKey(next);
+                redrawCard(id, `[data-zg="${id}"]`);
+            });
+
+            view.addEventListener('click', (e) => {
+                const b = e.target.closest('[data-zgm]');
+                if (!b) return;
+                zgState[b.dataset.zgm] = b.dataset.combo;
+                redrawCard(b.dataset.zgm, `[data-zgm="${b.dataset.zgm}"][aria-pressed="true"]`);
             });
 
             view.addEventListener('click', (e) => {

@@ -1,5 +1,29 @@
 [
     {
+        "type": "fjale",
+        "sub": "folje",
+        "date": "2026-11-19",
+        "words": [
+            {
+                "word": "di",
+                "std": "di",
+                "conjugation": [
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëftore",
+                        "un": "di",
+                        "taj": "din",
+                        "aj": "din",
+                        "ne": "dimë",
+                        "ju": "dini",
+                        "ato": "dinë",
+                        "variants": [{"taj": "dish"}]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "type": "gramatike",
         "tense": "tashmja",
         "mood": "dëftore",
@@ -1398,11 +1422,10 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "daj",
-                "std": "di",
+                "std": "ndaj",
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1422,7 +1445,6 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "du",
@@ -1432,11 +1454,12 @@
                         "tense": "tashmja",
                         "mood": "dëftore",
                         "un": "du",
-                        "taj": "dosh",
+                        "taj": "dush",
                         "aj": "do",
                         "ne": "dum",
-                        "ju": "doni",
-                        "ato": "dun"
+                        "ju": "duni",
+                        "ato": "dun",
+                        "variants": [{"aj": "don", "ju": "doni"}]
                     }
                 ]
             }
@@ -1469,7 +1492,6 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "paj",
@@ -1483,7 +1505,7 @@
                         "aj": "paj",
                         "ne": "pajm",
                         "ju": "pajni",
-                        "ato": "pajn"
+                        "ato": "pajnë"
                     }
                 ]
             }

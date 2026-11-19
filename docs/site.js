@@ -320,6 +320,28 @@ const boot = (ALL, focus, withDrafts) => {
         }
     };
 
+    // Long lists are split into pages. Changing the tab, filter, sort or search goes back to page 1;
+    // opening a link to an entry (pageTo) opens the page it is on.
+    const PAGE_SIZE = { fjalor: 20, blog: 10 };
+    let listKey = '';
+    const paged = (list, key) => {
+        const size = PAGE_SIZE[state.tab];
+        if (state.restore && state.restore.list === key) { state.page = state.restore.page; state.pageTo = null; }
+        else if (state.pageTo) { const i = list.findIndex((e) => e.id === state.pageTo); state.page = i < 0 ? 1 : Math.floor(i / size) + 1; state.pageTo = null; }
+        else if (key !== listKey) state.page = 1;
+        listKey = key;
+        const pages = Math.max(1, Math.ceil(list.length / size));
+        state.page = Math.min(Math.max(1, state.page || 1), pages);
+        return { items: list.slice((state.page - 1) * size, state.page * size), pager: pagerHtml(state.page, pages) };
+    };
+    const pagerHtml = (cur, pages) => {
+        if (pages < 2) return '';
+        const show = [...new Set([1, cur - 1, cur, cur + 1, pages])].filter((n) => n >= 1 && n <= pages).sort((a, b) => a - b);
+        const btn = (n, label, aria) => `<button type="button" data-page="${n}"${aria ? ` aria-label="${aria}"` : ''}${n === cur && !aria ? ' aria-pressed="true" aria-current="page"' : ''}>${label}</button>`;
+        const nums = show.map((n, i) => (i && n - show[i - 1] > 1 ? '<span class="gap">…</span>' : '') + btn(n, n)).join('');
+        return `<nav class="chips pager" aria-label="Faqet">${cur > 1 ? btn(cur - 1, '‹', 'Faqja para') : ''}${nums}${cur < pages ? btn(cur + 1, '›', 'Faqja mbas') : ''}</nav>`;
+    };
+
     const renderView = () => {
         const w = words();
         let html = '';
@@ -341,11 +363,13 @@ const boot = (ALL, focus, withDrafts) => {
             const list = ENTRIES.filter((e) => e.type === 'fjale' && (state.fjalor === 'all' || e.sub === state.fjalor) && matches(e, w) && (!state.only || e.id === state.only));
             list.sort((a, b) => (state.by === 'alpha' ? a.key.localeCompare(b.key, 'sq') : a.date.localeCompare(b.date)));
             if (state.dir === 'desc') list.reverse();
-            html = `<div class="list">${list.map(wordCard).join('')}</div>`;
+            const pg = paged(list, ['fjalor', state.fjalor, state.by, state.dir, w.join(' ')].join('|'));
+            html = `${pg.pager}<div class="list">${pg.items.map(wordCard).join('')}</div>${pg.pager}`;
         } else {
             const list = ENTRIES.filter((e) => e.type === 'blog' && (state.blog === 'all' || e.cat === state.blog) && matches(e, w) && (!state.only || e.id === state.only));
             list.sort((a, b) => b.date.localeCompare(a.date));
-            html = `<div class="blog">${list.map(blogPost).join('')}</div>`;
+            const pg = paged(list, ['blog', state.blog, w.join(' ')].join('|'));
+            html = `${pg.pager}<div class="blog">${pg.items.map(blogPost).join('')}</div>${pg.pager}`;
         }
         view.innerHTML = html;
         empty.hidden = !!view.querySelector('article');
@@ -427,6 +451,14 @@ const boot = (ALL, focus, withDrafts) => {
         }
         try { await navigator.clipboard.writeText(url); b.textContent = 'u kopjau'; } catch (err) { b.textContent = url; }
         setTimeout(() => { b.textContent = 'shpërndaj'; }, 1600);
+    });
+
+    view.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-page]');
+        if (!b) return;
+        state.page = Number(b.dataset.page);
+        renderView();
+        toTop();
     });
 
     const comboOf = (el) => { const box = el.closest('.conjugate'); return box && { box, c: { tense: box.dataset.tense, mood: box.dataset.mood } }; };
@@ -520,10 +552,10 @@ const boot = (ALL, focus, withDrafts) => {
             search.value = '';
             state.tab = TAB_OF_TYPE[e.type];
             if (e.type === 'gramatike') { state.item = e.item; state.v[e.item] = e.v; }
-            else { state[state.tab] = 'all'; target = h; }
+            else { state[state.tab] = 'all'; state.pageTo = h; target = h; }
         }
         render();
-        const el = target && document.getElementById(target);
+        const el = target && !state.restore && document.getElementById(target);
         if (el) {
             el.classList.add('focus');
             el.scrollIntoView({ block: 'start' });
@@ -534,15 +566,23 @@ const boot = (ALL, focus, withDrafts) => {
         state.only = ENTRIES[focus].id;
         history.replaceState(null, '', '#' + ENTRIES[focus].id);
     }
-    // A refresh starts clean: drop the #… and start at the top. Opening a shared link with a #… still goes there.
+    // A refresh comes back to where you were: same #…, same list page, same scroll position.
+    // (The browser can't restore the scroll by itself: the content is drawn only after entries.json loads.)
+    const PLACE = 'shqipollog-place';
     const reloaded = (performance.getEntriesByType('navigation')[0] || {}).type === 'reload';
-    if (reloaded && location.hash && !PREVIEW) {
-        history.replaceState(null, '', location.pathname + location.search);
+    let place = null;
+    if (!PREVIEW) {
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-        window.scrollTo(0, 0);
+        try { place = reloaded ? JSON.parse(sessionStorage.getItem(PLACE) || 'null') : null; } catch (e) {}
+        if (place && place.hash !== location.hash) place = null;
+        window.addEventListener('pagehide', () => {
+            try { sessionStorage.setItem(PLACE, JSON.stringify({ hash: location.hash, y: Math.round(scrollY), page: state.page, list: listKey })); } catch (e) {}
+        });
     }
+    if (place) state.restore = place;
     window.addEventListener('hashchange', openHash);
     openHash();
+    if (place) { state.restore = null; window.scrollTo(0, place.y); }
 };
 
 const PREVIEW = new URLSearchParams(location.search).has('preview') && window.parent !== window;

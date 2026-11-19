@@ -260,7 +260,34 @@ const comboSelect = (w, z, redraw) => {
 // ---------- compound tenses: rules from TAXONOMY.rules ----------
 const RULES = TAXONOMY.rules || [];
 const isEmpty = (v) => v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length);
-const ruleFor = (z) => RULES.find((r) => r.tense === z.tense && r.mood === z.mood);
+// Simple tenses from the present first person (TAXONOMY.stems). The present itself is filled from its own "un" box.
+const STEMS = TAXONOMY.stems || [];
+const firstPerson = (w, z) => {
+    const src = z.tense === 'tashmja' && z.mood === 'dëftore' ? z : tenseOf(w, ['tashmja', 'dëftore']);
+    const un = src && asList(src.un)[0];
+    return un ? String(un).split(/\s*\/\s*/)[0].trim() : '';
+};
+const stemRuleFor = (z, w) => {
+    const all = STEMS.filter((s) => s.tense === z.tense && s.mood === z.mood);
+    if (!all.length) return null;
+    const un = firstPerson(w, z);
+    return all.find((s) => un && new RegExp(`(${s.match})$`).test(un)) || { ...all[0], stem: true, unmatched: true };
+};
+const deriveStem = (s, w, z) => {
+    const un = firstPerson(w, z);
+    if (!un) return { missing: z.tense === 'tashmja' && z.mood === 'dëftore' ? 'forma e vetës “un”' : 'vetja “un” e së tashmes (dëftore)' };
+    if (s.unmatched) return { missing: `një rregull për foljet si “${un}”` };
+    const stem = s.cut ? un.slice(0, -s.cut) : un;
+    const build = (o) => Object.fromEntries(Object.entries(o).filter(([p]) => personsOf(z.mood).includes(p)).map(([p, end]) => [p, stem + end]));
+    return { main: build(s.forms), variants: (s.variants || []).map(build) };
+};
+const stemText = (s, w, z) => {
+    const un = firstPerson(w, z) || '…';
+    const stem = s.cut ? un.slice(0, -s.cut) : un;
+    return `nga “${un}”: ${Object.values(s.forms).map((end) => stem + end).join(', ')}`;
+};
+// a tense's rule: compound (TAXONOMY.rules) or simple (TAXONOMY.stems); derive/describe either kind
+const ruleFor = (z, w) => RULES.find((r) => r.tense === z.tense && r.mood === z.mood) || (w ? stemRuleFor(z, w) : null);
 const { sourcesOf, sourceText, ruleText } = SHARED;
 const verbWords = () => entries.filter((e) => e.type === 'fjale' && e.sub === 'folje').flatMap((e) => e.words || []);
 const helper = () => verbWords().find((w) => w.std === TAXONOMY.auxiliary) || verbWords().find((w) => w.word === TAXONOMY.auxiliary);
@@ -300,9 +327,12 @@ const fill = (z, d) => {
         z.variants.forEach((v) => Object.keys(v).forEach((p) => mark(v, p)));
     }
 };
+const selfStem = (z) => z.tense === 'tashmja' && z.mood === 'dëftore';
+const deriveAny = (r, w, z) => (r.forms ? deriveStem(r, w, z) : derive(r, w));
+const describe = (r, w, z) => (r.forms ? (r.unmatched ? 'sipas mbaresës së “un”' : stemText(r, w, z)) : ruleText(r));
 const autoFill = (z, w) => {
-    const r = ruleFor(z);
-    if (r && PERSONS.every((p) => isEmpty(z[p])) && !(z.variants || []).length) fill(z, derive(r, w));
+    const r = ruleFor(z, w);
+    if (r && PERSONS.every((p) => isEmpty(z[p])) && !(z.variants || []).length) fill(z, deriveAny(r, w, z));
 };
 
 // how many of a verb's tenses are filled for every person (own table, linked pair, or Gramatikë)
@@ -336,14 +366,15 @@ const verbEditor = (e) => {
             h('div', { class: 'row' }, h('label', {}, 'participle'), h('div', {}, cellInput(w, 'participle')))),
         h('p', { class: 'hint' }, 'Pjesorja: një për rresht nëse ka variacione. Përdoret për t’i mbushur kohët e përbëra.'),
         (w.conjugation = w.conjugation || []).map((z, zi) => {
-            const rule = ruleFor(z);
-            const d = rule ? derive(rule, w) : null;
+            const rule = ruleFor(z, w);
+            const d = rule ? deriveAny(rule, w, z) : null;
             return h('div', { class: 'sub-box' },
                 h('div', { class: 'inline' },
                     comboSelect(w, z, redraw),
-                    rule ? h('button', { class: 'btn small', type: 'button', disabled: !!d.missing, title: 'Mbush kutitë bosh sipas rregullit', onclick: () => { fill(z, d); changed(); redraw(); } }, 'Mbush') : null,
+                    // the present is filled from its own "un" box, which may be typed after this was drawn: work the rule out on click
+                    rule ? h('button', { class: 'btn small', type: 'button', disabled: !!d.missing && !selfStem(z), title: 'Mbush kutitë bosh sipas rregullit', onclick: () => { const r = ruleFor(z, w); if (r) fill(z, deriveAny(r, w, z)); changed(); redraw(); } }, 'Mbush') : null,
                     removeBtn('Hiqe këtë kohë', () => { w.conjugation.splice(zi, 1); changed(); redraw(); })),
-                rule ? h('p', { class: 'hint' }, `Rregull: ${ruleText(rule)}.${d.missing ? ' Mungon: ' + d.missing + '.' : ''}`) : null,
+                rule ? h('p', { class: 'hint' }, `Rregull: ${describe(rule, w, z)}.${d.missing ? ' Mungon: ' + d.missing + '.' : ''}`) : null,
                 personGrid(z, redraw, personsOf(z.mood)),
                 lines(z, 'footnotes', 'shënime', 'Shënime vetëm për këtë kohë. Dalin nën tabelë.'));
         }),

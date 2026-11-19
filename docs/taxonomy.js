@@ -88,6 +88,20 @@ const TAXONOMY = {
         { tense: 'mese-kryera', mood: 'habitore', aux: ['pakryera', 'habitore'], participle: true },
         { tense: 'kryera-perbere', mood: 'dëshirore', aux: ['tashmja', 'dëshirore'], participle: true },
     ],
+    // Simple tenses the admin can fill in from the verb's present first person (the "un" of e tashme, dëftore).
+    // match: which verbs, by how that form ends; cut: letters dropped from its end to get the stem;
+    // forms: the ending added to the stem for each person; variants: extra columns, only the persons that differ.
+    // Only patterns every verb in the data follows are here; irregular verbs (jom, kom, vaj …) are typed by hand.
+    stems: [
+        // -oj: shkoj, boj, ngjoj, fjaroj
+        { tense: 'tashmja', mood: 'dëftore', match: 'oj', cut: 1, forms: { un: 'j', taj: 'jsh', aj: 'n', ne: 'jm', ju: 'ni', ato: 'jn' }, variants: [{ taj: 'n' }] },
+        // vowel + consonant(s) + -i: foli, heci (not one-syllable verbs like di)
+        { tense: 'tashmja', mood: 'dëftore', match: '[aeiouyë][^aeiouyë]+i', cut: 1, forms: { un: 'i', taj: 'ish', aj: 'ën', ne: 'im', ju: 'ni', ato: 'in' }, variants: [{ taj: 'ën' }] },
+        // -oj / -uj: shkoj, boj, shkruj
+        { tense: 'pakryera', mood: 'dëftore', match: '[ou]j', cut: 1, forms: { un: 'jsha', taj: 'jshe', aj: 'nte', ne: 'jshim', ju: 'jshi', ato: 'jshin' } },
+        // any -j verb: shkoj, boj, vaj, laj
+        { tense: 'tashmja', mood: 'habitore', match: 'j', cut: 0, forms: { un: 'kam', taj: 'ke', aj: 'ka', ne: 'kim', ju: 'ki', ato: 'kan' } },
+    ],
     dictionaryCategories: [
         { id: 'folje', label: 'Folje' },
         { id: 'emra', label: 'Emra' },

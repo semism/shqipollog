@@ -430,22 +430,327 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "kom",
                 "std": "kam",
+                "pjesore": ["pas", "pat"],
                 "zgjedhimi": [
                     {
                         "koha": "tashmja",
                         "menyra": "dëftore",
                         "un": "kom",
-                        "taj": "ke",
+                        "taj": "kie",
                         "aj": "ka",
                         "ne": "kina",
                         "ju": "kini",
                         "ato": "kan",
-                        "variants": [{"ne": "kimi", "ato": "kajn"}, {"ato": "kën"}]
+                        "variants": [{"ne": "kimi", "ato": "kajn"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "habitore",
+                        "un": "paskam",
+                        "taj": "paske",
+                        "aj": "paska",
+                        "ne": "paskim",
+                        "ju": "paski",
+                        "ato": "paskan/paskën",
+                        "variants": [
+                            {
+                                "un": "paham",
+                                "taj": "pahe",
+                                "aj": "paha",
+                                "ne": "pahim",
+                                "ju": "pahi",
+                                "ato": "pahan/pahën"
+                            }
+                        ]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "urdhërore",
+                        "taj": "?",
+                        "ju": ["kinja", "kini"],
+                        "footnotes": [
+                            "Rallë përdoret. Qëllimet e ktij zgjedhimi shpesh i plotsojn folje qera si bon, xhej, fitoj.\nVeçanërish njëjesin se kom ndaj asniher askush ta those.\nShembull: \"Boni gajret, kini durim.\""
+                        ]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "lidhore",
+                        "un": "t'kem",
+                        "taj": "t'kesh",
+                        "aj": "t'ket",
+                        "ne": "t'kina",
+                        "ju": "t'kini",
+                        "ato": "t'ken",
+                        "variants": [{"ne": "t'kimi"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "kushtore",
+                        "un": "dë kisha",
+                        "taj": "dë kishe",
+                        "aj": "dë kish",
+                        "ne": "dë kishim",
+                        "ju": "dë kishi",
+                        "ato": "dë kishin",
+                        "variants": [{"aj": "dë kishte", "ju": "dë kishit"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "dëshirore",
+                        "un": "patsha",
+                        "taj": "patsh",
+                        "aj": "patt",
+                        "ne": "patshim",
+                        "ju": "patshit",
+                        "ato": "patshin",
+                        "variants": [{"un": "paça", "taj": "paç", "ne": "paçim", "ju": "paçi", "ato": "paçin"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "dëftore",
+                        "un": "kisha",
+                        "taj": "kishe",
+                        "aj": "kish",
+                        "ne": "kishim",
+                        "ju": "kishi",
+                        "ato": "kishin",
+                        "variants": [{"aj": "kishte", "ne": "kishna", "ju": "kishit"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "habitore",
+                        "un": "pasksha",
+                        "taj": "paskshe",
+                        "aj": "paskësh",
+                        "ne": "paskshim",
+                        "ju": "paskshi",
+                        "ato": "paskshin",
+                        "variants": [
+                            {
+                                "un": "paskisha",
+                                "taj": "paskishe",
+                                "aj": "paskish",
+                                "ne": "paskishim",
+                                "ju": "paskishi",
+                                "ato": "paskishin"
+                            }
+                        ],
+                        "footnotes": [
+                            "Dë e vini rroe se ki zgjedhim shfaqet vetëm te kjo folje. Jom mendau 15 minuta ene kom rra n'përfundim se ska folje qera xhi zgjedhohen kshau."
+                        ]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "lidhore",
+                        "un": "t'kisha",
+                        "taj": "t'kishe",
+                        "aj": "t'kish",
+                        "ne": "t'kishim",
+                        "ju": "t'kishi",
+                        "ato": "t'kishin",
+                        "variants": [{"aj": "t'kishte", "ne": "t'kishna"}]
+                    },
+                    {
+                        "koha": "kryera-thjeshte",
+                        "menyra": "dëftore",
+                        "un": "pata",
+                        "taj": "pate",
+                        "aj": "pat",
+                        "ne": "patëm",
+                        "ju": "patët",
+                        "ato": "patën"
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "dëftore",
+                        "un": "kom pas",
+                        "taj": "ke pas",
+                        "aj": "ka pas",
+                        "ne": "kina pas",
+                        "ju": "kini pas",
+                        "ato": "kan pas",
+                        "variants": [
+                            {
+                                "un": "kom pat",
+                                "taj": "ke pat",
+                                "aj": "ka pat",
+                                "ne": "kina pat",
+                                "ju": "kini pat",
+                                "ato": "kan pat"
+                            },
+                            {"ne": "kimi pas/pat", "ato": "kën pas/pat"}
+                        ]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "habitore",
+                        "un": "paskam pas",
+                        "taj": "paske pas",
+                        "aj": "paska pas",
+                        "ne": "paskim pas",
+                        "ju": "paski pas",
+                        "ato": "paskan pas"
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "lidhore",
+                        "un": "t'kem pas",
+                        "taj": "t'kesh pas",
+                        "aj": "t'ket pas",
+                        "ne": "t'kina pas",
+                        "ju": "t'kini pas",
+                        "ato": "t'ken pas",
+                        "variants": [
+                            {
+                                "un": "t'kem pat",
+                                "taj": "t'kesh pat",
+                                "aj": "t'ket pat",
+                                "ne": "t'kina pat",
+                                "ju": "t'tkini pat",
+                                "ato": "t'tken pat"
+                            },
+                            {"ne": "t'kimi pas/pat"}
+                        ]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "kushtore",
+                        "un": "dë kisha pas",
+                        "taj": "dë kishe pas",
+                        "aj": "dë kish pas",
+                        "ne": "dë kishim pas",
+                        "ju": "dë kishi pas",
+                        "ato": "dë kishin pas",
+                        "variants": [
+                            {
+                                "un": "dë kisha pat",
+                                "taj": "dë kishe pat",
+                                "aj": "dë kish pat",
+                                "ne": "dë kishim pat",
+                                "ju": "dë kishi pat",
+                                "ato": "dë kishin pat"
+                            },
+                            {"aj": "dë kishte pas/pat", "ne": "dë kishna pas/pat", "ju": "dë kishit pas/pat"}
+                        ]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "dëftore",
+                        "un": "kisha pas",
+                        "taj": "kishe pas",
+                        "aj": "kish pas",
+                        "ne": "kishim pas",
+                        "ju": "kishi pas",
+                        "ato": "kishin pas",
+                        "variants": [
+                            {
+                                "un": "kisha pat",
+                                "taj": "kishe pat",
+                                "aj": "kish pat",
+                                "ne": "kishim pat",
+                                "ju": "kishi pat",
+                                "ato": "kishin pat"
+                            },
+                            {"aj": "kishte pas/pat", "ne": "kishna pas/pat", "ju": "kishit pas/pat"}
+                        ]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "habitore",
+                        "un": "pasksha pas",
+                        "taj": "paskshe pas",
+                        "aj": "paskësh pas",
+                        "ne": "paskshim pas",
+                        "ju": "paskshi pas",
+                        "ato": "paskshin pas",
+                        "variants": [
+                            {
+                                "un": "pasksha pat",
+                                "taj": "paskshe pat",
+                                "aj": "paskësh pat",
+                                "ne": "paskshim pat",
+                                "ju": "paskshi pat",
+                                "ato": "paskshin pat"
+                            },
+                            {
+                                "un": "paskisha pas",
+                                "taj": "paskishe pas",
+                                "aj": "paskish pas",
+                                "ne": "paskishim pas",
+                                "ju": "paskishi pas",
+                                "ato": "paskishin pas"
+                            }
+                        ]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "lidhore",
+                        "un": "t’kisha pas",
+                        "taj": "t’kishe pas",
+                        "aj": "t’kish pas",
+                        "ne": "t’kishim pas",
+                        "ju": "t’kishi pas",
+                        "ato": "t’kishin pas",
+                        "variants": [
+                            {
+                                "un": "t’kisha pat",
+                                "taj": "t’kishe pat",
+                                "aj": "t’kish pat",
+                                "ne": "t’kishim pat",
+                                "ju": "t’kishi pat",
+                                "ato": "t’kishin pat"
+                            },
+                            {"aj": "t’kishte pas/pat", "ne": "t’kishna pas/pat", "ju": "t’kishit pas/pat"}
+                        ]
+                    },
+                    {
+                        "koha": "kryera-tejshkuar",
+                        "menyra": "dëftore",
+                        "un": "pata pat",
+                        "taj": "pate pat",
+                        "aj": "pat pat",
+                        "ne": "patëm pat",
+                        "ju": "patët pat",
+                        "ato": "patën pat"
+                    },
+                    {
+                        "koha": "ardhmja",
+                        "menyra": "dëftore",
+                        "un": "dë kem",
+                        "taj": "dë kesh",
+                        "aj": "dë ket",
+                        "ne": "dë kimi",
+                        "ju": "dë kini",
+                        "ato": "dë ken",
+                        "variants": [{"ne": "dë kina"}]
+                    },
+                    {
+                        "koha": "ardhmja-perparme",
+                        "menyra": "dëftore",
+                        "un": "dë kem pas",
+                        "taj": "dë kesh pas",
+                        "aj": "dë ket pas",
+                        "ne": "dë kina pas",
+                        "ju": "dë kini pas",
+                        "ato": "dë ken pas",
+                        "variants": [
+                            {
+                                "un": "dë kem pat",
+                                "taj": "dë kesh pat",
+                                "aj": "dë ket pat",
+                                "ne": "dë kina pat",
+                                "ju": "dë kini pat",
+                                "ato": "dë ken pat"
+                            },
+                            {"ne": "dë kimi pas"}
+                        ],
+                        "footnotes": [
+                            "I pavlefshëm, nuk përdoret. Qëllimin e ksaj kohe e përmbushën  koha ene zgjedhimi i njejt i fojleve si: boj, xhej, fitoj. etj. \n\nShembull: \"Kur t'vajsh taj mbas 5 mujve, un mo dë kem {xhet} nause.\""
+                        ]
                     }
                 ]
             }
@@ -455,11 +760,11 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "boj",
                 "std": "bëj",
+                "pjesore": "bo",
                 "zgjedhimi": [
                     {
                         "koha": "tashmja",
@@ -469,7 +774,215 @@
                         "aj": "bon",
                         "ne": "bojm",
                         "ju": "boni",
-                        "ato": "bojn"
+                        "ato": "bojn",
+                        "variants": [{"taj": "bon"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "habitore",
+                        "un": "bojkam",
+                        "taj": "bojke",
+                        "aj": "bojkan",
+                        "ne": "bojkim",
+                        "ju": "bojki",
+                        "ato": "bojkan"
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "urdhërore",
+                        "taj": "bon",
+                        "ju": "bojni",
+                        "variants": [{"ju": "boni"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "lidhore",
+                        "un": "t’boj",
+                        "taj": "t’bojsh",
+                        "aj": "t’boje",
+                        "ne": "t’bojm",
+                        "ju": "t’boni",
+                        "ato": "t’bojn",
+                        "variants": [{"ju": "t’bojni"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "kushtore",
+                        "un": "dë bojsha",
+                        "taj": "dë bojshe",
+                        "aj": "dë bonte",
+                        "ne": "dë bojshim",
+                        "ju": "dë bojshi",
+                        "ato": "dë bojshin"
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "dëshirore",
+                        "un": "bofsha",
+                        "taj": "bofsh",
+                        "aj": "boft",
+                        "ne": "bofshim",
+                        "ju": "bofshi",
+                        "ato": "bofshin",
+                        "variants": [{"ju": "bofshit"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "dëftore",
+                        "un": "bojsha",
+                        "taj": "bojshe",
+                        "aj": "bonte",
+                        "ne": "bojshim",
+                        "ju": "bojshi",
+                        "ato": "bojshin"
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "lidhore",
+                        "un": "t’bojsha",
+                        "taj": "t’bojshe",
+                        "aj": "t’bonte",
+                        "ne": "t’bojshim",
+                        "ju": "t’bojshi",
+                        "ato": "t’bojshin"
+                    },
+                    {
+                        "koha": "kryera-thjeshte",
+                        "menyra": "dëftore",
+                        "un": "bona",
+                        "taj": "bone",
+                        "aj": "boni",
+                        "ne": "bonëm",
+                        "ju": "bonët",
+                        "ato": "bonën",
+                        "variants": [{"ne": "bom", "ju": "bot"}]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "dëftore",
+                        "un": "kom bo",
+                        "taj": "ke bo",
+                        "aj": "ka bo",
+                        "ne": "kimi bo",
+                        "ju": "kini bo",
+                        "ato": "kan bo",
+                        "variants": [{"taj": "ki bo", "ne": "kina bo", "ato": "kajn bo"}, {"ato": "kën bo"}]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "habitore",
+                        "un": "paskam bo",
+                        "taj": "paske bo",
+                        "aj": "paska bo",
+                        "ne": "paskim bo",
+                        "ju": "paski bo",
+                        "ato": "paskan bo",
+                        "variants": [
+                            {
+                                "un": "pahëm bo",
+                                "taj": "pahe bo",
+                                "aj": "paha bo",
+                                "ne": "pahim bo",
+                                "ju": "pahi bo",
+                                "ato": "pahën bo"
+                            },
+                            {"ne": "paskimi bo", "ju": "paskini bo", "ato": "paskën bo"}
+                        ]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "lidhore",
+                        "un": "t’kem bo",
+                        "taj": "t’kesh bo",
+                        "aj": "t’ket bo",
+                        "ne": "t’kina bo",
+                        "ju": "t’kini bo",
+                        "ato": "t’ken bo",
+                        "variants": [{"ne": "t’kimi bo"}]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "kushtore",
+                        "un": "dë kisha bo",
+                        "taj": "dë kishe bo",
+                        "aj": "dë kish bo",
+                        "ne": "dë kishim bo",
+                        "ju": "dë kishi bo",
+                        "ato": "dë kishin bo",
+                        "variants": [{"aj": "dë kishte bo", "ne": "dë kishna bo", "ju": "dë kishit bo"}]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "dëftore",
+                        "un": "kisha bo",
+                        "taj": "kishe bo",
+                        "aj": "kish bo",
+                        "ne": "kishim bo",
+                        "ju": "kishi bo",
+                        "ato": "kishin bo",
+                        "variants": [{"aj": "kishte bo", "ne": "kishna bo", "ju": "kishit bo"}]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "habitore",
+                        "un": "pasksha bo",
+                        "taj": "paskshe bo",
+                        "aj": "paskësh bo",
+                        "ne": "paskshim bo",
+                        "ju": "paskshi bo",
+                        "ato": "paskshin bo",
+                        "variants": [
+                            {
+                                "un": "paskisha bo",
+                                "taj": "paskishe bo",
+                                "aj": "paskish bo",
+                                "ne": "paskishim bo",
+                                "ju": "paskishi bo",
+                                "ato": "paskishin bo"
+                            }
+                        ]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "lidhore",
+                        "un": "t’kisha bo",
+                        "taj": "t’kishe bo",
+                        "aj": "t’kish bo",
+                        "ne": "t’kishim bo",
+                        "ju": "t’kishi bo",
+                        "ato": "t’kishin bo",
+                        "variants": [{"aj": "t’kishte bo", "ne": "t’kishna bo", "ju": "t’kishit bo"}]
+                    },
+                    {
+                        "koha": "kryera-tejshkuar",
+                        "menyra": "dëftore",
+                        "un": "pata bo",
+                        "taj": "pate bo",
+                        "aj": "pat bo",
+                        "ne": "patëm bo",
+                        "ju": "patët bo",
+                        "ato": "patën bo"
+                    },
+                    {
+                        "koha": "ardhmja",
+                        "menyra": "dëftore",
+                        "un": "dë boj",
+                        "taj": "dë bojsh",
+                        "aj": "dë boje",
+                        "ne": "dë bojm",
+                        "ju": "dë boni",
+                        "ato": "dë bojn",
+                        "variants": [{"ju": "dë bojni"}]
+                    },
+                    {
+                        "koha": "ardhmja-perparme",
+                        "menyra": "dëftore",
+                        "un": "dë kem bo",
+                        "taj": "dë kesh bo",
+                        "aj": "dë ket bo",
+                        "ne": "dë kina bo",
+                        "ju": "dë kini bo",
+                        "ato": "dë ken bo"
                     }
                 ]
             }
@@ -479,10 +992,11 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "shkoj",
+                "std": "shkoj",
+                "pjesore": "shku",
                 "zgjedhimi": [
                     {
                         "koha": "tashmja",
@@ -492,7 +1006,212 @@
                         "aj": "shkon",
                         "ne": "shkojm",
                         "ju": "shkoni",
-                        "ato": "shkojn"
+                        "ato": "shkojn",
+                        "variants": [{"taj": "shkon"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "habitore",
+                        "un": "shkojkam",
+                        "taj": "shkojke",
+                        "aj": "shkojka",
+                        "ne": "shkojkim",
+                        "ju": "shkojki",
+                        "ato": "shkojkan",
+                        "variants": [{"ju": "shkojkit", "ato": "shkojkën"}]
+                    },
+                    {"koha": "tashmja", "menyra": "urdhërore", "taj": "shko", "ju": "shkoni"},
+                    {
+                        "koha": "tashmja",
+                        "menyra": "lidhore",
+                        "un": "t’shkoj",
+                        "taj": "t’shkojsh",
+                        "aj": "t’shkoje",
+                        "ne": "t’shkojm",
+                        "ju": "t’shkoni",
+                        "ato": "t’shkojn"
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "kushtore",
+                        "un": "dë shkojsha",
+                        "taj": "dë shkojshe",
+                        "aj": "dë shkonte",
+                        "ne": "dë shkojshim",
+                        "ju": "dë shkojshi",
+                        "ato": "dë shkojshin",
+                        "variants": [{"aj": "dë shkojte"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "dëshirore",
+                        "un": "shkofsha",
+                        "taj": "shkofsh",
+                        "aj": "shkoft",
+                        "ne": "shkofshim",
+                        "ju": "shkofshi",
+                        "ato": "shkofshin",
+                        "variants": [{"ju": "shkofshit"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "dëftore",
+                        "un": "shkojsha",
+                        "taj": "shkojshe",
+                        "aj": "shkonte",
+                        "ne": "shkojshim",
+                        "ju": "shkojshi",
+                        "ato": "shkojshin",
+                        "variants": [{"aj": "shkojke"}, {"aj": "shkojte"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "lidhore",
+                        "un": "t’shkojsha",
+                        "taj": "t’shkojshe",
+                        "aj": "t’shkonte",
+                        "ne": "t’shkojshim",
+                        "ju": "t’shkojshi",
+                        "ato": "t’shkojshin",
+                        "variants": [{"aj": "t’shkojte"}]
+                    },
+                    {
+                        "koha": "kryera-thjeshte",
+                        "menyra": "dëftore",
+                        "un": "shkova",
+                        "taj": "shkove",
+                        "aj": "shkoj",
+                        "ne": "shkumë",
+                        "ju": "shkutë",
+                        "ato": "shkunë"
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "dëftore",
+                        "un": "kom shku",
+                        "taj": "ke shku",
+                        "aj": "ka shku",
+                        "ne": "kina shku",
+                        "ju": "kini shku",
+                        "ato": "kan shku",
+                        "variants": [{"ne": "kimi shku", "ato": "kajn shku"}, {"ato": "kën shku"}]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "habitore",
+                        "un": "paskam shku",
+                        "taj": "paske shku",
+                        "aj": "paska shku",
+                        "ne": "paskim shku",
+                        "ju": "paski shku",
+                        "ato": "paskan/paskën shku",
+                        "variants": [
+                            {
+                                "un": "paham shku",
+                                "taj": "pahe shku",
+                                "aj": "paha shku",
+                                "ne": "pahim shku",
+                                "ju": "pahi shku",
+                                "ato": "pahan/pahën shku"
+                            }
+                        ]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "lidhore",
+                        "un": "t’kem shku",
+                        "taj": "t’kesh shku",
+                        "aj": "t’ket shku",
+                        "ne": "t’kina shku",
+                        "ju": "t’kini shku",
+                        "ato": "t’ken shku",
+                        "variants": [{"ne": "t’kimi shku"}],
+                        "footnotes": ["Shtaj ne i bie, i vajn, t'kina shku?"]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "kushtore",
+                        "un": "dë kisha shku",
+                        "taj": "dë kishe shku",
+                        "aj": "dë kish shku",
+                        "ne": "dë kishim shku",
+                        "ju": "dë kishi shku",
+                        "ato": "dë kishin shku",
+                        "variants": [{"aj": "dë kishte shku", "ne": "dë kishna shku", "ju": "dë kishit shku"}]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "dëftore",
+                        "un": "kisha shku",
+                        "taj": "kishe shku",
+                        "aj": "kish shku",
+                        "ne": "kishim shku",
+                        "ju": "kishi shku",
+                        "ato": "kishin shku",
+                        "variants": [{"aj": "kishte shku", "ne": "kishna shku", "ju": "kishit shku"}]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "habitore",
+                        "un": "pasksha shku",
+                        "taj": "paskshe shku",
+                        "aj": "paskësh shku",
+                        "ne": "paskshim shku",
+                        "ju": "paskshi shku",
+                        "ato": "paskshin shku",
+                        "variants": [
+                            {
+                                "un": "paskisha shku",
+                                "taj": "paskishe shku",
+                                "aj": "paskish shku",
+                                "ne": "paskishim shku",
+                                "ju": "paskishi shku",
+                                "ato": "paskishin shku"
+                            }
+                        ]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "lidhore",
+                        "un": "t’kisha shku",
+                        "taj": "t’kishe shku",
+                        "aj": "t’kish shku",
+                        "ne": "t’kishim shku",
+                        "ju": "t’kishi shku",
+                        "ato": "t’kishin shku",
+                        "variants": [{"aj": "t’kishte shku", "ne": "t’kishna shku", "ju": "t’kishit shku"}]
+                    },
+                    {
+                        "koha": "kryera-tejshkuar",
+                        "menyra": "dëftore",
+                        "un": "pata shku",
+                        "taj": "pate shku",
+                        "aj": "pat shku",
+                        "ne": "patëm shku",
+                        "ju": "patët shku",
+                        "ato": "patën shku"
+                    },
+                    {
+                        "koha": "ardhmja",
+                        "menyra": "dëftore",
+                        "un": "dë shkoj",
+                        "taj": "dë shkojsh",
+                        "aj": "dë shkoje",
+                        "ne": "dë shkojm",
+                        "ju": "dë shkoni",
+                        "ato": "dë shkojn"
+                    },
+                    {
+                        "koha": "ardhmja-perparme",
+                        "menyra": "dëftore",
+                        "un": "dë kem shku",
+                        "taj": "dë kesh shku",
+                        "aj": "dë ket shku",
+                        "ne": "dë kina shku",
+                        "ju": "dë kini shku",
+                        "ato": "dë ken shku",
+                        "variants": [{"ne": "dë kimi shku"}],
+                        "footnotes": ["Kur dët bere taj zhetoni, un moti dë kem shku :)"]
                     }
                 ]
             }
@@ -502,11 +1221,11 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "vaj",
                 "std": "vij",
+                "pjesore": "ardhë",
                 "zgjedhimi": [
                     {
                         "koha": "tashmja",
@@ -516,7 +1235,221 @@
                         "aj": "vajn",
                         "ne": "vajm",
                         "ju": "vajni",
-                        "ato": "vajn"
+                        "ato": "vajn",
+                        "variants": [{"taj": "vajn"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "habitore",
+                        "un": "vajkam",
+                        "taj": "vajke",
+                        "aj": "vajka",
+                        "ne": "vajkim",
+                        "ju": "vajki",
+                        "ato": "vajkin",
+                        "variants": [{"ne": "vajkimi"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "urdhërore",
+                        "taj": "ija",
+                        "ju": "ini",
+                        "variants": [{"taj": "hajde", "ju": "hajdi"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "lidhore",
+                        "un": "t’vaj",
+                        "taj": "t’vajsh",
+                        "aj": "t’vaje",
+                        "ne": "t’vajm",
+                        "ju": "t’vajni",
+                        "ato": "t’vajn"
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "kushtore",
+                        "un": "dë vajsha",
+                        "taj": "dë vajshe",
+                        "aj": "dë vajnte",
+                        "ne": "dë vajshim",
+                        "ju": "dë vajshit",
+                        "ato": "dë vajshin",
+                        "variants": [{"ju": "dë vajshi"}]
+                    },
+                    {
+                        "koha": "tashmja",
+                        "menyra": "dëshirore",
+                        "un": "erdhsha",
+                        "taj": "erdhsh",
+                        "aj": "erdhsh",
+                        "ne": "erdhshim",
+                        "ju": "erdhshi",
+                        "ato": "erdhshin",
+                        "variants": [{"taj": "ardhsh", "aj": "ardhshin", "ju": "ardhshi", "ato": "ardhshin"}, {"ju": "ardhshit"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "dëftore",
+                        "un": "vajsha",
+                        "taj": "vajshe",
+                        "aj": "vajnte",
+                        "ne": "vajshim",
+                        "ju": "vajshi",
+                        "ato": "vajshin",
+                        "variants": [{"aj": "vajke", "ju": "vajshit"}]
+                    },
+                    {
+                        "koha": "pakryera",
+                        "menyra": "lidhore",
+                        "un": "t’vajsha",
+                        "taj": "t’vajshe",
+                        "aj": "t’vajnte",
+                        "ne": "t’vajshim",
+                        "ju": "t’vajshi",
+                        "ato": "t’vajshin",
+                        "variants": [{"aj": "t’vajke", "ju": "t’vajshit"}],
+                        "footnotes": ["Aj t'vajke teko, majr dë isht. Po shkojke tiqe!"]
+                    },
+                    {
+                        "koha": "kryera-thjeshte",
+                        "menyra": "dëftore",
+                        "un": "erdha",
+                        "taj": "erdhe",
+                        "aj": "erdh",
+                        "ne": "erdhëm",
+                        "ju": "erdhët",
+                        "ato": "erdhën"
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "dëftore",
+                        "un": "kom ardhë",
+                        "taj": "ke ardhë",
+                        "aj": "ka ardhë",
+                        "ne": "kina ardhë",
+                        "ju": "kini ardhë",
+                        "ato": "kan ardhë",
+                        "variants": [{"ne": "kimi ardhë", "ato": "kajn ardhë"}],
+                        "footnotes": [
+                            "ë-ja e paskajores nuk shkruhet ndijalekt. Folsit thjesht e shkrujn ardh.\nKisha pas qif, un personalisht, ta shkruj aardh, po na zemërohen pastaj si të vemi në Korçkë."
+                        ]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "habitore",
+                        "un": "paskam ardhë",
+                        "taj": "paske ardhë",
+                        "aj": "paska ardhë",
+                        "ne": "paskim ardhë",
+                        "ju": "paski ardhë",
+                        "ato": "paskan/paskën ardhë",
+                        "variants": [
+                            {
+                                "un": "paham ardhë",
+                                "taj": "pahe ardhë",
+                                "aj": "paha ardhë",
+                                "ne": "pahim ardhë",
+                                "ju": "pahi ardhë",
+                                "ato": "pahan/pahën ardhë"
+                            }
+                        ]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "lidhore",
+                        "un": "t’kem ardhë",
+                        "taj": "t’kesh ardhë",
+                        "aj": "t’ket ardhë",
+                        "ne": "t’kina ardhë",
+                        "ju": "t’kini ardhë",
+                        "ato": "t’ken ardhë",
+                        "variants": [{"ne": "t’kimi ardhë"}]
+                    },
+                    {
+                        "koha": "kryera-perbere",
+                        "menyra": "kushtore",
+                        "un": "dë kisha ardhë",
+                        "taj": "dë kishe ardhë",
+                        "aj": "dë kish ardhë",
+                        "ne": "dë kishim ardhë",
+                        "ju": "dë kishi ardhë",
+                        "ato": "dë kishin ardhë",
+                        "variants": [{"aj": "dë kishte ardhë", "ne": "dë kishna ardhë", "ju": "dë kishit ardhë"}],
+                        "footnotes": ["E urrej ta shkruj ë-jën e paskajores po skom menyr{ë} ma tmajr për ta zgjat a-jën."]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "dëftore",
+                        "un": "kisha ardhë",
+                        "taj": "kishe ardhë",
+                        "aj": "kish ardhë",
+                        "ne": "kishim ardhë",
+                        "ju": "kishi ardhë",
+                        "ato": "kishin ardhë",
+                        "variants": [{"aj": "kishte ardhë", "ne": "kishna ardhë", "ju": "kishit ardhë"}]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "habitore",
+                        "un": "pasksha ardhë",
+                        "taj": "paskshe ardhë",
+                        "aj": "paskësh ardhë",
+                        "ne": "paskshim ardhë",
+                        "ju": "paskshi ardhë",
+                        "ato": "paskshin ardhë",
+                        "variants": [
+                            {
+                                "un": "paskisha ardhë",
+                                "taj": "paskishe ardhë",
+                                "aj": "paskish ardhë",
+                                "ne": "paskishim ardhë",
+                                "ju": "paskishi ardhë",
+                                "ato": "paskishin ardhë"
+                            }
+                        ],
+                        "footnotes": ["Veta e parë njëjes e ksaj o pak absurde."]
+                    },
+                    {
+                        "koha": "mese-kryera",
+                        "menyra": "lidhore",
+                        "un": "t’kisha ardhë",
+                        "taj": "t’kishe ardhë",
+                        "aj": "t’kish ardhë",
+                        "ne": "t’kishim ardhë",
+                        "ju": "t’kishi ardhë",
+                        "ato": "t’kishin ardhë",
+                        "variants": [{"aj": "t’kishte ardhë", "ne": "t’kishna ardhë", "ju": "t’kishit ardhë"}]
+                    },
+                    {
+                        "koha": "kryera-tejshkuar",
+                        "menyra": "dëftore",
+                        "un": "pata ardhë",
+                        "taj": "pate ardhë",
+                        "aj": "pat ardhë",
+                        "ne": "patëm ardhë",
+                        "ju": "patët ardhë",
+                        "ato": "patën ardhë"
+                    },
+                    {
+                        "koha": "ardhmja",
+                        "menyra": "dëftore",
+                        "un": "dë vaj",
+                        "taj": "dë vajsh",
+                        "aj": "dë vaje",
+                        "ne": "dë vajm",
+                        "ju": "dë vajni",
+                        "ato": "dë vajn"
+                    },
+                    {
+                        "koha": "ardhmja-perparme",
+                        "menyra": "dëftore",
+                        "un": "dë kem ardhë",
+                        "taj": "dë kesh ardhë",
+                        "aj": "dë ket ardhë",
+                        "ne": "dë kina ardhë",
+                        "ju": "dë kini ardhë",
+                        "ato": "dë ken ardhë"
                     }
                 ]
             }
@@ -526,20 +1459,22 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
-                "word": "flas",
+                "word": "foli",
+                "std": "flas",
+                "pjesore": "folë",
                 "zgjedhimi": [
                     {
                         "koha": "tashmja",
                         "menyra": "dëftore",
-                        "un": "flas",
-                        "taj": "flasësh/flet",
-                        "aj": "flet",
-                        "ne": "flasëm",
-                        "ju": "flitni",
-                        "ato": "flasën"
+                        "un": "foli",
+                        "taj": "folish",
+                        "aj": "folën",
+                        "ne": "folim",
+                        "ju": "folni",
+                        "ato": "folin",
+                        "variants": [{"taj": "folën"}]
                     }
                 ]
             }
@@ -1008,7 +1943,25 @@
                 ]
             },
             "kan kalu tani (ka lidhje hala)",
-            "nuk u bë atëherë (ska lidhje mo)"
+            "nuk u bë atëherë (ska lidhje mo)",
+            "Dallimi midis dy kohëve nuk është gjithmonë i njëjtë: varet nga veta për të cilën flasim.",
+            "**Veta e tretë.** Kur flasim për dikë tjetër, e kryera e thjeshtë tregon se folësi e ka parë ose e ka dëgjuar vetë, ndërsa e kryera e përbërë tregon se e ka marrë vesh nga të tjerët.",
+            "**Veta e parë.** Veprimet e veta folësi i ka përjetuar gjithmonë vetë, prandaj këtu dallimi midis asaj që e ke parë dhe asaj që e ke dëgjuar nuk vlen më. Zgjedhja kalon te pasojat: e kryera e thjeshtë për diçka që ka mbaruar dhe nuk ka më lidhje me të tashmen, e kryera e përbërë për diçka që ka ende pasoja, ose që folësi e ka kuptuar më vonë.",
+            "**Habitorja.** Kur folësi e kupton diçka në çastin që flet, përdoret habitorja. Nëse e ka kuptuar më parë, përdoret e kryera e përbërë.",
+            {
+                "cols": [
+                    ["“Paskam fjet”", "[e kuptoj tani, në çastin që flas]"],
+                    ["“Kom fjet”", "[e kam kuptuar më parë: “kom fjet se kom ndaj telefonin”]"]
+                ]
+            },
+            "Shkurt:",
+            {
+                "list": [
+                    "e kryera e thjeshtë: e kam parë ose përjetuar vetë, dhe ka mbaruar",
+                    "e kryera e përbërë: e kam dëgjuar nga të tjerët, e kam kuptuar më vonë, ose ka ende pasoja",
+                    "habitorja: po e kuptoj tani"
+                ]
+            }
         ]
     },
     {

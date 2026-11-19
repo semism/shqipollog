@@ -167,6 +167,7 @@
             margin: 10px 0 16px;
             text-shadow: var(--title-shadow);
         }
+        .hero h1 .u { text-decoration: underline; text-decoration-thickness: .045em; text-underline-offset: .1em; }
 
         .motto {
             font-family: var(--serif);
@@ -552,7 +553,7 @@
         <div class="hero-inner">
             <div class="brand">
                 <p class="kicker">Malet dhe të folurit</p>
-                <h1>shqipollog</h1>
+                <h1>shqi<span class="u">pollog</span></h1>
                 <p class="motto"><a href="https://www.instagram.com/p/DKEgJaItXPH/" target="_blank" rel="noopener noreferrer">Shipja</a> <a href="https://www.instagram.com/p/DKEgK6-Nbar/" target="_blank" rel="noopener noreferrer">meriton</a> <a href="https://www.instagram.com/p/DKEgMcfNTlp/" target="_blank" rel="noopener noreferrer">tngjohet</a></p>
             </div>
             <div class="intro">
@@ -598,7 +599,7 @@
                 { id: 'blog', label: 'Blog' },
             ];
             const ITEMS = TAXONOMY.gramatike.flatMap((g) => g.items);
-            const LABEL = Object.fromEntries([...TAXONOMY.fjalor, ...TAXONOMY.blog, ...ITEMS].map((x) => [x.id, x.label]));
+            const LABEL = Object.fromEntries([...TAXONOMY.kohet, ...TAXONOMY.fjalor, ...TAXONOMY.blog, ...ITEMS].map((x) => [x.id, x.label]));
             const vRank = (v) => (v ? TAXONOMY.variants.indexOf(v) : -1);
 
             const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -639,19 +640,20 @@
             const blocks = (arr, cls = 'forms') => (arr && arr.length ? `<div class="${cls}">${arr.map(block).join('')}</div>` : '');
 
             const PERSON_KEYS = ['un', 'taj', 'aj', 'ne', 'ju', 'ato'];
+            const personsOf = (menyra) => ((TAXONOMY.menyrat.find((m) => m.id === menyra) || {}).persons || PERSON_KEYS);
             const PERSON_LABEL = Object.fromEntries(PERSON_KEYS.map((k, i) => [k, TAXONOMY.persons[i]]));
             const asList = (v) => (v === undefined || v === null || v === '' ? [] : Array.isArray(v) ? v : [v]);
 
-            const personBlock = (words) => {
+            const personBlock = (words, keys = PERSON_KEYS) => {
                 const cols = [];
                 words.forEach((w) => {
                     cols.push({ head: w.word || w.std ? { word: w.word, std: w.std } : '', forms: w.forms || {}, main: true });
                     (w.variants || []).forEach((v) => cols.push({ head: 'variant', forms: v }));
                 });
-                const extra = [...new Set(cols.flatMap((c) => Object.keys(c.forms).filter((k) => !PERSON_KEYS.includes(k) && !['word', 'std', 'variants', 'koha', 'menyra'].includes(k))))];
+                const extra = [...new Set(cols.flatMap((c) => Object.keys(c.forms).filter((k) => !PERSON_KEYS.includes(k) && !['word', 'std', 'variants', 'koha', 'menyra', 'footnotes', 'pjesore', 'zgjedhimi'].includes(k))))];
                 const rows = [];
                 const cells = cols.map(() => []);
-                [...PERSON_KEYS, ...extra].forEach((k) => {
+                [...keys, ...extra].forEach((k) => {
                     const n = Math.max(0, ...cols.map((c) => asList(c.forms[k]).length));
                     for (let r = 0; r < n; r++) {
                         rows.push(PERSON_LABEL[k] || k);
@@ -669,7 +671,7 @@
                 if (words.some((w) => w.examples)) {
                     words.forEach((w) => { out.push({ head: w.word, std: w.std }); out.push({ list: w.examples || [] }); });
                 } else if (words.length) {
-                    out.push(personBlock(words.map((w) => ({ word: w.word, std: w.std, forms: w, variants: w.variants }))));
+                    out.push(personBlock(words.map((w) => ({ word: w.word, std: w.std, forms: w, variants: w.variants })), e.koha ? personsOf(e.menyra) : PERSON_KEYS));
                 }
                 (e.footnotes || []).forEach((n) => out.push({ note: n }));
                 return out;
@@ -706,31 +708,38 @@
             const meta = (label, e, cls) => `<div class="head"><span class="tag ${cls}">${label}</span><span class="meta">${day(e.date)}${e.place ? ', ' + esc(e.place) : ''}</span></div>`;
             const caption = (t) => (t && t.length ? `<div class="caption">${t.map((x) => `<p>${fmt(x)}</p>`).join('')}</div>` : '');
 
-            const COMBOS = [];
+            const COMBOS = TAXONOMY.kohet.flatMap((k) => TAXONOMY.menyrat.filter((m) => m.kohet.includes(k.id)).map((m) => ({ koha: k.id, menyra: m.id })));
             const addCombo = (koha, menyra) => { if (koha && menyra && koha !== 'paskajorja' && !COMBOS.some((c) => c.koha === koha && c.menyra === menyra)) COMBOS.push({ koha, menyra }); };
             ENTRIES.forEach((e) => {
                 if (e.type === 'gramatike') addCombo(e.koha, e.menyra);
                 (e.words || []).forEach((w) => (w.zgjedhimi || []).forEach((z) => addCombo(z.koha, z.menyra)));
             });
-            COMBOS.sort((a, b) => ITEMS.findIndex((x) => x.id === a.koha) - ITEMS.findIndex((x) => x.id === b.koha) || vRank(a.menyra) - vRank(b.menyra));
             const comboKey = (c) => `${c.koha}|${c.menyra}`;
-            const formsFor = (w, c) => {
+            const formsFor = (w, c0) => {
+                const link = TAXONOMY.njejta[comboKey(c0)];
+                const c = link ? { koha: link.split('|')[0], menyra: link.split('|')[1] } : c0;
                 const own = (w.zgjedhimi || []).find((z) => z.koha === c.koha && z.menyra === c.menyra);
                 if (own) return own;
                 const g = ENTRIES.find((e) => e.type === 'gramatike' && e.koha === c.koha && e.menyra === c.menyra && (e.words || []).some((x) => x.word === w.word || (x.std && w.std && x.std === w.std)));
                 return g ? g.words.find((x) => x.word === w.word || (x.std && w.std && x.std === w.std)) : null;
             };
             const zgState = {};
+            const isHelper = (e) => (e.words || []).some((w) => w.std === TAXONOMY.ndihmese || w.word === TAXONOMY.ndihmese);
+            const AUX_KEYS = (TAXONOMY.rregullat || []).filter((r) => r.aux).map((r) => r.aux.join('|'));
+            const unused = (c, e) => (TAXONOMY.nukPerdoret || []).includes(comboKey(c)) && !(isHelper(e) && AUX_KEYS.includes(comboKey(c)));
 
             const verbSection = (e) => {
                 const has = (c) => e.words.some((w) => formsFor(w, c));
                 const cur = COMBOS.find((c) => comboKey(c) === zgState[e.id]) || COMBOS.find(has) || COMBOS[0];
-                const opts = COMBOS.map((c) => `<option value="${comboKey(c)}"${c === cur ? ' selected' : ''}>${esc(LABEL[c.koha])} (${esc(c.menyra)})${has(c) ? '' : ' — mungojnë hyrje'}</option>`).join('');
+                const opts = [...new Set(COMBOS.map((c) => c.koha))].map((k) => `<optgroup label="${esc(LABEL[k] || k)}">${COMBOS.filter((c) => c.koha === k).map((c) => `<option value="${comboKey(c)}"${c === cur ? ' selected' : ''}>${esc(LABEL[c.koha] || c.koha)} (${esc(c.menyra)})${has(c) ? '' : unused(c, e) ? ' — nuk përdoret' : ' — mungojnë hyrje'}</option>`).join('')}</optgroup>`).join('');
                 const multi = e.words.length > 1;
                 const body = has(cur)
-                    ? table(personBlock(e.words.map((w) => { const f = formsFor(w, cur) || {}; return { word: multi ? w.word : '', std: multi ? w.std : '', forms: f, variants: f.variants }; })))
-                    : '<p class="miss-all">Mungojnë hyrje.</p>';
-                return `<div class="sect"><label class="zg"><span>Zgjedhimi</span><select data-zg="${e.id}">${opts}</select></label>${body}</div>`;
+                    ? table(personBlock(e.words.map((w) => { const f = formsFor(w, cur) || {}; return { word: multi ? w.word : '', std: multi ? w.std : '', forms: f, variants: f.variants }; }), personsOf(cur.menyra)))
+                    : unused(cur, e) ? '<p class="miss-all">Nuk përdoret.</p>' : '<p class="miss-all">Mungojnë hyrje.</p>';
+                const notes = e.words.flatMap((w) => { const f = formsFor(w, cur); return f ? f.footnotes || [] : []; });
+                const pj = e.words.map((w) => asList(w.pjesore).join(' / ')).filter(Boolean);
+                const pjLine = pj.length ? `<p class="std">pjesore: ${pj.map(fmt).join(', ')}</p>` : '';
+                return `${pjLine}<div class="sect"><label class="zg"><span>Zgjedhimi</span><select data-zg="${e.id}">${opts}</select></label>${body}${notes.map((n) => `<p class="note">${fmt(n)}</p>`).join('')}</div>`;
             };
 
             const CASES = [['emerore', 'emërore'], ['gjinore', 'gjinore'], ['dhanore', 'dhanore'], ['kallezore', 'kallëzore'], ['rrjedhore', 'rrjedhore']];

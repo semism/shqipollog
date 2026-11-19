@@ -16,7 +16,7 @@ then open http://127.0.0.1:8792/admin/. Pick an entry, edit, Ruaj (or Ctrl+S). T
 Each save keeps the previous file as `entries.bak.json` next to `serve.py`. Ctrl+C stops it.
 The site itself is also at http://127.0.0.1:8792/ while it runs.
 
-`draft: true` (the "hamendje" box) keeps an entry off the site. It is still in `entries.json`, so anyone reading the file can see it.
+`draft: true` (the "fshehur" box) keeps an entry off the site. It is still in `entries.json`, so anyone reading the file can see it.
 
 The examples below are written the short way; in `entries.json` keys and strings are in double quotes.
 
@@ -64,6 +64,16 @@ Anything missing in a table shows as a faint **—** ("— mungon hyrja"); a tab
 
 The card has a **Zgjedhimi** dropdown with every tense/mood the site knows. Forms come from the verb's own `zgjedhimi`, or from a Gramatikë entry
 that has the same verb (same `word`, or same `std`), so e.g. `jom` shows E pakryera from the grammar table.
+
+The valid tense/mood pairs are in `TAXONOMY.kohet` and `TAXONOMY.menyrat`. Pairs listed in `TAXONOMY.njejta` share their forms:
+E ardhmja e së shkuarës (dëftore) is stored as E tashmja (kushtore), and E ardhmja e përparme e së shkuarës (dëftore) as E kryera e përbërë (kushtore).
+The admin edits them once; the site shows the same forms for both.
+
+Each verb can have `pjesore: 'kon'` (or a list for variations, `pjesore: ['pat', 'pas']`); the site shows it above the dropdown.
+
+`TAXONOMY.rregullat` says how compound tenses are built: from the helper verb (`TAXONOMY.ndihmese`, the folje whose std is `kam`),
+or from the verb itself, with a particle in front (`dë `, `t’`) and the pjesore after. In the admin, adding one of those tenses fills it in,
+and **Mbush** fills the empty boxes again later. Nothing typed is ever overwritten, and only what is saved shows on the site.
 
 ### Emra: lakimi
 

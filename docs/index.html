@@ -9,15 +9,16 @@
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/ibm-plex-mono.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
     <script>
         try {
             const t = localStorage.getItem('shqipollog-theme');
-            document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: light)').matches ? 'soil' : 'dark');
         } catch (e) {
-            document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: light)').matches ? 'soil' : 'dark';
         }
     </script>
     <link rel="stylesheet" href="site.css">
@@ -29,7 +30,7 @@
         <div class="hero-inner">
             <div class="brand">
                 <p class="kicker">Malet dhe të folurit</p>
-                <h1>shqi<span class="u">pollog</span></h1>
+                <h1>shqi<span class="u">pollog</span><a class="tld" href="https://shqipollog.com/">.com</a></h1>
                 <p class="motto"><a href="https://www.instagram.com/p/DKEgJaItXPH/" target="_blank" rel="noopener noreferrer">Shipja</a> <a href="https://www.instagram.com/p/DKEgK6-Nbar/" target="_blank" rel="noopener noreferrer">meriton</a> <a href="https://www.instagram.com/p/DKEgMcfNTlp/" target="_blank" rel="noopener noreferrer">tngjohet</a></p>
             </div>
             <div class="intro">
@@ -42,7 +43,10 @@
                 <div class="links">
                     <a class="btn" href="https://www.instagram.com/shqipollog/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
                     <a class="btn" href="https://semism.github.io/space/">← _semism_</a>
-                    <button class="btn" type="button" id="theme" aria-label="Ndrysho temën"></button>
+                    <div class="theme-switch">
+                        <span class="theme-name" id="theme-name" aria-hidden="true"></span>
+                        <button class="btn" type="button" id="theme" aria-label="Ndroe temën"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,7 +64,7 @@
 
         <div class="content">
             <div class="view" id="view"></div>
-            <p class="empty" id="empty" hidden>Asnjë rezultat.</p>
+            <p class="empty" id="empty" hidden>Asni rezulltat.</p>
         </div>
     </main>
 

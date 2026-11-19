@@ -29,8 +29,8 @@ const SHARED = (() => {
     const sourceText = (src) => (src.aux ? `${TAXONOMY.auxiliary}, ${comboName(src.aux)}` : comboName(src.self)) + (src.strip ? ` pa “${src.strip.trim()}”` : '');
     const ruleText = (r) => [r.pre ? `“${r.pre.trim()}”` : null, sourcesOf(r).map(sourceText).join(', ose '), r.participle ? 'pjesore' : null].filter(Boolean).join(' + ');
     const ruleOf = (tense, mood) => (TAXONOMY.rules || []).find((r) => r.tense === tense && r.mood === mood);
-    // Pairs in TAXONOMY.sameForms share another pair's forms: "njëlloj si e tashme (kushtore)"
-    const linkText = (tense, mood) => { const l = (TAXONOMY.sameForms || {})[`${tense}|${mood}`]; return l ? `njëlloj si ${comboName(l.split('|'))}` : ''; };
+    // Pairs in TAXONOMY.sameForms share another pair's forms: "nisoj si e tashme (kushtore)"
+    const linkText = (tense, mood) => { const l = (TAXONOMY.sameForms || {})[`${tense}|${mood}`]; return l ? `nisoj si ${comboName(l.split('|'))}` : ''; };
 
-    return { asList, day, PERSON_KEYS, PERSON_LABEL, personsOf, CASES, comboKey, COMBOS, norm, isHelperWord, AUX_KEYS, helperOnly, unusedFor, comboName, sourcesOf, sourceText, ruleText, ruleOf, linkText };
+    return { asList, day, PERSON_KEYS, PERSON_LABEL, personsOf, CASES, comboKey, COMBOS, norm, helperOnly, unusedFor, sourcesOf, sourceText, ruleText, ruleOf, linkText };
 })();

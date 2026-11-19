@@ -90,7 +90,7 @@ button { cursor: pointer; }
 fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 0 0 14px; min-width: 0; }
 legend { padding: 0 6px; color: var(--muted); font-size: 13px; display: flex; gap: 8px; align-items: center; }
 .row { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 4px 10px; align-items: start; margin: 0 0 8px; }
-.row > label, .lab { color: var(--muted); font-family: var(--mono); font-size: 12px; padding-top: 6px; }
+.row > label { color: var(--muted); font-family: var(--mono); font-size: 12px; padding-top: 6px; }
 .inline { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 0 0 8px; }
 .inline .row { grid-template-columns: auto minmax(120px, 1fr); margin: 0; }
 input[type="text"], input[type="date"], select, textarea {

@@ -42,7 +42,7 @@ Shared optional fields, shown in this order on the card:
 | `footnotes: ['…']` | small notes |
 | `text: ['…']` | your caption, at the bottom |
 
-Anything missing in a table shows as a faint **—** ("— mungon hyrja"); a table with no data at all says **Mungojnë hyrje.**
+Anything missing in a table shows as a faint **—** ("— mungon e dhona"); a table with no data at all says **Ende mungojn.**
 
 ### Folje: conjugation
 
@@ -116,7 +116,7 @@ Cases: `emerore`, `gjinore`, `dhanore`, `kallezore`, `rrjedhore`. The definite s
 
 Every tense in `TAXONOMY.tenses` has a page, with chips for its moods. Each tense + mood shows the Gramatikë entry for that pair
 if there is one (`intro`, a **formimi** line taken from `TAXONOMY.rules`, `footnotes`, `text`), and a table with a random Fjalor verb
-that has forms for that pair. The search box above the table swaps in another verb; **tjetër** picks another at random.
+that has forms for that pair. The search box above the table swaps in another verb; **qetër** picks another at random.
 
 A tense entry holds no forms itself; they live in the Fjalor verbs:
 

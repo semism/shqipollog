@@ -25,8 +25,8 @@ const boot = (ALL, focus, withDrafts) => {
         return `${h.word ? fmt(h.word) : ''}${h.std ? `<span class="hstd">std: ${fmt(h.std)}</span>` : ''}`;
     };
     const MISS = '\u0000';
-    const cell = (v) => (v === MISS ? '<span class="miss" title="mungon hyrja">—</span>' : v ? fmt(v) : '');
-    const wrapTable = (t) => `<div class="table-wrap">${t}</div>${t.includes('class="miss"') ? '<p class="miss-key">— mungon hyrja</p>' : ''}`;
+    const cell = (v) => (v === MISS ? '<span class="miss" title="mungon e dhona">—</span>' : v ? fmt(v) : '');
+    const wrapTable = (t) => `<div class="table-wrap">${t}</div>${t.includes('class="miss"') ? '<p class="miss-key">— mungon e dhona</p>' : ''}`;
     const table = (b) => {
         const sep = (b.heads || []).map((h, i) => i > 0 && h && typeof h === 'object' && (h.word || h.std));
         const cls = (i) => (sep[i] ? ' class="gs"' : '');
@@ -112,6 +112,8 @@ const boot = (ALL, focus, withDrafts) => {
     const byId = Object.fromEntries(ENTRIES.map((e) => [e.id, e]));
 
     const meta = (label, e, cls) => `<div class="head"><span class="tag ${cls}">${label}</span><span class="meta">${day(e.date)}${e.place ? ', ' + esc(e.place) : ''}</span></div>`;
+    // A quiet "shpërndaj" link at the bottom of a card: the phone's share sheet where there is one, otherwise copy the link.
+    const shareBtn = (hash, title) => `<p class="share-row"><button type="button" class="share" data-share="${esc(hash)}" data-title="${esc(title || 'Shqipollog')}">shpërndaj</button></p>`;
     const caption = (t) => (t && t.length ? `<div class="caption">${t.map((x) => `<p>${fmt(x)}</p>`).join('')}</div>` : '');
 
     const formsFor = (w, c0) => {
@@ -125,7 +127,7 @@ const boot = (ALL, focus, withDrafts) => {
     const unused = (c, words) => (words.length ? words : [null]).every((w) => SHARED.unusedFor(w, comboKey(c)));
 
     // How a tense is built (shared.js), or which pair it shares its forms with.
-    const missMsg = (c, words = []) => `<p class="miss-all">${c && unused(c, words) ? 'Nuk përdoret.' : 'Mungojnë hyrje.'}</p>`;
+    const missMsg = (c, words = []) => `<p class="miss-all">${c && unused(c, words) ? 'Nuk përdoret.' : 'Ende mungojn.'}</p>`;
     // A row of chips. items: { label, attrs (data-* string), pressed, empty }; big = the page-level mood/case row.
     const chipRow = (items, { big = false, label = '' } = {}) => `<div class="chips${big ? ' big' : ''}" role="group"${label ? ` aria-label="${esc(label)}"` : ''}>${items.map((x) => `<button type="button" ${x.attrs} aria-pressed="${!!x.pressed}"${x.empty ? ' class="empty"' : ''}>${esc(x.label)}</button>`).join('')}</div>`;
     const ruleLine = (tense, mood) => { const r = SHARED.ruleOf(tense, mood); return SHARED.linkText(tense, mood) || (r ? 'formimi: ' + SHARED.ruleText(r) : ''); };
@@ -142,8 +144,8 @@ const boot = (ALL, focus, withDrafts) => {
     const poolFor = (c) => VERBS.filter((v) => !v.e.draft && (NON_FINITE.includes(c.tense) ? asList(v.w.participle).length : formsFor(v.w, c)));
     const pickerHtml = (pool, label) => (pool.length ? `
             <div class="vpick">
-                <input type="search" class="vq" placeholder="kërko një folje…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${label}">
-                ${pool.length > 1 ? '<button type="button" class="vrand">tjetër</button>' : ''}
+                <input type="search" class="vq" placeholder="kërko folje…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${label}">
+                ${pool.length > 1 ? '<button type="button" class="vrand">qetër</button>' : ''}
             </div>
             <div class="vsug" hidden></div>` : '');
     const gOf = (c) => ENTRIES.find((e) => e.type === 'gramatike' && e.tense === c.tense && e.mood === c.mood);
@@ -170,7 +172,7 @@ const boot = (ALL, focus, withDrafts) => {
         const shown = shownFor(cur);
         pickState.shown[comboKey(cur)] = shown.verbs.length === 1 ? vKey(shown.verbs[0]) : null;
         const pool = poolFor(cur);
-        const picker = pickerHtml(pool, 'Kërko një folje për këtë kohë');
+        const picker = pickerHtml(pool, 'Kërko folje për kët koh');
         const body = shown.verbs.length ? verbTable(shown.verbs, cur) + (shown.link ? `<p class="miss-key"><a href="#${shown.link}">te fjalori →</a></p>` : '')
             : missMsg(cur);
         const parts = [
@@ -183,6 +185,7 @@ const boot = (ALL, focus, withDrafts) => {
         return `<section class="gview"><h2>${esc(LABEL[tense])}</h2>${pills}
             <article class="entry conjugate"${g ? ` id="${g.id}"` : ''} data-tense="${esc(cur.tense)}" data-mood="${esc(cur.mood)}">
                 ${g ? std(g.std) : ''}<div class="forms">${parts}</div>${g ? caption(g.text) : ''}
+                ${shareBtn(g ? g.id : slug(LABEL[tense]), `${LABEL[tense]}${g ? ', ' + g.mood : ''}`)}
             </article></section>`;
     };
     // One verb's pjesore, or its përcjellore (TAXONOMY.gerund.pre + pjesore).
@@ -196,7 +199,7 @@ const boot = (ALL, focus, withDrafts) => {
         const body = w
             ? `<div class="lemma"><h4>${fmt(vKey(w))}</h4>${w.std && w.std !== w.word ? std(w.std) : ''}</div>${pres.map((pre) => `<p class="pj">${asList(w.participle).map((p) => fmt(pre + p)).join(' / ')}</p>`).join('')}${shown.link ? `<p class="miss-key"><a href="#${shown.link}">te fjalori →</a></p>` : ''}`
             : missMsg();
-        return `<section class="gview"><h2>${title}</h2><article class="entry conjugate" data-tense="${c.tense}" data-mood=""><div class="forms">${rule}${pickerHtml(pool, 'Kërko një folje')}${body}</div></article></section>`;
+        return `<section class="gview"><h2>${title}</h2><article class="entry conjugate" data-tense="${c.tense}" data-mood=""><div class="forms">${rule}${pickerHtml(pool, 'Kërko folje')}${body}</div>${shareBtn(slug(title), title)}</article></section>`;
     };
 
     const verbSection = (e) => {
@@ -253,6 +256,7 @@ const boot = (ALL, focus, withDrafts) => {
             ${e.examples ? `<ul class="examples">${e.examples.map((t) => `<li>${fmt(t)}</li>`).join('')}</ul>` : ''}
             ${(e.footnotes || []).map((n) => `<p class="note">${fmt(n)}</p>`).join('')}
             ${caption(e.text)}
+            ${shareBtn(e.id, wordTitle(e))}
         </article>`;
 
     const gramCard = (e, withTitle) => `
@@ -261,6 +265,7 @@ const boot = (ALL, focus, withDrafts) => {
             ${std(e.std)}
             ${blocks(e.forms)}
             ${caption(e.text)}
+            ${shareBtn(e.id, `${LABEL[e.item]}${e.v ? ', ' + e.v : ''}`)}
         </article>`;
 
     const blogPost = (e) => `
@@ -271,6 +276,7 @@ const boot = (ALL, focus, withDrafts) => {
             ${std(e.std)}
             ${e.video ? `<video class="clip" controls preload="none" playsinline poster="${e.video}.jpg" src="${e.video}.mp4"></video>` : ''}
             ${blocks(e.body, 'body')}
+            ${shareBtn(e.id, e.title)}
         </article>`;
 
     const state = { tab: 'gramatike', item: ITEMS[0].id, v: {}, fjalor: 'all', blog: 'all', by: 'date', dir: 'desc' };
@@ -295,7 +301,7 @@ const boot = (ALL, focus, withDrafts) => {
 
     const filterButtons = (groups, key, field, all) => {
         const btn = (id, label, n, sub) => `<button type="button" data-filter="${id}"${sub ? ' class="sub"' : ''} aria-pressed="${state[key] === id}">${label}<span class="n">${n}</span></button>`;
-        return `<div class="filter" data-key="${key}">${btn('all', 'Të gjitha', all.length)}${groups.map((g) => btn(g.id, g.label, all.filter((e) => e[field] === g.id).length, key === 'fjalor')).join('')}</div>`;
+        return `<div class="filter" data-key="${key}">${btn('all', 'Kit', all.length)}${groups.map((g) => btn(g.id, g.label, all.filter((e) => e[field] === g.id).length, key === 'fjalor')).join('')}</div>`;
     };
 
     const renderPanel = () => {
@@ -306,7 +312,7 @@ const boot = (ALL, focus, withDrafts) => {
         } else if (state.tab === 'fjalor') {
             panel.innerHTML = filterButtons(TAXONOMY.dictionaryCategories, 'fjalor', 'sub', ENTRIES.filter((e) => e.type === 'fjale'))
                 + `<div class="sort">
-                    <button type="button" data-by="date" aria-pressed="${state.by === 'date'}">${state.by === 'date' && state.dir === 'asc' ? 'Më të vjetrat' : 'Më të rejat'}</button>
+                    <button type="button" data-by="date" aria-pressed="${state.by === 'date'}">${state.by === 'date' && state.dir === 'asc' ? 'Ma t’vjetrat' : 'Ma t’rejat'}</button>
                     <button type="button" data-by="alpha" aria-pressed="${state.by === 'alpha'}">${state.by === 'alpha' && state.dir === 'desc' ? 'Zh–A' : 'A–Zh'}</button>
                 </div>`;
         } else {
@@ -411,6 +417,18 @@ const boot = (ALL, focus, withDrafts) => {
         redrawCard(id, `[data-zg="${id}"]`);
     });
 
+    document.addEventListener('click', async (e) => {
+        const b = e.target.closest('.share');
+        if (!b) return;
+        const url = `${location.origin}${location.pathname}#${b.dataset.share}`;
+        if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+            try { await navigator.share({ title: b.dataset.title, url }); } catch (err) { /* closed the share sheet */ }
+            return;
+        }
+        try { await navigator.clipboard.writeText(url); b.textContent = 'u kopjau'; } catch (err) { b.textContent = url; }
+        setTimeout(() => { b.textContent = 'shpërndaj'; }, 1600);
+    });
+
     const comboOf = (el) => { const box = el.closest('.conjugate'); return box && { box, c: { tense: box.dataset.tense, mood: box.dataset.mood } }; };
     const showSug = (box, c) => {
         const sug = box.querySelector('.vsug');
@@ -419,7 +437,7 @@ const boot = (ALL, focus, withDrafts) => {
         const hits = poolFor(c).filter((v) => norm([v.w.word, v.w.std].filter(Boolean).join(' ')).includes(q)).slice(0, 8);
         sug.innerHTML = hits.length
             ? hits.map((v) => `<button type="button" data-verb="${esc(vKey(v.w))}">${fmt(vKey(v.w))}${v.w.std && v.w.std !== v.w.word ? ` <span class="hstd">${fmt(v.w.std)}</span>` : ''}</button>`).join('')
-            : `<p class="miss-key">${NON_FINITE.includes(c.tense) ? 'Asnjë folje me pjesore.' : 'Asnjë folje me këtë kohë.'}</p>`;
+            : `<p class="miss-key">${NON_FINITE.includes(c.tense) ? 'Asni folje me pjesore.' : 'Asni folje me kët koh.'}</p>`;
         sug.hidden = false;
     };
     view.addEventListener('input', (e) => {
@@ -461,13 +479,29 @@ const boot = (ALL, focus, withDrafts) => {
         if (cur) setHash(cur.id);
     });
 
-    search.addEventListener('input', () => { renderTabs(); if (state.tab === 'gramatike') renderPanel(); renderView(); });
+    // Redraw a moment after typing stops, so a long list doesn't re-render on every keystroke.
+    let searchTimer = 0;
+    search.addEventListener('input', () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => { renderTabs(); if (state.tab === 'gramatike') renderPanel(); renderView(); }, 120);
+    });
 
     const themeBtn = document.getElementById('theme');
-    const setThemeLabel = () => { themeBtn.textContent = document.documentElement.dataset.theme === 'light' ? '☾' : '☀'; };
+    // Four palettes, from darkest page to lightest. The button shows the current one's icon (a small inline SVG
+    // in the text colour, so it looks the same on every device) and its name sits next to it.
+    const icon = (body) => `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+    const THEMES = [
+        ['dark', 'baltë', icon('<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/>')],
+        ['grass', 'bar', icon('<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/>')],
+        ['soil', 'traull', icon('<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12a8.5 8.5 0 0 0 17 0z" fill="currentColor"/>')],
+        ['light', 'letër', icon('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>')],
+    ];
+    const themeName = document.getElementById('theme-name');
+    const themeIndex = () => Math.max(0, THEMES.findIndex((t) => t[0] === document.documentElement.dataset.theme));
+    const setThemeLabel = () => { const t = THEMES[themeIndex()]; themeBtn.innerHTML = t[2]; themeName.textContent = t[1]; themeBtn.title = 'Ndroe temën'; themeBtn.setAttribute('aria-label', `Tema: ${t[1]}. Ndroe temën`); };
     setThemeLabel();
     themeBtn.addEventListener('click', () => {
-        const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        const next = THEMES[(themeIndex() + 1) % THEMES.length][0];
         document.documentElement.dataset.theme = next;
         try { localStorage.setItem('shqipollog-theme', next); } catch (e) {}
         setThemeLabel();
@@ -499,6 +533,13 @@ const boot = (ALL, focus, withDrafts) => {
     if (focus !== undefined && ENTRIES[focus]) {
         state.only = ENTRIES[focus].id;
         history.replaceState(null, '', '#' + ENTRIES[focus].id);
+    }
+    // A refresh starts clean: drop the #… and start at the top. Opening a shared link with a #… still goes there.
+    const reloaded = (performance.getEntriesByType('navigation')[0] || {}).type === 'reload';
+    if (reloaded && location.hash && !PREVIEW) {
+        history.replaceState(null, '', location.pathname + location.search);
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
     }
     window.addEventListener('hashchange', openHash);
     openHash();

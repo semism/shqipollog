@@ -92,7 +92,6 @@ const set = (obj, key, val) => {
 // ---------- field builders ----------
 const row = (label, input) => h('div', { class: 'row' }, h('label', {}, label), input);
 const text = (obj, key, label = key, ph = '') => row(label, h('input', { type: 'text', value: obj[key] || '', placeholder: ph, oninput: (ev) => set(obj, key, ev.target.value) }));
-const area = (obj, key, label = key) => row(label, h('textarea', { rows: 2, value: obj[key] || '', oninput: (ev) => set(obj, key, ev.target.value) }));
 const choose = (obj, key, label, options, onchange) => row(label, h('select', {
     onchange: (ev) => { if (onchange) onchange(ev.target.value); else set(obj, key, ev.target.value); },
 }, options.map(([v, l]) => h('option', { value: v, selected: (obj[key] || '') === v }, l))));
@@ -265,13 +264,8 @@ const ruleFor = (z) => RULES.find((r) => r.tense === z.tense && r.mood === z.moo
 const { sourcesOf, sourceText, ruleText } = SHARED;
 const verbWords = () => entries.filter((e) => e.type === 'fjale' && e.sub === 'folje').flatMap((e) => e.words || []);
 const helper = () => verbWords().find((w) => w.std === TAXONOMY.auxiliary) || verbWords().find((w) => w.word === TAXONOMY.auxiliary);
-// forms of a verb for one tense: its own table, or the Gramatikë table with the same word/std (like the site)
-const tenseOf = (w, [tense, mood]) => {
-    const own = (w.conjugation || []).find((z) => z.tense === tense && z.mood === mood && PERSONS.some((p) => !isEmpty(z[p])));
-    if (own) return own;
-    const g = entries.find((e) => e.type === 'gramatike' && e.tense === tense && e.mood === mood && (e.words || []).some((x) => x.word === w.word || (x.std && w.std && x.std === w.std)));
-    return g ? g.words.find((x) => x.word === w.word || (x.std && w.std && x.std === w.std)) : null;
-};
+// forms of a verb for one tense (from its own conjugation; Gramatikë entries hold no forms)
+const tenseOf = (w, [tense, mood]) => (w.conjugation || []).find((z) => z.tense === tense && z.mood === mood && PERSONS.some((p) => !isEmpty(z[p]))) || null;
 // columns in full: variant 0, then each variant with its blanks taken from variant 0
 const fullCols = (t) => [t, ...(t.variants || [])].map((o) => Object.fromEntries(PERSONS.map((p) => [p, isEmpty(o[p]) ? t[p] : o[p]]).filter(([, v]) => !isEmpty(v))));
 const derive = (r, w) => {

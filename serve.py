@@ -20,6 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DOCS = ROOT / 'docs'
 ADMIN = ROOT / 'admin' / 'index.html'
+ADMIN_FILES = {'/admin/admin.css': ('admin.css', 'text/css; charset=utf-8'), '/admin/admin.js': ('admin.js', 'text/javascript; charset=utf-8')}
 DATA = DOCS / 'entries.json'
 BACKUP = ROOT / 'entries.bak.json'
 HOST = '127.0.0.1'
@@ -87,6 +88,9 @@ class Handler(SimpleHTTPRequestHandler):
         if path in ('/admin', '/admin/', '/admin/index.html'):
             html = ADMIN.read_text(encoding='utf-8').replace('__TOKEN__', TOKEN)
             return self.reply(200, html, 'text/html; charset=utf-8')
+        if path in ADMIN_FILES:
+            name, ctype = ADMIN_FILES[path]
+            return self.reply(200, (ADMIN.parent / name).read_text(encoding='utf-8'), ctype)
         if path.startswith('/admin'):
             return self.reply(404, '{"error":"not found"}')
         return super().do_GET()

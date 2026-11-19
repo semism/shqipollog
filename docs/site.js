@@ -14,7 +14,6 @@ const boot = (ALL, focus, withDrafts) => {
 
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const fmt = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\{(.+?)\}/g, '<span class="hl">$1</span>');
-    const day = (d) => new Date(d + 'T00:00:00').toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' });
     const { norm } = SHARED;
     const slug = (t) => norm(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const std = (t) => (t ? `<p class="std">std: ${fmt(t)}</p>` : '');
@@ -48,10 +47,7 @@ const boot = (ALL, focus, withDrafts) => {
     };
     const blocks = (arr, cls = 'forms') => (arr && arr.length ? `<div class="${cls}">${arr.map(block).join('')}</div>` : '');
 
-    const PERSON_KEYS = ['un', 'taj', 'aj', 'ne', 'ju', 'ato'];
-    const personsOf = (mood) => ((TAXONOMY.moods.find((m) => m.id === mood) || {}).persons || PERSON_KEYS);
-    const PERSON_LABEL = Object.fromEntries(PERSON_KEYS.map((k, i) => [k, TAXONOMY.persons[i]]));
-    const asList = (v) => (v === undefined || v === null || v === '' ? [] : Array.isArray(v) ? v : [v]);
+    const { asList, day, PERSON_KEYS, PERSON_LABEL, personsOf, CASES, comboKey, COMBOS } = SHARED;
 
     const personBlock = (words, keys = PERSON_KEYS) => {
         const cols = [];
@@ -118,13 +114,6 @@ const boot = (ALL, focus, withDrafts) => {
     const meta = (label, e, cls) => `<div class="head"><span class="tag ${cls}">${label}</span><span class="meta">${day(e.date)}${e.place ? ', ' + esc(e.place) : ''}</span></div>`;
     const caption = (t) => (t && t.length ? `<div class="caption">${t.map((x) => `<p>${fmt(x)}</p>`).join('')}</div>` : '');
 
-    const COMBOS = TAXONOMY.tenses.flatMap((k) => TAXONOMY.moods.filter((m) => m.tenses.includes(k.id)).map((m) => ({ tense: k.id, mood: m.id })));
-    const addCombo = (tense, mood) => { if (tense && mood && tense !== 'paskajorja' && !COMBOS.some((c) => c.tense === tense && c.mood === mood)) COMBOS.push({ tense, mood }); };
-    ENTRIES.forEach((e) => {
-        if (e.type === 'gramatike') addCombo(e.tense, e.mood);
-        (e.words || []).forEach((w) => (w.conjugation || []).forEach((z) => addCombo(z.tense, z.mood)));
-    });
-    const comboKey = (c) => `${c.tense}|${c.mood}`;
     const formsFor = (w, c0) => {
         const link = TAXONOMY.sameForms[comboKey(c0)];
         const c = link ? { tense: link.split('|')[0], mood: link.split('|')[1] } : c0;
@@ -146,8 +135,11 @@ const boot = (ALL, focus, withDrafts) => {
     // and the search above it swaps in any verb that has it.
     const TENSE_IDS = TAXONOMY.tenses.map((k) => k.id);
     const pickState = { verb: null, rand: {}, shown: {} };
+    // Pjesorja and përcjellorja pose as tenses so they can share the picker; both need the verb's participle.
     const PARTICIPLE = { tense: 'pjesorja', mood: '' };
-    const poolFor = (c) => VERBS.filter((v) => !v.e.draft && (c.tense === PARTICIPLE.tense ? asList(v.w.participle).length : formsFor(v.w, c)));
+    const GERUND = { tense: 'percjellorja', mood: '' };
+    const NON_FINITE = [PARTICIPLE.tense, GERUND.tense];
+    const poolFor = (c) => VERBS.filter((v) => !v.e.draft && (NON_FINITE.includes(c.tense) ? asList(v.w.participle).length : formsFor(v.w, c)));
     const pickerHtml = (pool, label) => (pool.length ? `
             <div class="vpick">
                 <input type="search" class="vq" placeholder="kërko një folje…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${label}">
@@ -193,15 +185,18 @@ const boot = (ALL, focus, withDrafts) => {
                 ${g ? std(g.std) : ''}<div class="forms">${parts}</div>${g ? caption(g.text) : ''}
             </article></section>`;
     };
-    const pjesoreView = () => {
-        const pool = poolFor(PARTICIPLE);
-        const shown = shownFor(PARTICIPLE);
+    // One verb's pjesore, or its përcjellore (TAXONOMY.gerund.pre + pjesore).
+    const nonFiniteView = (c, title) => {
+        const pres = c === GERUND ? asList((TAXONOMY.gerund || {}).pre) : [''];
+        const pool = poolFor(c);
+        const shown = shownFor(c);
         const w = shown.verbs[0];
-        pickState.shown[comboKey(PARTICIPLE)] = w ? vKey(w) : null;
+        pickState.shown[comboKey(c)] = w ? vKey(w) : null;
+        const rule = c === GERUND ? `<p class="std">formimi: ${pres.map((p) => `“${esc(p.trim())}”`).join(' ose ')} + pjesore</p>` : '';
         const body = w
-            ? `<div class="lemma"><h4>${fmt(vKey(w))}</h4>${w.std && w.std !== w.word ? std(w.std) : ''}</div><p class="pj">${asList(w.participle).map(fmt).join(' / ')}</p>${shown.link ? `<p class="miss-key"><a href="#${shown.link}">te fjalori →</a></p>` : ''}`
+            ? `<div class="lemma"><h4>${fmt(vKey(w))}</h4>${w.std && w.std !== w.word ? std(w.std) : ''}</div>${pres.map((pre) => `<p class="pj">${asList(w.participle).map((p) => fmt(pre + p)).join(' / ')}</p>`).join('')}${shown.link ? `<p class="miss-key"><a href="#${shown.link}">te fjalori →</a></p>` : ''}`
             : missMsg();
-        return `<section class="gview"><h2>Pjesorja</h2><article class="entry conjugate" data-tense="${PARTICIPLE.tense}" data-mood=""><div class="forms">${pickerHtml(pool, 'Kërko një folje')}${body}</div></article></section>`;
+        return `<section class="gview"><h2>${title}</h2><article class="entry conjugate" data-tense="${c.tense}" data-mood=""><div class="forms">${rule}${pickerHtml(pool, 'Kërko një folje')}${body}</div></article></section>`;
     };
 
     const verbSection = (e) => {
@@ -220,7 +215,6 @@ const boot = (ALL, focus, withDrafts) => {
         return `${pjLine}<div class="sect"><div class="zg"><label class="zg"><span>Koha</span><select data-zg="${e.id}" data-cur="${esc(comboKey(cur))}">${opts}</select></label>${chips}</div>${body}${notes.map((n) => `<p class="note">${fmt(n)}</p>`).join('')}</div>`;
     };
 
-    const CASES = [['emerore', 'emërore'], ['gjinore', 'gjinore'], ['dhanore', 'dhanore'], ['kallezore', 'kallëzore'], ['rrjedhore', 'rrjedhore']];
     const nounSection = (e) => {
         if (!e.declension) return `<div class="sect"><p class="sect-label">Lakimi</p>${missMsg()}</div>`;
         const L = e.declension;
@@ -330,7 +324,8 @@ const boot = (ALL, focus, withDrafts) => {
             } else {
                 const it = ITEMS.find((x) => x.id === state.item) || ITEMS[0];
                 if (TENSE_IDS.includes(it.id)) { view.innerHTML = tensePage(it.id); empty.hidden = true; return; }
-                if (it.id === 'pjesorja') { view.innerHTML = pjesoreView(); empty.hidden = true; return; }
+                if (it.id === PARTICIPLE.tense) { view.innerHTML = nonFiniteView(PARTICIPLE, 'Pjesorja'); empty.hidden = true; return; }
+                if (it.id === GERUND.tense) { view.innerHTML = nonFiniteView(GERUND, 'Përcjellorja'); empty.hidden = true; return; }
                 const cards = all.filter((e) => e.item === it.id).sort((a, b) => vRank(a.v) - vRank(b.v));
                 const cur = cards.find((e) => e.v === state.v[it.id]) || cards[0];
                 const pills = cards.some((e) => e.v) ? chipRow(cards.map((e) => ({ label: e.v, attrs: `data-v="${esc(e.v)}"`, pressed: e === cur })), { big: true }) : '';
@@ -424,7 +419,7 @@ const boot = (ALL, focus, withDrafts) => {
         const hits = poolFor(c).filter((v) => norm([v.w.word, v.w.std].filter(Boolean).join(' ')).includes(q)).slice(0, 8);
         sug.innerHTML = hits.length
             ? hits.map((v) => `<button type="button" data-verb="${esc(vKey(v.w))}">${fmt(vKey(v.w))}${v.w.std && v.w.std !== v.w.word ? ` <span class="hstd">${fmt(v.w.std)}</span>` : ''}</button>`).join('')
-            : `<p class="miss-key">${c.tense === PARTICIPLE.tense ? 'Asnjë folje me pjesore.' : 'Asnjë folje me këtë kohë.'}</p>`;
+            : `<p class="miss-key">${NON_FINITE.includes(c.tense) ? 'Asnjë folje me pjesore.' : 'Asnjë folje me këtë kohë.'}</p>`;
         sug.hidden = false;
     };
     view.addEventListener('input', (e) => {

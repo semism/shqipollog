@@ -178,12 +178,30 @@
                     {
                         "tense": "tashmja",
                         "mood": "dëftore",
-                        "un": "rrshes/rrëshes/rrishes",
-                        "taj": "rr(ë/i)shet/rr(ë/i)shesësh",
-                        "aj": "rr(ë/i)shet",
-                        "ne": "rr(ë/i)shes(ë/i)m",
-                        "ju": "rr(ë/i)sh(i/aj)tni",
-                        "ato": "rr(ë/i)shes(ë/i)n"
+                        "un": "rrëshes",
+                        "taj": ["rrëshet", "rrëshesësh"],
+                        "aj": "rrëshet",
+                        "ne": "rrëshesëm",
+                        "ju": "rrëshitni",
+                        "ato": "rrëshesën",
+                        "variants": [
+                            {
+                                "un": "rrishes",
+                                "taj": ["rrishet", "rrishesësh"],
+                                "aj": "rrishet",
+                                "ne": "rrishesim",
+                                "ju": "rrishajtni",
+                                "ato": "rrishesin"
+                            },
+                            {
+                                "un": "rrshes",
+                                "taj": ["rrshet", "rrshesësh"],
+                                "aj": "rrshet",
+                                "ne": "rrshesm",
+                                "ju": "rrshtni",
+                                "ato": "rrshesn"
+                            }
+                        ]
                     }
                 ]
             }
@@ -508,8 +526,8 @@
                                 "taj": "t'kesh pat",
                                 "aj": "t'ket pat",
                                 "ne": "t'kina pat",
-                                "ju": "t'tkini pat",
-                                "ato": "t'tken pat"
+                                "ju": "t'kini pat",
+                                "ato": "t'ken pat"
                             },
                             {"ne": "t'kimi pas/pat"}
                         ]

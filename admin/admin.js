@@ -3,16 +3,12 @@ const SERVED = !TOKEN.startsWith('__');
 const ITEMS = TAXONOMY.grammarMenu.flatMap((g) => g.items.map((x) => ({ ...x, group: g.label })));
 const PRONOUNS = ITEMS.filter((x) => x.group === 'Përemra').map((x) => x.id);
 const LABEL = Object.fromEntries([...TAXONOMY.dictionaryCategories, ...TAXONOMY.blog, ...ITEMS].map((x) => [x.id, x.label]));
-const PERSONS = ['un', 'taj', 'aj', 'ne', 'ju', 'ato'];
-const PLABEL = Object.fromEntries(PERSONS.map((k, i) => [k, TAXONOMY.persons[i]]));
-const CASES = [['emerore', 'emërore'], ['gjinore', 'gjinore'], ['dhanore', 'dhanore'], ['kallezore', 'kallëzore'], ['rrjedhore', 'rrjedhore']];
+const { PERSON_KEYS: PERSONS, PERSON_LABEL: PLABEL, CASES, asList, day, personsOf } = SHARED;
 const ORDER = ['id', 'type', 'sub', 'cat', 'tense', 'mood', 'pronoun', 'case', 'date', 'place', 'draft', 'title', 'word', 'gender', 'pos',
     'std', 'pronunciation', 'video', 'intro', 'meaning', ...PERSONS, 'm', 'f', 'njejes', 'shumes', 'pashquar', 'shquar', ...CASES.map((c) => c[0]),
     'participle', 'variants', 'variantsNote', 'declension', 'words', 'conjugation', 'examples', 'footnotes', 'text', 'body'];
 const today = () => new Date().toLocaleDateString('sv');
-const day = (d) => (d ? new Date(d + 'T00:00:00').toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 const { norm } = SHARED;
-const asList = (v) => (v === undefined || v === null || v === '' ? [] : Array.isArray(v) ? v : [v]);
 
 let entries = [];
 let cur = -1;
@@ -235,10 +231,9 @@ const changeSub = (e, sub) => {
 // valid tense + mood pairs, from TAXONOMY.tenses / TAXONOMY.moods
 const TENSE_LABEL = Object.fromEntries(TAXONOMY.tenses.map((k) => [k.id, k.label]));
 const LINKS = TAXONOMY.sameForms || {};
-const COMBOS = TAXONOMY.tenses.flatMap((k) => TAXONOMY.moods.filter((m) => m.tenses.includes(k.id)).map((m) => ({ tense: k.id, mood: m.id, key: k.id + '|' + m.id })))
-    .filter((c) => !LINKS[c.key]);
+// Pairs that share another pair's forms (sameForms) are edited once, under that other pair.
+const COMBOS = SHARED.COMBOS.filter((c) => !LINKS[c.key]);
 const linkedTo = (key) => Object.keys(LINKS).filter((a) => LINKS[a] === key).map((a) => { const [k, m] = a.split('|'); return `${TENSE_LABEL[k]}, ${m}`; });
-const personsOf = (mood) => (TAXONOMY.moods.find((m) => m.id === mood) || {}).persons || PERSONS;
 const usedCombos = (w, except) => (w.conjugation || []).filter((z) => z !== except).map((z) => z.tense + '|' + z.mood);
 const comboRank = (z) => { const i = COMBOS.findIndex((c) => c.tense === z.tense && c.mood === z.mood); return i < 0 ? COMBOS.length : i; };
 const sortZ = (w) => { if (w.conjugation) w.conjugation.sort((a, b) => comboRank(a) - comboRank(b)); };
@@ -449,7 +444,7 @@ const gramParts = (e, pron, itemId, setItem, vKey, box) => {
         section('gramatika',
             h('div', { class: 'inline' },
                 row(pron ? 'pronoun' : 'tense', h('select', { onchange: (ev) => setItem(ev.target.value) },
-                    TAXONOMY.grammarMenu.map((g) => h('optgroup', { label: g.label }, g.items.filter((x) => x.id !== 'pjesorja').map((x) => h('option', { value: x.id, selected: x.id === itemId }, x.label)))))),
+                    TAXONOMY.grammarMenu.map((g) => h('optgroup', { label: g.label }, g.items.filter((x) => !['pjesorja', 'percjellorja'].includes(x.id)).map((x) => h('option', { value: x.id, selected: x.id === itemId }, x.label)))))),
                 choose(e, vKey, vKey, [['', '—'], ...TAXONOMY.variants.map((v) => [v, v])])),
             lines(e, 'intro', 'intro', 'Shpjegim mbi tabelë.')),
         box,

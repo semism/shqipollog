@@ -33,8 +33,8 @@ const TAXONOMY = {
             label: 'Kohët',
             items: KOHET.map(({ id, label }) => ({ id, label })),
         },
-        // pjesorja is built from each verb's participle; paskajorja is a normal entry
-        { label: 'Trajtat e pashtjelluara', items: [{ id: 'pjesorja', label: 'Pjesorja' }, { id: 'paskajorja', label: 'Paskajorja' }] },
+        // pjesorja and përcjellorja are built from each verb's participle; paskajorja is a normal entry
+        { label: 'Trajtat e pashtjelluara', items: [{ id: 'pjesorja', label: 'Pjesorja' }, { id: 'percjellorja', label: 'Përcjellorja' }, { id: 'paskajorja', label: 'Paskajorja' }] },
         {
             label: 'Përemra',
             items: [{ id: 'vetore', label: 'Përemrat vetorë' }, { id: 'pronore', label: 'Përemrat pronorë' }],
@@ -62,6 +62,8 @@ const TAXONOMY = {
     // pre: particle in front (a leading t’ on the source form is dropped first); participle: add the verb's participle (pjesore) after.
     // from: several sources tried in order; strip: particle removed from the source form first.
     auxiliary: 'kam',
+    // Përcjellorja: each particle + the participle (works for every verb), e.g. “kona tu u la” (qenka duke u larë), “të pat / të pas”.
+    gerund: { pre: ['tu ', 'të '] },
     // kam as the auxiliary, where it differs from kom's own table (taj ke, not kie). Used instead of kom's forms for that tense.
     auxiliaryForms: {
         'tashmja|dëftore': {

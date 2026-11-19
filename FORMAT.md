@@ -133,6 +133,7 @@ A tense entry holds no forms itself; they live in the Fjalor verbs:
 ```
 
 **Pjesorja** shows one verb's `participle` at a time, with the same search box; it has no entry of its own.
+**Përcjellorja** works the same way, showing each particle in `TAXONOMY.gerund.pre` (`tu`, `të`) + the participle.
 
 Paskajorja and pronouns still keep their forms in the entry, as a list of **words**:
 

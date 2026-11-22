@@ -19,10 +19,48 @@ Nonetheless, the spelling we land on will be affected by opinion.
   - Source: *Drejtshkrimi i gjuhës shqipe* (1973; Instituti Albanologjik i Prishtinës reprint, 1974), section "ë-ja fundore", §8–9.
     A copy is in [`resources/drejtshkrimi-i-gjuhes-shqipe-1973.pdf`](resources/drejtshkrimi-i-gjuhes-shqipe-1973.pdf).
 - **For simplicity, this project drops the final ë from all nouns:** kal, djal, lum, uj, bar.
-  Verbs and participles may keep it where it marks a difference in pronunciation, e.g. *ai din*, *ato dinë*.
+  Verbs and participles drop it too, unless dropping it would make the form look the same as another form that is pronounced differently:
+  *ai din* / *ato dinë* keep apart, but *ardh* (pjesore) has no such twin, so it is written without ë.
 - **Vowel length is not marked in the spelling** (kal and djal are written alike, although the a in kal is long).
   Where it matters, note it in the entry's pronunciation field.
 - For anything else, just ask.
+
+## Somewhat regular shifts and differences from standard
+
+### Verbs
+
+Compound tenses are built the same way as in the standard. The difference is in the pieces they are built from.
+
+- **Particles:** *do të* → **dë**, *të* → **t’**. When *dë* goes in front of a lidhore form, its *t’* is dropped: *dë shkoj*, not *dë të shkoj*.
+- **The helper verb kam:** *kom, ke, ka, kina/kimi, kini, kan/kajn/kën* (std: *kam, ke, ka, kemi, keni, kanë*).
+- **Participles (pjesore)** are short, with no *-ur*/*-uar*: *ardh* (std: *ardhur*).
+
+| Tense (mood) | Dialect | Standard |
+|---|---|---|
+| e kryer (dëftore) | kom ardh | kam ardhur |
+| më se e kryer (dëftore) | kisha ardh | kisha ardhur |
+| e kryer e tejshkuar (dëftore) | pata ardh | pata ardhur |
+| e ardhme (dëftore) | dë shkoj | do të shkoj |
+| e ardhme e përparme (dëftore) | dë kem ardh | do të kem ardhur |
+| e tashme (lidhore) | t’shkoj | të shkoj |
+| e pakryer (lidhore) | t’shkojsha | të shkoja |
+| e kryer (lidhore) | t’kem ardh | të kem ardhur |
+| më se e kryer (lidhore) | t’kisha ardh | të kisha ardhur |
+| e tashme (kushtore) | dë shkojsha | do të shkoja |
+| e kryer (kushtore) | dë kisha ardh | do të kisha ardhur |
+| e kryer (habitore) | paskam ardh | paskam ardhur |
+| më se e kryer (habitore) | pasksha ardh | paskësha ardhur |
+
+As in the standard, *e ardhme e së shkuarës* has the same forms as *kushtore e tashme*, and *e ardhme e përparme e së shkuarës* the same as *kushtore e kryer*.
+
+Simple tenses, for regular verbs:
+
+- **-oj, present:** *shkoj, shkojsh/shkon, shkon, shkojm, shkojni, shkojn* (std: *shkoj, shkon, shkon, shkojmë, shkoni, shkojnë*).
+- **-oj/-uj, imperfect:** **-jsh-** where the standard has *-j-*/*-n-*: *shkojsha, shkojshe, shkonte, shkojshim, shkojshi, shkojshin* (std: *shkoja, shkoje, shkonte, shkonim, shkonit, shkonin*).
+- **Habitore e tashme** is built from the present stem, not the participle: *shkojkam* (std: *shkuakam*).
+- **Not used in the dialect:** *habitore e pakryer* (except kam's *pasksha*, needed for *pasksha ardh*) and *dëshirore e kryer*.
+
+These rules live in `docs/taxonomy.js` (`rules`, `stems`, `auxiliaryForms`, `sameForms`, `unused`); the admin uses them to fill in tables.
 
 # Entry format
 

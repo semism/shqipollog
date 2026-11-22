@@ -1161,7 +1161,7 @@
             {
                 "word": "vaj",
                 "std": "vij",
-                "participle": "ardhë",
+                "participle": "ardh",
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1260,13 +1260,13 @@
                     {
                         "tense": "kryera-perbere",
                         "mood": "dëftore",
-                        "un": "kom ardhë",
-                        "taj": "ke ardhë",
-                        "aj": "ka ardhë",
-                        "ne": "kina ardhë",
-                        "ju": "kini ardhë",
-                        "ato": "kan ardhë",
-                        "variants": [{"ne": "kimi ardhë", "ato": "kajn ardhë"}],
+                        "un": "kom ardh",
+                        "taj": "ke ardh",
+                        "aj": "ka ardh",
+                        "ne": "kina ardh",
+                        "ju": "kini ardh",
+                        "ato": "kan ardh",
+                        "variants": [{"ne": "kimi ardh", "ato": "kajn ardh"}],
                         "footnotes": [
                             "ë-ja e paskajores nuk shkruhet ndijalekt. Folsit thjesht e shkrujn ardh.\nKisha pas qif, un personalisht, ta shkruj aardh, po na zemërohen pastaj si të vemi në Korçkë."
                         ]
@@ -1274,76 +1274,76 @@
                     {
                         "tense": "kryera-perbere",
                         "mood": "habitore",
-                        "un": "paskam ardhë",
-                        "taj": "paske ardhë",
-                        "aj": "paska ardhë",
-                        "ne": "paskim ardhë",
-                        "ju": "paski ardhë",
-                        "ato": "paskan ardhë",
+                        "un": "paskam ardh",
+                        "taj": "paske ardh",
+                        "aj": "paska ardh",
+                        "ne": "paskim ardh",
+                        "ju": "paski ardh",
+                        "ato": "paskan ardh",
                         "variants": [
                             {
-                                "un": "paham ardhë",
-                                "taj": "pahe ardhë",
-                                "aj": "paha ardhë",
-                                "ne": "pahim ardhë",
-                                "ju": "pahi ardhë",
-                                "ato": "pahan ardhë"
+                                "un": "paham ardh",
+                                "taj": "pahe ardh",
+                                "aj": "paha ardh",
+                                "ne": "pahim ardh",
+                                "ju": "pahi ardh",
+                                "ato": "pahan ardh"
                             },
-                            {"ato": "paskën ardhë"},
-                            {"ato": "pahën ardhë"}
+                            {"ato": "paskën ardh"},
+                            {"ato": "pahën ardh"}
                         ]
                     },
                     {
                         "tense": "kryera-perbere",
                         "mood": "lidhore",
-                        "un": "t’kem ardhë",
-                        "taj": "t’kesh ardhë",
-                        "aj": "t’ket ardhë",
-                        "ne": "t’kina ardhë",
-                        "ju": "t’kini ardhë",
-                        "ato": "t’ken ardhë",
-                        "variants": [{"ne": "t’kimi ardhë"}]
+                        "un": "t’kem ardh",
+                        "taj": "t’kesh ardh",
+                        "aj": "t’ket ardh",
+                        "ne": "t’kina ardh",
+                        "ju": "t’kini ardh",
+                        "ato": "t’ken ardh",
+                        "variants": [{"ne": "t’kimi ardh"}]
                     },
                     {
                         "tense": "kryera-perbere",
                         "mood": "kushtore",
-                        "un": "dë kisha ardhë",
-                        "taj": "dë kishe ardhë",
-                        "aj": "dë kish ardhë",
-                        "ne": "dë kishim ardhë",
-                        "ju": "dë kishi ardhë",
-                        "ato": "dë kishin ardhë",
-                        "variants": [{"aj": "dë kishte ardhë", "ne": "dë kishna ardhë", "ju": "dë kishit ardhë"}],
+                        "un": "dë kisha ardh",
+                        "taj": "dë kishe ardh",
+                        "aj": "dë kish ardh",
+                        "ne": "dë kishim ardh",
+                        "ju": "dë kishi ardh",
+                        "ato": "dë kishin ardh",
+                        "variants": [{"aj": "dë kishte ardh", "ne": "dë kishna ardh", "ju": "dë kishit ardh"}],
                         "footnotes": ["E urrej ta shkruj ë-jën e paskajores po skom menyr{ë} ma tmajr për ta zgjat a-jën."]
                     },
                     {
                         "tense": "mese-kryera",
                         "mood": "dëftore",
-                        "un": "kisha ardhë",
-                        "taj": "kishe ardhë",
-                        "aj": "kish ardhë",
-                        "ne": "kishim ardhë",
-                        "ju": "kishi ardhë",
-                        "ato": "kishin ardhë",
-                        "variants": [{"aj": "kishte ardhë", "ne": "kishna ardhë", "ju": "kishit ardhë"}]
+                        "un": "kisha ardh",
+                        "taj": "kishe ardh",
+                        "aj": "kish ardh",
+                        "ne": "kishim ardh",
+                        "ju": "kishi ardh",
+                        "ato": "kishin ardh",
+                        "variants": [{"aj": "kishte ardh", "ne": "kishna ardh", "ju": "kishit ardh"}]
                     },
                     {
                         "tense": "mese-kryera",
                         "mood": "habitore",
-                        "un": "pasksha ardhë",
-                        "taj": "paskshe ardhë",
-                        "aj": "paskësh ardhë",
-                        "ne": "paskshim ardhë",
-                        "ju": "paskshi ardhë",
-                        "ato": "paskshin ardhë",
+                        "un": "pasksha ardh",
+                        "taj": "paskshe ardh",
+                        "aj": "paskësh ardh",
+                        "ne": "paskshim ardh",
+                        "ju": "paskshi ardh",
+                        "ato": "paskshin ardh",
                         "variants": [
                             {
-                                "un": "paskisha ardhë",
-                                "taj": "paskishe ardhë",
-                                "aj": "paskish ardhë",
-                                "ne": "paskishim ardhë",
-                                "ju": "paskishi ardhë",
-                                "ato": "paskishin ardhë"
+                                "un": "paskisha ardh",
+                                "taj": "paskishe ardh",
+                                "aj": "paskish ardh",
+                                "ne": "paskishim ardh",
+                                "ju": "paskishi ardh",
+                                "ato": "paskishin ardh"
                             }
                         ],
                         "footnotes": ["Veta e parë njëjes e ksaj o pak absurde."]
@@ -1351,23 +1351,23 @@
                     {
                         "tense": "mese-kryera",
                         "mood": "lidhore",
-                        "un": "t’kisha ardhë",
-                        "taj": "t’kishe ardhë",
-                        "aj": "t’kish ardhë",
-                        "ne": "t’kishim ardhë",
-                        "ju": "t’kishi ardhë",
-                        "ato": "t’kishin ardhë",
-                        "variants": [{"aj": "t’kishte ardhë", "ne": "t’kishna ardhë", "ju": "t’kishit ardhë"}]
+                        "un": "t’kisha ardh",
+                        "taj": "t’kishe ardh",
+                        "aj": "t’kish ardh",
+                        "ne": "t’kishim ardh",
+                        "ju": "t’kishi ardh",
+                        "ato": "t’kishin ardh",
+                        "variants": [{"aj": "t’kishte ardh", "ne": "t’kishna ardh", "ju": "t’kishit ardh"}]
                     },
                     {
                         "tense": "kryera-tejshkuar",
                         "mood": "dëftore",
-                        "un": "pata ardhë",
-                        "taj": "pate ardhë",
-                        "aj": "pat ardhë",
-                        "ne": "patëm ardhë",
-                        "ju": "patët ardhë",
-                        "ato": "patën ardhë"
+                        "un": "pata ardh",
+                        "taj": "pate ardh",
+                        "aj": "pat ardh",
+                        "ne": "patëm ardh",
+                        "ju": "patët ardh",
+                        "ato": "patën ardh"
                     },
                     {
                         "tense": "ardhmja",
@@ -1382,12 +1382,12 @@
                     {
                         "tense": "ardhmja-perparme",
                         "mood": "dëftore",
-                        "un": "dë kem ardhë",
-                        "taj": "dë kesh ardhë",
-                        "aj": "dë ket ardhë",
-                        "ne": "dë kina ardhë",
-                        "ju": "dë kini ardhë",
-                        "ato": "dë ken ardhë"
+                        "un": "dë kem ardh",
+                        "taj": "dë kesh ardh",
+                        "aj": "dë ket ardh",
+                        "ne": "dë kina ardh",
+                        "ju": "dë kini ardh",
+                        "ato": "dë ken ardh"
                     }
                 ]
             }

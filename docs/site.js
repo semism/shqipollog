@@ -416,15 +416,31 @@ const boot = (ALL, focus, withDrafts) => {
         }
     });
 
-    const redrawCard = (id, focusSel) => {
+    // keep: an element of the card that must stay in the page untouched (the tense <select>: replacing or even
+    // moving it while iOS has its picker open leaves the picker stuck, and focusing a copy reopens it).
+    // Everything around it is swapped for the fresh card's nodes, level by level up to the card.
+    const redrawCard = (id, focusSel, keep) => {
         const card = document.getElementById(id);
         const entry = byId[id];
         if (!card || !entry) return;
         const tmp = document.createElement('div');
         tmp.innerHTML = wordCard(entry);
-        card.replaceWith(tmp.firstElementChild);
+        const fresh = tmp.firstElementChild;
+        const copy = keep && card.contains(keep) && fresh.querySelector(focusSel);
+        if (copy) {
+            keep.dataset.cur = copy.dataset.cur;
+            for (let o = keep, n = copy; o !== card; o = o.parentElement, n = n.parentElement) {
+                const kids = [...n.parentElement.childNodes];
+                const at = kids.indexOf(n);
+                [...o.parentElement.childNodes].forEach((c) => { if (c !== o) c.remove(); });
+                o.before(...kids.slice(0, at));
+                o.after(...kids.slice(at + 1));
+            }
+            return;
+        }
+        card.replaceWith(fresh);
         const again = document.querySelector(focusSel);
-        if (again) again.focus();
+        if (again) again.focus({ preventScroll: true });
     };
 
     view.addEventListener('change', (e) => {
@@ -438,7 +454,7 @@ const boot = (ALL, focus, withDrafts) => {
         const cs = COMBOS.filter((c) => c.tense === sel.value);
         const next = cs.find((c) => c.mood === prev) || cs.find(has) || cs[0];
         if (next) tenseChoice[id] = comboKey(next);
-        redrawCard(id, `[data-zg="${id}"]`);
+        redrawCard(id, `[data-zg="${id}"]`, sel);
     });
 
     document.addEventListener('click', async (e) => {
@@ -579,6 +595,20 @@ const boot = (ALL, focus, withDrafts) => {
             try { sessionStorage.setItem(PLACE, JSON.stringify({ hash: location.hash, y: Math.round(scrollY), page: state.page, list: listKey })); } catch (e) {}
         });
     }
+    // Phone: the sticky bar (search, tabs, filters) is a quarter of the screen. It slides away while
+    // scrolling down and comes back on any scroll up. Never while typing in it.
+    const side = document.querySelector('.side');
+    const narrow = matchMedia('(max-width: 860px)');
+    let lastY = scrollY;
+    window.addEventListener('scroll', () => {
+        const y = scrollY;
+        const dy = y - lastY;
+        if (Math.abs(dy) < 6) return;
+        lastY = y;
+        const stuck = narrow.matches && side.getBoundingClientRect().top <= 1 && y > side.parentElement.offsetTop;
+        side.classList.toggle('tucked', stuck && dy > 0 && !side.contains(document.activeElement));
+    }, { passive: true });
+
     if (place) state.restore = place;
     window.addEventListener('hashchange', openHash);
     openHash();

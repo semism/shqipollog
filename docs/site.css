@@ -331,7 +331,7 @@ button.btn { border: 0; cursor: pointer; }
 .sort button[aria-pressed="true"], .chips button[aria-pressed="true"] { background: var(--pressed); color: var(--text); }
 .chips button.empty:not([aria-pressed="true"]) { opacity: .5; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
-.chips.big button { padding: 6px 14px; font: italic 17px var(--serif); }
+.chips.big button { padding: 6px 14px; font: 500 16px var(--sans); }
 
 .filter button:focus-visible, .tabs button:focus-visible, .sort button:focus-visible, .chips button:focus-visible,
 .vpick input:focus-visible, .vpick button:focus-visible, .vsug button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
@@ -345,7 +345,7 @@ button.btn { border: 0; cursor: pointer; }
     cursor: pointer;
     padding: 6px 8px 10px;
     margin-bottom: -2px;
-    font-family: var(--serif);
+    font-family: var(--sans);
     font-size: 19px;
     color: var(--muted);
     border-bottom: 2px solid transparent;
@@ -359,7 +359,7 @@ button.btn { border: 0; cursor: pointer; }
 .list { display: grid; gap: 28px; }
 
 .gview { display: grid; gap: 18px; }
-.gview > h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 3.6vw, 40px); line-height: 1.1; letter-spacing: -.01em; }
+.gview > h2 { font-family: var(--sans); font-weight: 500; font-size: clamp(30px, 3.6vw, 40px); line-height: 1.1; letter-spacing: -.01em; }
 
 .vpick { display: flex; gap: 8px; min-width: 0; }
 .vpick input {
@@ -375,7 +375,7 @@ button.btn { border: 0; cursor: pointer; }
 }
 .vpick button { padding: 7px 12px; }
 .vsug { display: flex; flex-wrap: wrap; gap: 6px; }
-.pj { font-family: var(--serif); font-size: clamp(22px, 2.6vw, 28px); }
+.pj { font-family: var(--sans); font-size: clamp(22px, 2.6vw, 28px); }
 .vsug .hstd { display: inline; margin-left: 4px; font-family: var(--mono); font-size: 12px; }
 
 .tag.fjala { --c: var(--fjala); }
@@ -411,8 +411,8 @@ button.btn { border: 0; cursor: pointer; }
 .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); opacity: .85; }
 
 .entry h3 {
-    font-family: var(--serif);
-    font-weight: 600;
+    font-family: var(--sans);
+    font-weight: 500;
     font-size: clamp(24px, 3.2vw, 34px);
     line-height: 1.15;
     letter-spacing: -.01em;
@@ -425,7 +425,7 @@ button.btn { border: 0; cursor: pointer; }
 .pos { font-style: italic; font-size: 15px; color: var(--muted); }
 
 .lemma { display: grid; gap: 4px; }
-.lemma h4 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2.4vw, 24px); line-height: 1.2; }
+.lemma h4 { margin: 0; font-family: var(--sans); font-weight: 500; font-size: clamp(20px, 2.4vw, 24px); line-height: 1.2; }
 
 .forms { display: grid; gap: 14px; font-size: clamp(16px, 1.9vw, 18px); line-height: 1.5; min-width: 0; }
 
@@ -457,9 +457,9 @@ button.btn { border: 0; cursor: pointer; }
 .conj th, .conj td { text-align: left; vertical-align: baseline; font-weight: 400; padding: 2px 26px 2px 0; white-space: nowrap; }
 .conj td:last-child { padding-right: 0; }
 .conj th.p { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-right: 20px; }
-.conj thead th { padding-bottom: 8px; font-family: var(--serif); font-weight: 600; font-size: 1.05em; }
+.conj thead th { padding-bottom: 8px; font-family: var(--sans); font-weight: 500; font-size: 1.05em; }
 .conj thead .var, .colhead.var { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); }
-.colhead { font-family: var(--serif); font-weight: 600; margin-bottom: 6px; }
+.colhead { font-family: var(--sans); font-weight: 500; margin-bottom: 6px; }
 .conj .hstd { display: block; font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); margin-top: 2px; }
 .colhead.std { font-family: var(--mono); font-weight: 400; }
 
@@ -519,8 +519,8 @@ button.btn { border: 0; cursor: pointer; }
 .post.focus { outline: 2px solid var(--link); outline-offset: 8px; border-radius: 4px; }
 
 .post h2 {
-    font-family: var(--serif);
-    font-weight: 600;
+    font-family: var(--sans);
+    font-weight: 500;
     font-size: clamp(28px, 3.6vw, 40px);
     line-height: 1.12;
     letter-spacing: -.01em;
@@ -529,7 +529,7 @@ button.btn { border: 0; cursor: pointer; }
 .post h2 a { text-decoration: none; }
 .post h2 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
 
-.post .sub { font-family: var(--serif); font-style: italic; font-size: clamp(18px, 2.2vw, 21px); color: var(--muted); margin-top: -6px; }
+.post .sub { font-family: var(--sans); font-size: clamp(18px, 2.2vw, 21px); color: var(--muted); margin-top: -6px; }
 
 .post .body { display: grid; gap: 14px; font-size: clamp(17px, 2vw, 19px); line-height: 1.7; }
 .post .body ul { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line); }

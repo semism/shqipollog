@@ -75,8 +75,14 @@ const TAXONOMY = {
         { tense: 'kryera-perbere', mood: 'dëftore', aux: ['tashmja', 'dëftore'], participle: true },
         { tense: 'mese-kryera', mood: 'dëftore', aux: ['pakryera', 'dëftore'], participle: true },
         { tense: 'kryera-tejshkuar', mood: 'dëftore', aux: ['kryera-thjeshte', 'dëftore'], participle: true },
-        // lidhore e tashme: from the future without "dë" (exact), otherwise from the dëftore (check aj/ajo)
-        { tense: 'tashmja', mood: 'lidhore', from: [{ self: ['ardhmja', 'dëftore'], strip: 'dë ' }, { self: ['tashmja', 'dëftore'] }], pre: 't’' },
+        // lidhore e tashme: from the future without "dë" (exact), otherwise from the dëftore. From the dëftore, aj/ajo is not copied
+        // (t’bon is wrong, t’boje is right): it is built from "un" by the first matching `aj` pattern (match: how "un" ends; cut: letters
+        // dropped from its end; add: what goes on). No match (marr, jap, ngjohem, kom …): aj/ajo stays empty, to type by hand.
+        { tense: 'tashmja', mood: 'lidhore', from: [{ self: ['ardhmja', 'dëftore'], strip: 'dë ' }, { self: ['tashmja', 'dëftore'], aj: [
+            { match: 'j', add: 'e' },                                // boj → boje, shkoj, vaj, daj
+            { match: '[aeiouyë][^aeiouyë]+i', cut: 1, add: 'e' },    // foli → fole, heci → hece (not one-syllable di)
+            { match: '[aeiouyë]', add: 'je' },                       // di → dije
+        ] }], pre: 't’' },
         { tense: 'ardhmja', mood: 'dëftore', self: ['tashmja', 'lidhore'], pre: 'dë ' },
         { tense: 'ardhmja-perparme', mood: 'dëftore', aux: ['tashmja', 'lidhore'], pre: 'dë ', participle: true },
         { tense: 'tashmja', mood: 'kushtore', self: ['pakryera', 'dëftore'], pre: 'dë ' },

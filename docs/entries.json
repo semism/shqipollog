@@ -7,6 +7,150 @@
             {
                 "word": "di",
                 "std": "di",
+                "audio": "audio/di-1a205cb9b7b.mp3",
+                "audios": {
+                    "din": "audio/din-1a205e796a5.mp3",
+                    "dish": "audio/dish-1a205e78bbf.mp3",
+                    "dimë": "audio/dime-1a205e7a41a.mp3",
+                    "dini": "audio/dini-1a205e8458a.mp3",
+                    "dinë": "audio/dine-1a205e7b4c4.mp3",
+                    "dikam": "audio/dikam-1a205e7fa8a.mp3",
+                    "dike": "audio/dike-1a205e802df.mp3",
+                    "dika": "audio/dika-1a205e80a24.mp3",
+                    "dikim": "audio/dikim-1a205e811c5.mp3",
+                    "diki": "audio/diki-1a205e81af0.mp3",
+                    "dikan": "audio/dikan-1a205e8232a.mp3",
+                    "t’di": "audio/tdi-1a205e93740.mp3",
+                    "t’dish": "audio/tdish-1a205e94856.mp3",
+                    "t’dije": "audio/tdije-1a205e95860.mp3",
+                    "t’dimë": "audio/tdime-1a205e96b7b.mp3",
+                    "t’dini": "audio/tdini-1a205e97ccb.mp3",
+                    "t’dinë": "audio/tdine-1a205e98dad.mp3",
+                    "dë disha": "audio/de-disha-1a205e9c8aa.mp3",
+                    "dë dishe": "audio/de-dishe-1a205e9d1b4.mp3",
+                    "dë dinte": "audio/de-dinte-1a205e9da18.mp3",
+                    "dë dishim": "audio/de-dishim-1a205e9e27b.mp3",
+                    "dë dishi": "audio/de-dishi-1a205e9eaf9.mp3",
+                    "dë dishin": "audio/de-dishin-1a205e9f340.mp3",
+                    "dë dishit": "audio/de-dishit-1a205e9ff38.mp3",
+                    "difsha": "audio/difsha-1a205ea12d5.mp3",
+                    "difsh": "audio/difsh-1a205ea1ba9.mp3",
+                    "dift": "audio/dift-1a205ea25aa.mp3",
+                    "difshim": "audio/difshim-1a205ea2f02.mp3",
+                    "difshi": "audio/difshi-1a205ea3735.mp3",
+                    "difshin": "audio/difshin-1a205ea3fe3.mp3",
+                    "difshit": "audio/difshit-1a205ea497f.mp3",
+                    "disha": "audio/disha-1a205ea5c85.mp3",
+                    "dishe": "audio/dishe-1a205ea63b2.mp3",
+                    "dinte": "audio/dinte-1a205ea6c04.mp3",
+                    "dishim": "audio/dishim-1a205ea7436.mp3",
+                    "dishi": "audio/dishi-1a205ea7c0e.mp3",
+                    "dishin": "audio/dishin-1a205ea83ca.mp3",
+                    "dishit": "audio/dishit-1a205ea8d74.mp3",
+                    "t’dishi": "audio/tdishi-1a205ead9e4.mp3",
+                    "t’dishin": "audio/tdishin-1a205eaf930.mp3",
+                    "t’dishim": "audio/tdishim-1a205eb1e42.mp3",
+                    "t’dinte": "audio/tdinte-1a205eb32e9.mp3",
+                    "t’disha": "audio/tdisha-1a205eb5ab9.mp3",
+                    "t’dishe": "audio/tdishe-1a205eb68e8.mp3",
+                    "dita": "audio/dita-1a205eb84ca.mp3",
+                    "ditëm": "audio/ditem-1a205eb9ec8.mp3",
+                    "dite": "audio/dite-1a205ec1436.mp3",
+                    "diti": "audio/diti-1a205ec1cbb.mp3",
+                    "ditët": "audio/ditet-1a205ec2dd5.mp3",
+                    "ditën": "audio/diten-1a205ec36bf.mp3",
+                    "kom dit": "audio/kom-dit-1a205ec4b84.mp3",
+                    "ke dit": "audio/ke-dit-1a205ec533f.mp3",
+                    "ka dit": "audio/ka-dit-1a205ec5b03.mp3",
+                    "kina dit": "audio/kina-dit-1a205ec6eda.mp3",
+                    "kini dit": "audio/kini-dit-1a205ec7800.mp3",
+                    "kan dit": "audio/kan-dit-1a205ec81a0.mp3",
+                    "kimi dit": "audio/kimi-dit-1a205ec8b60.mp3",
+                    "kajn dit": "audio/kajn-dit-1a205ec959f.mp3",
+                    "kën dit": "audio/ken-dit-1a205eca199.mp3",
+                    "paskam dit": "audio/paskam-dit-1a205ecb577.mp3",
+                    "paske dit": "audio/paske-dit-1a205ecbdbe.mp3",
+                    "paska dit": "audio/paska-dit-1a205ecc749.mp3",
+                    "paskim dit": "audio/paskim-dit-1a205ecd102.mp3",
+                    "paski dit": "audio/paski-dit-1a205ecda89.mp3",
+                    "paskan dit": "audio/paskan-dit-1a205ece424.mp3",
+                    "paham dit": "audio/paham-dit-1a205ecef40.mp3",
+                    "pahe dit": "audio/pahe-dit-1a205ecf809.mp3",
+                    "paha dit": "audio/paha-dit-1a205ed0149.mp3",
+                    "pahim dit": "audio/pahim-dit-1a205ed0a13.mp3",
+                    "pahi dit": "audio/pahi-dit-1a205ed1582.mp3",
+                    "pahan dit": "audio/pahan-dit-1a205ed1edf.mp3",
+                    "paskën dit": "audio/pasken-dit-1a205ed28f7.mp3",
+                    "pahën dit": "audio/pahen-dit-1a205ed34b7.mp3",
+                    "t’kem dit": "audio/tkem-dit-1a205ed4c2a.mp3",
+                    "t’kesh dit": "audio/tkesh-dit-1a205ed548c.mp3",
+                    "t’ket dit": "audio/tket-dit-1a205ed6109.mp3",
+                    "t’kina dit": "audio/tkina-dit-1a205ed6a92.mp3",
+                    "t’kini dit": "audio/tkini-dit-1a205ed738a.mp3",
+                    "t’ken dit": "audio/tken-dit-1a205ed7b62.mp3",
+                    "t’kimi dit": "audio/tkimi-dit-1a205ed83c4.mp3",
+                    "dë kisha dit": "audio/de-kisha-dit-1a205ed9296.mp3",
+                    "dë kishe dit": "audio/de-kishe-dit-1a205ed9bad.mp3",
+                    "dë kish dit": "audio/de-kish-dit-1a205eda369.mp3",
+                    "dë kishim dit": "audio/de-kishim-dit-1a205edab72.mp3",
+                    "dë kishi dit": "audio/de-kishi-dit-1a205edb4ce.mp3",
+                    "dë kishin dit": "audio/de-kishin-dit-1a205edbe51.mp3",
+                    "dë kishit dit": "audio/de-kishit-dit-1a205edcc48.mp3",
+                    "dë kishna dit": "audio/de-kishna-dit-1a205edd6c2.mp3",
+                    "dë kishte dit": "audio/de-kishte-dit-1a205ede1c8.mp3",
+                    "kisha dit": "audio/kisha-dit-1a205edf892.mp3",
+                    "kishe dit": "audio/kishe-dit-1a205ee0046.mp3",
+                    "kish dit": "audio/kish-dit-1a205ee075d.mp3",
+                    "kishim dit": "audio/kishim-dit-1a205ee1106.mp3",
+                    "kishi dit": "audio/kishi-dit-1a205ee1a91.mp3",
+                    "kishin dit": "audio/kishin-dit-1a205ee2373.mp3",
+                    "kishte dit": "audio/kishte-dit-1a205ee2dfc.mp3",
+                    "kishna dit": "audio/kishna-dit-1a205ee38db.mp3",
+                    "kishit dit": "audio/kishit-dit-1a205ee4342.mp3",
+                    "pasksha dit": "audio/pasksha-dit-1a205ee5d78.mp3",
+                    "paskshe dit": "audio/paskshe-dit-1a205ee693f.mp3",
+                    "paskësh dit": "audio/paskesh-dit-1a205ee7304.mp3",
+                    "paskshim dit": "audio/paskshim-dit-1a205ee7dea.mp3",
+                    "paskshi dit": "audio/paskshi-dit-1a205ee8962.mp3",
+                    "paskshin dit": "audio/paskshin-dit-1a205ee93ef.mp3",
+                    "paskisha dit": "audio/paskisha-dit-1a205eeb3a2.mp3",
+                    "paskishe dit": "audio/paskishe-dit-1a205eebd1a.mp3",
+                    "paskish dit": "audio/paskish-dit-1a205eec8c0.mp3",
+                    "paskishim dit": "audio/paskishim-dit-1a205eed2bc.mp3",
+                    "paskishi dit": "audio/paskishi-dit-1a205eedf45.mp3",
+                    "paskishin dit": "audio/paskishin-dit-1a205eeec60.mp3",
+                    "t’kisha dit": "audio/tkisha-dit-1a205ef080f.mp3",
+                    "t’kishe dit": "audio/tkishe-dit-1a205ef17a3.mp3",
+                    "t’kish dit": "audio/tkish-dit-1a205ef2173.mp3",
+                    "t’kishim dit": "audio/tkishim-dit-1a205ef296a.mp3",
+                    "t’kishi dit": "audio/tkishi-dit-1a205ef3257.mp3",
+                    "t’kishin dit": "audio/tkishin-dit-1a205ef3c23.mp3",
+                    "t’kishte dit": "audio/tkishte-dit-1a205ef4800.mp3",
+                    "t’kishna dit": "audio/tkishna-dit-1a205ef5177.mp3",
+                    "t’kishit dit": "audio/tkishit-dit-1a205ef5b8a.mp3",
+                    "pata dit": "audio/pata-dit-1a205ef74e3.mp3",
+                    "pate dit": "audio/pate-dit-1a205ef7d37.mp3",
+                    "pat dit": "audio/pat-dit-1a205ef86d3.mp3",
+                    "patëm dit": "audio/patem-dit-1a205ef9036.mp3",
+                    "patët dit": "audio/patet-dit-1a205efa5d7.mp3",
+                    "patën dit": "audio/paten-dit-1a205efb034.mp3",
+                    "dë di": "audio/de-di-1a205efc241.mp3",
+                    "dë dish": "audio/de-dish-1a205efcb89.mp3",
+                    "dë dije": "audio/de-dije-1a205efd415.mp3",
+                    "dë dimë": "audio/de-dime-1a205efe138.mp3",
+                    "dë dini": "audio/de-dini-1a205efebcd.mp3",
+                    "dë dinë": "audio/de-dine-1a205eff6be.mp3",
+                    "dë kem dit": "audio/de-kem-dit-1a205f010b6.mp3",
+                    "dë kesh dit": "audio/de-kesh-dit-1a205f0327f.mp3",
+                    "dë ket dit": "audio/de-ket-dit-1a205f03bd5.mp3",
+                    "dë kina dit": "audio/de-kina-dit-1a205f04894.mp3",
+                    "dë kini dit": "audio/de-kini-dit-1a205f05285.mp3",
+                    "dë ken dit": "audio/de-ken-dit-1a205f05cd6.mp3",
+                    "dë kimi dit": "audio/de-kimi-dit-1a205f066b5.mp3",
+                    "dit": "audio/dit-1a205f0c1c2.mp3",
+                    "t’dishit": "audio/tdishit-1a205fbd7f2.mp3"
+                },
+                "participle": "dit",
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -18,6 +162,209 @@
                         "ju": "dini",
                         "ato": "dinë",
                         "variants": [{"taj": "dish"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "dikam",
+                        "taj": "dike",
+                        "aj": "dika",
+                        "ne": "dikim",
+                        "ju": "diki",
+                        "ato": "dikan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "taj": "di", "ju": "dini"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "lidhore",
+                        "un": "t’di",
+                        "taj": "t’dish",
+                        "aj": "t’dije",
+                        "ne": "t’dimë",
+                        "ju": "t’dini",
+                        "ato": "t’dinë"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "kushtore",
+                        "un": "dë disha",
+                        "taj": "dë dishe",
+                        "aj": "dë dinte",
+                        "ne": "dë dishim",
+                        "ju": "dë dishi",
+                        "ato": "dë dishin",
+                        "variants": [{"ju": "dë dishit"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "difsha",
+                        "taj": "difsh",
+                        "aj": "dift",
+                        "ne": "difshim",
+                        "ju": "difshi",
+                        "ato": "difshin",
+                        "variants": [{"ju": "difshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "un": "disha",
+                        "taj": "dishe",
+                        "aj": "dinte",
+                        "ne": "dishim",
+                        "ju": "dishi",
+                        "ato": "dishin",
+                        "variants": [{"ju": "dishit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "lidhore",
+                        "un": "t’disha",
+                        "taj": "t’dishe",
+                        "aj": "t’dinte",
+                        "ne": "t’dishim",
+                        "ju": "t’dishi",
+                        "ato": "t’dishin",
+                        "variants": [{"ju": "t’dishit"}]
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "un": "dita",
+                        "taj": "dite",
+                        "aj": "diti",
+                        "ne": "ditëm",
+                        "ju": "ditët",
+                        "ato": "ditën"
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "dëftore",
+                        "un": "kom dit",
+                        "taj": "ke dit",
+                        "aj": "ka dit",
+                        "ne": "kina dit",
+                        "ju": "kini dit",
+                        "ato": "kan dit",
+                        "variants": [{"ne": "kimi dit", "ato": "kajn dit"}, {"ato": "kën dit"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "habitore",
+                        "un": "paskam dit",
+                        "taj": "paske dit",
+                        "aj": "paska dit",
+                        "ne": "paskim dit",
+                        "ju": "paski dit",
+                        "ato": "paskan dit",
+                        "variants": [
+                            {
+                                "un": "paham dit",
+                                "taj": "pahe dit",
+                                "aj": "paha dit",
+                                "ne": "pahim dit",
+                                "ju": "pahi dit",
+                                "ato": "pahan dit"
+                            },
+                            {"ato": "paskën dit"},
+                            {"ato": "pahën dit"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "lidhore",
+                        "un": "t’kem dit",
+                        "taj": "t’kesh dit",
+                        "aj": "t’ket dit",
+                        "ne": "t’kina dit",
+                        "ju": "t’kini dit",
+                        "ato": "t’ken dit",
+                        "variants": [{"ne": "t’kimi dit"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "kushtore",
+                        "un": "dë kisha dit",
+                        "taj": "dë kishe dit",
+                        "aj": "dë kish dit",
+                        "ne": "dë kishim dit",
+                        "ju": "dë kishi dit",
+                        "ato": "dë kishin dit",
+                        "variants": [{"aj": "dë kishte dit", "ne": "dë kishna dit", "ju": "dë kishit dit"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "dëftore",
+                        "un": "kisha dit",
+                        "taj": "kishe dit",
+                        "aj": "kish dit",
+                        "ne": "kishim dit",
+                        "ju": "kishi dit",
+                        "ato": "kishin dit",
+                        "variants": [{"aj": "kishte dit", "ne": "kishna dit", "ju": "kishit dit"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "habitore",
+                        "un": "pasksha dit",
+                        "taj": "paskshe dit",
+                        "aj": "paskësh dit",
+                        "ne": "paskshim dit",
+                        "ju": "paskshi dit",
+                        "ato": "paskshin dit",
+                        "variants": [
+                            {
+                                "un": "paskisha dit",
+                                "taj": "paskishe dit",
+                                "aj": "paskish dit",
+                                "ne": "paskishim dit",
+                                "ju": "paskishi dit",
+                                "ato": "paskishin dit"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "lidhore",
+                        "un": "t’kisha dit",
+                        "taj": "t’kishe dit",
+                        "aj": "t’kish dit",
+                        "ne": "t’kishim dit",
+                        "ju": "t’kishi dit",
+                        "ato": "t’kishin dit",
+                        "variants": [{"aj": "t’kishte dit", "ne": "t’kishna dit", "ju": "t’kishit dit"}]
+                    },
+                    {
+                        "tense": "kryera-tejshkuar",
+                        "mood": "dëftore",
+                        "un": "pata dit",
+                        "taj": "pate dit",
+                        "aj": "pat dit",
+                        "ne": "patëm dit",
+                        "ju": "patët dit",
+                        "ato": "patën dit"
+                    },
+                    {
+                        "tense": "ardhmja",
+                        "mood": "dëftore",
+                        "un": "dë di",
+                        "taj": "dë dish",
+                        "aj": "dë dije",
+                        "ne": "dë dimë",
+                        "ju": "dë dini",
+                        "ato": "dë dinë"
+                    },
+                    {
+                        "tense": "ardhmja-perparme",
+                        "mood": "dëftore",
+                        "un": "dë kem dit",
+                        "taj": "dë kesh dit",
+                        "aj": "dë ket dit",
+                        "ne": "dë kina dit",
+                        "ju": "dë kini dit",
+                        "ato": "dë ken dit",
+                        "variants": [{"ne": "dë kimi dit"}]
                     }
                 ]
             }
@@ -198,6 +545,8 @@
             {
                 "word": "rrshes",
                 "std": "rrëshqas",
+                "participle": "rrëshit",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -226,6 +575,50 @@
                                 "ato": "rrshesn"
                             }
                         ]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "rrëshitkam",
+                        "taj": "rrëshitke",
+                        "aj": "rrëshitka",
+                        "ne": "rrëshitkim",
+                        "ju": "rrëshitki",
+                        "ato": "rrëshitkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "rrëshit", "ju": "rrëshitni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "rrëshitsha",
+                        "taj": "rrëshitsh",
+                        "aj": "rrëshitt",
+                        "ne": "rrëshitshim",
+                        "ju": "rrëshitshi",
+                        "ato": "rrëshitshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "rrëshitsha",
+                        "taj": "rrëshitshe",
+                        "aj": "rrëshitte",
+                        "ne": "rrëshitshim",
+                        "ju": "rrëshitshi",
+                        "ato": "rrëshitshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "rrëshita",
+                        "taj": "rrëshite",
+                        "aj": "rrëshiti",
+                        "ne": "rrëshitëm",
+                        "ju": "rrëshitët",
+                        "ato": "rrëshitën"
                     }
                 ]
             }
@@ -241,6 +634,8 @@
             {
                 "word": "heci",
                 "std": "ec",
+                "participle": "hec",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -252,6 +647,51 @@
                         "ju": "hecni",
                         "ato": "hecin",
                         "variants": [{"taj": "hecën"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "review": true,
+                        "un": "heckam",
+                        "taj": "hecke",
+                        "aj": "hecka",
+                        "ne": "heckim",
+                        "ju": "hecki",
+                        "ato": "heckan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "hec", "ju": "hecni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "hecsha",
+                        "taj": "hecsh",
+                        "aj": "hect",
+                        "ne": "hecshim",
+                        "ju": "hecshi",
+                        "ato": "hecshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "hecsha",
+                        "taj": "hecshe",
+                        "aj": "hecte",
+                        "ne": "hecshim",
+                        "ju": "hecshi",
+                        "ato": "hecshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "heca",
+                        "taj": "hece",
+                        "aj": "heci",
+                        "ne": "hecëm",
+                        "ju": "hecët",
+                        "ato": "hecën"
                     }
                 ]
             }
@@ -266,6 +706,8 @@
             {
                 "word": "ngares",
                 "std": "vrapoj",
+                "participle": "ngarend",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -285,6 +727,50 @@
                                 "ato": "ngarendin"
                             }
                         ]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "ngarendkam",
+                        "taj": "ngarendke",
+                        "aj": "ngarendka",
+                        "ne": "ngarendkim",
+                        "ju": "ngarendki",
+                        "ato": "ngarendkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "ngarend", "ju": "ngarendni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "ngarendsha",
+                        "taj": "ngarendsh",
+                        "aj": "ngarendt",
+                        "ne": "ngarendshim",
+                        "ju": "ngarendshi",
+                        "ato": "ngarendshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "ngarendsha",
+                        "taj": "ngarendshe",
+                        "aj": "ngarente",
+                        "ne": "ngarendshim",
+                        "ju": "ngarendshi",
+                        "ato": "ngarendshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "ngarenda",
+                        "taj": "ngarende",
+                        "aj": "ngarendi",
+                        "ne": "ngarendëm",
+                        "ju": "ngarendët",
+                        "ato": "ngarendën"
                     }
                 ]
             }
@@ -299,6 +785,8 @@
             {
                 "word": "fjaroj",
                 "std": "fluturoj",
+                "participle": "fjaru",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -320,6 +808,29 @@
                             },
                             {"taj": "fjaron"}
                         ]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "fjaro", "ju": "fjaroni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "fjarofsha",
+                        "taj": "fjarofsh",
+                        "aj": "fjaroft",
+                        "ne": "fjarofshim",
+                        "ju": "fjarofshi",
+                        "ato": "fjarofshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "fjarova",
+                        "taj": "fjarove",
+                        "aj": "fjaroj",
+                        "ne": "fjarum",
+                        "ju": "fjarut",
+                        "ato": "fjarun"
                     }
                 ]
             }
@@ -334,6 +845,8 @@
             {
                 "word": "jom",
                 "std": "jam",
+                "participle": "kon",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -347,6 +860,29 @@
                         "variants": [{"taj": "ie", "aj": "osht", "ne": "imi"}, {"aj": "oshte"}]
                     },
                     {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "konkam",
+                        "taj": "konke",
+                        "aj": "konka",
+                        "ne": "konkim",
+                        "ju": "konki",
+                        "ato": "konkan",
+                        "variants": [{"un": "konam", "taj": "kone", "aj": "kona", "ne": "konim", "ju": "koni", "ato": "konan"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "ji", "ju": "jini"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "kofsha",
+                        "taj": "kofsh",
+                        "aj": "koft",
+                        "ne": "kofshim",
+                        "ju": "kofshi",
+                        "ato": "kofshin"
+                    },
+                    {
                         "tense": "pakryera",
                         "mood": "dëftore",
                         "un": "isha",
@@ -355,6 +891,17 @@
                         "ne": "ishim",
                         "ju": "ishit",
                         "ato": "ishin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "kjeva",
+                        "taj": "kjeve",
+                        "aj": "kje",
+                        "ne": "kjem",
+                        "ju": "kjet",
+                        "ato": "kjen"
                     },
                     {
                         "tense": "kryera-perbere",
@@ -379,6 +926,214 @@
             {
                 "word": "kom",
                 "std": "kam",
+                "audio": "audio/kom-1a205ce891a.mp3",
+                "audios": {
+                    "kie": "audio/kie-1a205da4188.mp3",
+                    "ka": "audio/ka-1a205da5496.mp3",
+                    "kina": "audio/kina-1a205da67b7.mp3",
+                    "kini": "audio/kini-1a205dbfa9e.mp3",
+                    "kan": "audio/kan-1a205da9560.mp3",
+                    "kimi": "audio/kimi-1a205dab189.mp3",
+                    "kajn": "audio/kajn-1a205dac42a.mp3",
+                    "paskam": "audio/paskam-1a205db01da.mp3",
+                    "paske": "audio/paske-1a205db0ea2.mp3",
+                    "paska": "audio/paska-1a205db1aae.mp3",
+                    "paskim": "audio/paskim-1a205db27b6.mp3",
+                    "paski": "audio/paski-1a205db3260.mp3",
+                    "paskan": "audio/paskan-1a205db3e03.mp3",
+                    "paham": "audio/paham-1a205db517f.mp3",
+                    "pahe": "audio/pahe-1a205db5b4b.mp3",
+                    "paha": "audio/paha-1a205db642a.mp3",
+                    "pahim": "audio/pahim-1a205db6eba.mp3",
+                    "pahi": "audio/pahi-1a205db784f.mp3",
+                    "pahan": "audio/pahan-1a205db8384.mp3",
+                    "pahën": "audio/pahen-1a205dbc7ab.mp3",
+                    "paskën": "audio/pasken-1a205dbd657.mp3",
+                    "t'kem": "audio/tkem-1a205dc16dd.mp3",
+                    "t'kesh": "audio/tkesh-1a205dc1fa6.mp3",
+                    "t'ket": "audio/tket-1a205dc2898.mp3",
+                    "t'kina": "audio/tkina-1a205dc31d7.mp3",
+                    "t'kini": "audio/tkini-1a205dc3b18.mp3",
+                    "t'ken": "audio/tken-1a205dc4422.mp3",
+                    "t'kimi": "audio/tkimi-1a205dc4eb8.mp3",
+                    "dë kisha": "audio/de-kisha-1a205dca036.mp3",
+                    "dë kishe": "audio/de-kishe-1a205dca976.mp3",
+                    "dë kish": "audio/de-kish-1a205dcb22c.mp3",
+                    "dë kishim": "audio/de-kishim-1a205dcbc98.mp3",
+                    "dë kishi": "audio/de-kishi-1a205dcc5e7.mp3",
+                    "dë kishin": "audio/de-kishin-1a205dcd000.mp3",
+                    "dë kishte": "audio/de-kishte-1a205dcdb95.mp3",
+                    "dë kishit": "audio/de-kishit-1a205dce705.mp3",
+                    "patsha": "audio/patsha-1a205dd018c.mp3",
+                    "patsh": "audio/patsh-1a205dd0ae5.mp3",
+                    "patt": "audio/patt-1a205dd1531.mp3",
+                    "patshim": "audio/patshim-1a205dd1d6a.mp3",
+                    "patshit": "audio/patshit-1a205dd2904.mp3",
+                    "patshin": "audio/patshin-1a205dd32e6.mp3",
+                    "paça": "audio/paca-1a205dd3f34.mp3",
+                    "paç": "audio/pac-1a205dd47a6.mp3",
+                    "paçim": "audio/pacim-1a205dd503e.mp3",
+                    "paçi": "audio/paci-1a205dd586b.mp3",
+                    "paçin": "audio/pacin-1a205dd6274.mp3",
+                    "kisha": "audio/kisha-1a205ddbbaf.mp3",
+                    "kishe": "audio/kishe-1a205ddc4ef.mp3",
+                    "kish": "audio/kish-1a205ddce42.mp3",
+                    "kishim": "audio/kishim-1a205ddd7fd.mp3",
+                    "kishi": "audio/kishi-1a205ddf02b.mp3",
+                    "kishin": "audio/kishin-1a205ddf99c.mp3",
+                    "kishte": "audio/kishte-1a205de0290.mp3",
+                    "kishna": "audio/kishna-1a205de0b69.mp3",
+                    "kishit": "audio/kishit-1a205de14d6.mp3",
+                    "pasksha": "audio/pasksha-1a205de4023.mp3",
+                    "paskisha": "audio/paskisha-1a205de501a.mp3",
+                    "paskshe": "audio/paskshe-1a205de5b93.mp3",
+                    "paskishe": "audio/paskishe-1a205de656e.mp3",
+                    "paskësh": "audio/paskesh-1a205de719c.mp3",
+                    "paskish": "audio/paskish-1a205de7e9c.mp3",
+                    "paskshim": "audio/paskshim-1a205de9934.mp3",
+                    "paskishim": "audio/paskishim-1a205dea4a8.mp3",
+                    "paskshi": "audio/paskshi-1a205deb00e.mp3",
+                    "paskishi": "audio/paskishi-1a205debb78.mp3",
+                    "paskshin": "audio/paskshin-1a205dec603.mp3",
+                    "paskishin": "audio/paskishin-1a205ded0d7.mp3",
+                    "t'kisha": "audio/tkisha-1a205deeaa5.mp3",
+                    "t'kishe": "audio/tkishe-1a205def4d6.mp3",
+                    "t'kish": "audio/tkish-1a205defe05.mp3",
+                    "t'kishim": "audio/tkishim-1a205df08b6.mp3",
+                    "t'kishi": "audio/tkishi-1a205df116d.mp3",
+                    "t'kishin": "audio/tkishin-1a205df1a30.mp3",
+                    "t'kishte": "audio/tkishte-1a205df2776.mp3",
+                    "t'kishna": "audio/tkishna-1a205df3c0e.mp3",
+                    "pata": "audio/pata-1a205df822e.mp3",
+                    "pate": "audio/pate-1a205df8a2f.mp3",
+                    "pat": "audio/pat-1a205df933f.mp3",
+                    "patëm": "audio/patem-1a205df9a85.mp3",
+                    "patët": "audio/patet-1a205dfa68b.mp3",
+                    "patën": "audio/paten-1a205dfb012.mp3",
+                    "kom pas": "audio/kom-pas-1a205e04718.mp3",
+                    "ke pas": "audio/ke-pas-1a205e05135.mp3",
+                    "ka pas": "audio/ka-pas-1a205e059cb.mp3",
+                    "kina pas": "audio/kina-pas-1a205e06161.mp3",
+                    "kini pas": "audio/kini-pas-1a205e06b2f.mp3",
+                    "kan pas": "audio/kan-pas-1a205e07436.mp3",
+                    "kom pat": "audio/kom-pat-1a205e07f2f.mp3",
+                    "ke pat": "audio/ke-pat-1a205e0884b.mp3",
+                    "ka pat": "audio/ka-pat-1a205e09060.mp3",
+                    "kina pat": "audio/kina-pat-1a205e09a6c.mp3",
+                    "kini pat": "audio/kini-pat-1a205e0a32b.mp3",
+                    "kan pat": "audio/kan-pat-1a205e0ac19.mp3",
+                    "kimi pas/pat": "audio/kimi-pas-pat-1a205e0dfa2.mp3",
+                    "kën pas/pat": "audio/ken-pas-pat-1a205e0eaf4.mp3",
+                    "paskam pas": "audio/paskam-pas-1a205e107ca.mp3",
+                    "paske pas": "audio/paske-pas-1a205e110a9.mp3",
+                    "paska pas": "audio/paska-pas-1a205e1193f.mp3",
+                    "paskim pas": "audio/paskim-pas-1a205e1251f.mp3",
+                    "paski pas": "audio/paski-pas-1a205e130f7.mp3",
+                    "paskan pas": "audio/paskan-pas-1a205e13ccb.mp3",
+                    "t'kem pas": "audio/tkem-pas-1a205e15168.mp3",
+                    "t'kesh pas": "audio/tkesh-pas-1a205e15c40.mp3",
+                    "t'ket pas": "audio/tket-pas-1a205e166d4.mp3",
+                    "t'kina pas": "audio/tkina-pas-1a205e171db.mp3",
+                    "t'kini pas": "audio/tkini-pas-1a205e17c9f.mp3",
+                    "t'ken pas": "audio/tken-pas-1a205e18669.mp3",
+                    "t'kem pat": "audio/tkem-pat-1a205e19108.mp3",
+                    "t'kesh pat": "audio/tkesh-pat-1a205e19b5e.mp3",
+                    "t'ket pat": "audio/tket-pat-1a205e1a563.mp3",
+                    "t'kina pat": "audio/tkina-pat-1a205e1b00d.mp3",
+                    "t'kini pat": "audio/tkini-pat-1a205e1baaa.mp3",
+                    "t'ken pat": "audio/tken-pat-1a205e1d5d3.mp3",
+                    "t'kimi pas/pat": "audio/tkimi-pas-pat-1a205e1eb73.mp3",
+                    "dë kisha pas": "audio/de-kisha-pas-1a205e20840.mp3",
+                    "dë kishe pas": "audio/de-kishe-pas-1a205e21577.mp3",
+                    "dë kish pas": "audio/de-kish-pas-1a205e22037.mp3",
+                    "dë kishim pas": "audio/de-kishim-pas-1a205e22be2.mp3",
+                    "dë kishi pas": "audio/de-kishi-pas-1a205e236b5.mp3",
+                    "dë kishin pas": "audio/de-kishin-pas-1a205e24284.mp3",
+                    "dë kisha pat": "audio/de-kisha-pat-1a205e252da.mp3",
+                    "dë kishe pat": "audio/de-kishe-pat-1a205e25d8c.mp3",
+                    "dë kish pat": "audio/de-kish-pat-1a205e26859.mp3",
+                    "dë kishim pat": "audio/de-kishim-pat-1a205e2738e.mp3",
+                    "dë kishi pat": "audio/de-kishi-pat-1a205e27ce4.mp3",
+                    "dë kishin pat": "audio/de-kishin-pat-1a205e287b5.mp3",
+                    "dë kishte pas/pat": "audio/de-kishte-pas-pat-1a205e29ab0.mp3",
+                    "dë kishna pas/pat": "audio/de-kishna-pas-pat-1a205e2a54a.mp3",
+                    "dë kishit pas/pat": "audio/de-kishit-pas-pat-1a205e2b21f.mp3",
+                    "kisha pas": "audio/kisha-pas-1a205e2cbf8.mp3",
+                    "kishe pas": "audio/kishe-pas-1a205e2d4d3.mp3",
+                    "kish pas": "audio/kish-pas-1a205e2dcc8.mp3",
+                    "kishim pas": "audio/kishim-pas-1a205e2e64c.mp3",
+                    "kishi pas": "audio/kishi-pas-1a205e2f04e.mp3",
+                    "kishin pas": "audio/kishin-pas-1a205e2fb35.mp3",
+                    "kisha pat": "audio/kisha-pat-1a205e305b3.mp3",
+                    "kishe pat": "audio/kishe-pat-1a205e30de9.mp3",
+                    "kish pat": "audio/kish-pat-1a205e3178c.mp3",
+                    "kishim pat": "audio/kishim-pat-1a205e32288.mp3",
+                    "kishi pat": "audio/kishi-pat-1a205e32bd9.mp3",
+                    "kishin pat": "audio/kishin-pat-1a205e335c8.mp3",
+                    "kishte pas/pat": "audio/kishte-pas-pat-1a205e34554.mp3",
+                    "kishna pas/pat": "audio/kishna-pas-pat-1a205e34e2d.mp3",
+                    "kishit pas/pat": "audio/kishit-pas-pat-1a205e358de.mp3",
+                    "pasksha pas": "audio/pasksha-pas-1a205e36eef.mp3",
+                    "paskshe pas": "audio/paskshe-pas-1a205e37989.mp3",
+                    "paskësh pas": "audio/paskesh-pas-1a205e38357.mp3",
+                    "paskshim pas": "audio/paskshim-pas-1a205e3919e.mp3",
+                    "paskshi pas": "audio/paskshi-pas-1a205e39d34.mp3",
+                    "paskshin pas": "audio/paskshin-pas-1a205e3a868.mp3",
+                    "pasksha pat": "audio/pasksha-pat-1a205e3b857.mp3",
+                    "paskshe pat": "audio/paskshe-pat-1a205e3c172.mp3",
+                    "paskësh pat": "audio/paskesh-pat-1a205e3caa2.mp3",
+                    "paskshim pat": "audio/paskshim-pat-1a205e3d389.mp3",
+                    "paskshi pat": "audio/paskshi-pat-1a205e3dd07.mp3",
+                    "paskshin pat": "audio/paskshin-pat-1a205e3e6c8.mp3",
+                    "paskisha pas": "audio/paskisha-pas-1a205e3f44a.mp3",
+                    "paskishe pas": "audio/paskishe-pas-1a205e3fc29.mp3",
+                    "paskish pas": "audio/paskish-pas-1a205e40540.mp3",
+                    "paskishim pas": "audio/paskishim-pas-1a205e41115.mp3",
+                    "paskishi pas": "audio/paskishi-pas-1a205e41ae2.mp3",
+                    "paskishin pas": "audio/paskishin-pas-1a205e426e0.mp3",
+                    "t’kisha pas": "audio/tkisha-pas-1a205e4530c.mp3",
+                    "t’kishe pas": "audio/tkishe-pas-1a205e45c42.mp3",
+                    "t’kish pas": "audio/tkish-pas-1a205e46458.mp3",
+                    "t’kishim pas": "audio/tkishim-pas-1a205e46c6e.mp3",
+                    "t’kishi pas": "audio/tkishi-pas-1a205e475d9.mp3",
+                    "t’kishin pas": "audio/tkishin-pas-1a205e4816f.mp3",
+                    "t’kisha pat": "audio/tkisha-pat-1a205e48bb1.mp3",
+                    "t’kishe pat": "audio/tkishe-pat-1a205e49461.mp3",
+                    "t’kish pat": "audio/tkish-pat-1a205e49c5f.mp3",
+                    "t’kishim pat": "audio/tkishim-pat-1a205e4a636.mp3",
+                    "t’kishi pat": "audio/tkishi-pat-1a205e4afd5.mp3",
+                    "t’kishin pat": "audio/tkishin-pat-1a205e4b93f.mp3",
+                    "t’kishte pas/pat": "audio/tkishte-pas-pat-1a205e4c706.mp3",
+                    "t’kishna pas/pat": "audio/tkishna-pas-pat-1a205e4dcbf.mp3",
+                    "t’kishit pas/pat": "audio/tkishit-pas-pat-1a205e4e780.mp3",
+                    "pata pat": "audio/pata-pat-1a205e4fdd4.mp3",
+                    "pate pat": "audio/pate-pat-1a205e50754.mp3",
+                    "pat pat": "audio/pat-pat-1a205e50f7a.mp3",
+                    "patën pat": "audio/paten-pat-1a205e52b97.mp3",
+                    "patët pat": "audio/patet-pat-1a205e556a9.mp3",
+                    "patëm pat": "audio/patem-pat-1a205e5638e.mp3",
+                    "dë kem": "audio/de-kem-1a205e57686.mp3",
+                    "dë kesh": "audio/de-kesh-1a205e57fea.mp3",
+                    "dë ket": "audio/de-ket-1a205e588e4.mp3",
+                    "dë kimi": "audio/de-kimi-1a205e5928e.mp3",
+                    "dë kini": "audio/de-kini-1a205e59c3f.mp3",
+                    "dë ken": "audio/de-ken-1a205e5a578.mp3",
+                    "dë kina": "audio/de-kina-1a205e5af5f.mp3",
+                    "dë kem pas": "audio/de-kem-pas-1a205e5cfce.mp3",
+                    "dë kesh pas": "audio/de-kesh-pas-1a205e5d9a8.mp3",
+                    "dë ket pas": "audio/de-ket-pas-1a205e5f254.mp3",
+                    "dë kina pas": "audio/de-kina-pas-1a205e5fb3a.mp3",
+                    "dë kini pas": "audio/de-kini-pas-1a205e60583.mp3",
+                    "dë ken pas": "audio/de-ken-pas-1a205e60e00.mp3",
+                    "dë kem pat": "audio/de-kem-pat-1a205e632d4.mp3",
+                    "dë kesh pat": "audio/de-kesh-pat-1a205e63ca1.mp3",
+                    "dë ket pat": "audio/de-ket-pat-1a205e647ad.mp3",
+                    "dë kina pat": "audio/de-kina-pat-1a205e65234.mp3",
+                    "dë kini pat": "audio/de-kini-pat-1a205e65dc4.mp3",
+                    "dë ken pat": "audio/de-ken-pat-1a205e66837.mp3",
+                    "dë kimi pas": "audio/de-kimi-pas-1a205e673a9.mp3",
+                    "pas": "audio/pas-1a205fee54f.mp3"
+                },
                 "participle": ["pas", "pat"],
                 "conjugation": [
                     {
@@ -411,7 +1166,7 @@
                         "tense": "tashmja",
                         "mood": "urdhërore",
                         "taj": "?",
-                        "ju": ["kinja", "kini"],
+                        "ju": "kini",
                         "footnotes": [
                             "Rallë përdoret. Qëllimet e ktij zgjedhimi shpesh i plotsojn folje qera si bon, xhej, fitoj.\nVeçanërish njëjesin se kom ndaj asniher askush ta those.\nShembull: \"Boni gajret, kini durim.\""
                         ]
@@ -704,6 +1459,7 @@
             {
                 "word": "boj",
                 "std": "bëj",
+                "audio": "audio/boj-1a205cf0819.mp3",
                 "participle": "bo",
                 "conjugation": [
                     {
@@ -930,6 +1686,7 @@
             {
                 "word": "shkoj",
                 "std": "shkoj",
+                "audio": "audio/shkoj-1a205cfe571.mp3",
                 "participle": "shku",
                 "conjugation": [
                     {
@@ -1161,6 +1918,16 @@
             {
                 "word": "vaj",
                 "std": "vij",
+                "audio": "audio/vaj-1a205d0edf2.mp3",
+                "audios": {
+                    "vajsh": "audio/vajsh-1a205f47776.mp3",
+                    "vajm": "audio/vajm-1a205f498f6.mp3",
+                    "vajn": "audio/vajn-1a205f55969.mp3",
+                    "vajni": "audio/vajni-1a205f7203e.mp3",
+                    "ardh": "audio/ardh-1a205f7f4bb.mp3",
+                    "kan ardh": "audio/kan-ardh-1a205f890fb.mp3",
+                    "kajn ardh": "audio/kajn-ardh-1a205f8badc.mp3"
+                },
                 "participle": "ardh",
                 "conjugation": [
                     {
@@ -1401,7 +2168,8 @@
             {
                 "word": "foli",
                 "std": "flas",
-                "participle": "folë",
+                "audio": "audio/foli-1a205d1492c.mp3",
+                "participle": "fol",
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1413,6 +2181,210 @@
                         "ju": "folni",
                         "ato": "folin",
                         "variants": [{"taj": "folën"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "folkam",
+                        "taj": "folke",
+                        "aj": "folka",
+                        "ne": "folkim",
+                        "ju": "folki",
+                        "ato": "folkan",
+                        "variants": [{"ju": "folkit"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "taj": "fol", "ju": "folni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "lidhore",
+                        "un": "t’foli",
+                        "taj": "t’folish",
+                        "aj": "t’fole",
+                        "ne": "t’folim",
+                        "ju": "t’folni",
+                        "ato": "t’folin"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "kushtore",
+                        "un": "dë folsha",
+                        "taj": "dë folshe",
+                        "aj": "dë folte",
+                        "ne": "dë folshim",
+                        "ju": "dë folshi",
+                        "ato": "dë folshin",
+                        "variants": [{"ju": "dë folshit"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "folsha",
+                        "taj": "folsh",
+                        "aj": "folt",
+                        "ne": "folshim",
+                        "ju": "folshi",
+                        "ato": "folshin",
+                        "variants": [{"ju": "folshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "un": "folsha",
+                        "taj": "folshe",
+                        "aj": "folte",
+                        "ne": "folshim",
+                        "ju": "folshi",
+                        "ato": "folshin",
+                        "variants": [{"ju": "folshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "lidhore",
+                        "un": "t’folsha",
+                        "taj": "t’folshe",
+                        "aj": "t’folte",
+                        "ne": "t’folshim",
+                        "ju": "t’folshi",
+                        "ato": "t’folshin",
+                        "variants": [{"ju": "t’folshit"}]
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "un": "fola",
+                        "taj": "fole",
+                        "aj": "foli",
+                        "ne": "folëm",
+                        "ju": "folët",
+                        "ato": "folën"
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "dëftore",
+                        "un": "kom fol",
+                        "taj": "ke fol",
+                        "aj": "ka fol",
+                        "ne": "kina fol",
+                        "ju": "kini fol",
+                        "ato": "kan fol",
+                        "variants": [{"ne": "kimi fol", "ato": "kajn fol"}, {"ato": "kën fol"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "habitore",
+                        "un": "paskam fol",
+                        "taj": "paske fol",
+                        "aj": "paska fol",
+                        "ne": "paskim fol",
+                        "ju": "paski fol",
+                        "ato": "paskan fol",
+                        "variants": [
+                            {
+                                "un": "paham fol",
+                                "taj": "pahe fol",
+                                "aj": "paha fol",
+                                "ne": "pahim fol",
+                                "ju": "pahi fol",
+                                "ato": "pahan fol"
+                            },
+                            {"ato": "paskën fol"},
+                            {"ato": "pahën fol"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "lidhore",
+                        "un": "t’kem fol",
+                        "taj": "t’kesh fol",
+                        "aj": "t’ket fol",
+                        "ne": "t’kina fol",
+                        "ju": "t’kini fol",
+                        "ato": "t’ken fol",
+                        "variants": [{"ne": "t’kimi fol"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "kushtore",
+                        "un": "dë kisha fol",
+                        "taj": "dë kishe fol",
+                        "aj": "dë kish fol",
+                        "ne": "dë kishim fol",
+                        "ju": "dë kishi fol",
+                        "ato": "dë kishin fol",
+                        "variants": [{"aj": "dë kishte fol", "ne": "dë kishna fol", "ju": "dë kishit fol"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "dëftore",
+                        "un": "kisha fol",
+                        "taj": "kishe fol",
+                        "aj": "kish fol",
+                        "ne": "kishim fol",
+                        "ju": "kishi fol",
+                        "ato": "kishin fol",
+                        "variants": [{"aj": "kishte fol", "ne": "kishna fol", "ju": "kishit fol"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "habitore",
+                        "un": "pasksha fol",
+                        "taj": "paskshe fol",
+                        "aj": "paskësh fol",
+                        "ne": "paskshim fol",
+                        "ju": "paskshi fol",
+                        "ato": "paskshin fol",
+                        "variants": [
+                            {
+                                "un": "paskisha fol",
+                                "taj": "paskishe fol",
+                                "aj": "paskish fol",
+                                "ne": "paskishim fol",
+                                "ju": "paskishi fol",
+                                "ato": "paskishin fol"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "lidhore",
+                        "un": "t’kisha fol",
+                        "taj": "t’kishe fol",
+                        "aj": "t’kish fol",
+                        "ne": "t’kishim fol",
+                        "ju": "t’kishi fol",
+                        "ato": "t’kishin fol",
+                        "variants": [{"aj": "t’kishte fol", "ne": "t’kishna fol", "ju": "t’kishit fol"}]
+                    },
+                    {
+                        "tense": "kryera-tejshkuar",
+                        "mood": "dëftore",
+                        "un": "pata fol",
+                        "taj": "pate fol",
+                        "aj": "pat fol",
+                        "ne": "patëm fol",
+                        "ju": "patët fol",
+                        "ato": "patën fol"
+                    },
+                    {
+                        "tense": "ardhmja",
+                        "mood": "dëftore",
+                        "un": "dë foli",
+                        "taj": "dë folish",
+                        "aj": "dë fole",
+                        "ne": "dë folim",
+                        "ju": "dë folni",
+                        "ato": "dë folin"
+                    },
+                    {
+                        "tense": "ardhmja-perparme",
+                        "mood": "dëftore",
+                        "un": "dë kem fol",
+                        "taj": "dë kesh fol",
+                        "aj": "dë ket fol",
+                        "ne": "dë kina fol",
+                        "ju": "dë kini fol",
+                        "ato": "dë ken fol",
+                        "variants": [{"ne": "dë kimi fol"}]
                     }
                 ]
             }
@@ -1426,6 +2398,7 @@
             {
                 "word": "daj",
                 "std": "ndaj",
+                "participle": "da",
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1436,6 +2409,211 @@
                         "ne": "dajm",
                         "ju": "dajni",
                         "ato": "dajn"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "dajkam",
+                        "taj": "dajke",
+                        "aj": "dajka",
+                        "ne": "dajkim",
+                        "ju": "dajki",
+                        "ato": "dajkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "taj": "daj", "ju": "dani", "variants": [{"ju": "dani"}]},
+                    {
+                        "tense": "tashmja",
+                        "mood": "lidhore",
+                        "un": "t’daj",
+                        "taj": "t’dajsh",
+                        "aj": "t’daje",
+                        "ne": "t’dajm",
+                        "ju": "t’dajni",
+                        "ato": "t’dajn",
+                        "variants": [{"ju": "t'dani"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "kushtore",
+                        "un": "dë dajsha",
+                        "taj": "dë dajshe",
+                        "aj": "dë dante",
+                        "ne": "dë dajshim",
+                        "ju": "dë dajshi",
+                        "ato": "dë dajshin"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "dafsha",
+                        "taj": "dafsh",
+                        "aj": "daft",
+                        "ne": "dafshim",
+                        "ju": "dafshi",
+                        "ato": "dafshin",
+                        "variants": [{"ju": "dafshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "un": "dajsha",
+                        "taj": "dajshe",
+                        "aj": "dante",
+                        "ne": "dajshim",
+                        "ju": "dajshi",
+                        "ato": "dajshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "lidhore",
+                        "un": "t’dajsha",
+                        "taj": "t’dajshe",
+                        "aj": "t’dante",
+                        "ne": "t’dajshim",
+                        "ju": "t’dajshi",
+                        "ato": "t’dajshin",
+                        "variants": [{"ju": "t’dajshit"}]
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "un": "dajta",
+                        "taj": "dajte",
+                        "aj": "dajti",
+                        "ne": "dajtëm",
+                        "ju": "dajtët",
+                        "ato": "dajtën",
+                        "variants": [{"un": "dava", "taj": "dave"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "dëftore",
+                        "un": "kom da",
+                        "taj": "ke da",
+                        "aj": "ka da",
+                        "ne": "kina da",
+                        "ju": "kini da",
+                        "ato": "kan da",
+                        "variants": [{"ne": "kimi da", "ato": "kajn da"}, {"ato": "kën da"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "habitore",
+                        "un": "paskam da",
+                        "taj": "paske da",
+                        "aj": "paska da",
+                        "ne": "paskim da",
+                        "ju": "paski da",
+                        "ato": "paskan da",
+                        "variants": [
+                            {
+                                "un": "paham da",
+                                "taj": "pahe da",
+                                "aj": "paha da",
+                                "ne": "pahim da",
+                                "ju": "pahi da",
+                                "ato": "pahan da"
+                            },
+                            {"ato": "paskën da"},
+                            {"ato": "pahën da"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "lidhore",
+                        "un": "t’kem da",
+                        "taj": "t’kesh da",
+                        "aj": "t’ket da",
+                        "ne": "t’kina da",
+                        "ju": "t’kini da",
+                        "ato": "t’ken da",
+                        "variants": [{"ne": "t’kimi da"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "kushtore",
+                        "un": "dë kisha da",
+                        "taj": "dë kishe da",
+                        "aj": "dë kish da",
+                        "ne": "dë kishim da",
+                        "ju": "dë kishi da",
+                        "ato": "dë kishin da",
+                        "variants": [{"aj": "dë kishte da", "ne": "dë kishna da", "ju": "dë kishit da"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "dëftore",
+                        "un": "kisha da",
+                        "taj": "kishe da",
+                        "aj": "kish da",
+                        "ne": "kishim da",
+                        "ju": "kishi da",
+                        "ato": "kishin da",
+                        "variants": [{"aj": "kishte da", "ne": "kishna da", "ju": "kishit da"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "habitore",
+                        "un": "pasksha da",
+                        "taj": "paskshe da",
+                        "aj": "paskësh da",
+                        "ne": "paskshim da",
+                        "ju": "paskshi da",
+                        "ato": "paskshin da",
+                        "variants": [
+                            {
+                                "un": "paskisha da",
+                                "taj": "paskishe da",
+                                "aj": "paskish da",
+                                "ne": "paskishim da",
+                                "ju": "paskishi da",
+                                "ato": "paskishin da"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "lidhore",
+                        "un": "t’kisha da",
+                        "taj": "t’kishe da",
+                        "aj": "t’kish da",
+                        "ne": "t’kishim da",
+                        "ju": "t’kishi da",
+                        "ato": "t’kishin da",
+                        "variants": [{"aj": "t’kishte da", "ne": "t’kishna da", "ju": "t’kishit da"}]
+                    },
+                    {
+                        "tense": "kryera-tejshkuar",
+                        "mood": "dëftore",
+                        "un": "pata da",
+                        "taj": "pate da",
+                        "aj": "pat da",
+                        "ne": "patëm da",
+                        "ju": "patët da",
+                        "ato": "patën da",
+                        "footnotes": ["Po ju a nuk i patët da punët moti?"]
+                    },
+                    {
+                        "tense": "ardhmja",
+                        "mood": "dëftore",
+                        "un": "dë daj",
+                        "taj": "dë dajsh",
+                        "aj": "dë daje",
+                        "ne": "dë dajm",
+                        "ju": "dë dajni",
+                        "ato": "dë dajn",
+                        "variants": [{"ju": "dë dani"}]
+                    },
+                    {
+                        "tense": "ardhmja-perparme",
+                        "mood": "dëftore",
+                        "un": "dë kem da",
+                        "taj": "dë kesh da",
+                        "aj": "dë ket da",
+                        "ne": "dë kina da",
+                        "ju": "dë kini da",
+                        "ato": "dë ken da",
+                        "variants": [{"ne": "dë kimi da"}]
                     }
                 ]
             }
@@ -1449,6 +2627,7 @@
             {
                 "word": "du",
                 "std": "dua",
+                "participle": ["desht", "dasht", "dash"],
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1459,7 +2638,355 @@
                         "ne": "dum",
                         "ju": "duni",
                         "ato": "dun",
-                        "variants": [{"aj": "don", "ju": "doni"}]
+                        "variants": [{"taj": "don", "aj": "don", "ju": "doni"}, {"taj": "do", "ju": "dujni"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "dashkam",
+                        "taj": "dashke",
+                        "aj": "dashka",
+                        "ne": "dashkim",
+                        "ju": "dashki",
+                        "ato": "dashkan",
+                        "variants": [
+                            {
+                                "un": "dojkam",
+                                "taj": "dojke",
+                                "aj": "dojka",
+                                "ne": "dojkim",
+                                "ju": "dojki",
+                                "ato": "dojkin"
+                            },
+                            {
+                                "un": "deshkam",
+                                "taj": "deshke",
+                                "aj": "deshka",
+                                "ne": "deshkim",
+                                "ju": "deshki",
+                                "ato": "deshkan"
+                            }
+                        ]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "taj": "duj", "ju": "dujni", "variants": [{"ju": "duni"}]},
+                    {
+                        "tense": "tashmja",
+                        "mood": "lidhore",
+                        "un": "t’du",
+                        "taj": "t’dush",
+                        "aj": "t’dose",
+                        "ne": "t’dum",
+                        "ju": "t’duni",
+                        "ato": "t’dun",
+                        "variants": [{"aj": "t’doje", "ju": "t’doni"}, {"ju": "t’dujni"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "kushtore",
+                        "un": "dë dojsha",
+                        "taj": "dë dojshe",
+                        "aj": "dë donte",
+                        "ne": "dë dojshim",
+                        "ju": "dë dojshi",
+                        "ato": "dë dojshin",
+                        "variants": [
+                            {
+                                "un": "dë dujsha",
+                                "taj": "dë dujshe",
+                                "aj": "dë dunte",
+                                "ne": "dë dujshim",
+                                "ju": "dë dujshit",
+                                "ato": "dë dujshin"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "dofsha",
+                        "taj": "dofsh",
+                        "aj": "doft",
+                        "ne": "dofshim",
+                        "ju": "dofshi",
+                        "ato": "dofshin",
+                        "variants": [{"ju": "dofshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "un": "dojsha",
+                        "taj": "dojshe",
+                        "aj": "donte",
+                        "ne": "dojshim",
+                        "ju": "dojshi",
+                        "ato": "dojshin",
+                        "variants": [
+                            {
+                                "un": "dujsha",
+                                "taj": "dujshe",
+                                "aj": "dunte",
+                                "ne": "dujshim",
+                                "ju": "dujshit",
+                                "ato": "dujshin"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "lidhore",
+                        "un": "t’dojsha",
+                        "taj": "t’dojshe",
+                        "aj": "t’donte",
+                        "ne": "t’dojshim",
+                        "ju": "t’dojshi",
+                        "ato": "t’dojshin",
+                        "variants": [
+                            {
+                                "un": "t’dujsha",
+                                "taj": "t’dujshe",
+                                "aj": "t’dunte",
+                                "ne": "t’dujshim",
+                                "ju": "t’dujshit",
+                                "ato": "t’dujshin"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "un": "deshta",
+                        "taj": "deshte",
+                        "aj": "desht",
+                        "ne": "deshtëm",
+                        "ju": "deshtët",
+                        "ato": "deshtën",
+                        "variants": [{"un": "desha", "taj": "deshe", "ne": "deshëm", "ju": "deshët", "ato": "deshën"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "dëftore",
+                        "un": "kom desht",
+                        "taj": "ke desht",
+                        "aj": "ka desht",
+                        "ne": "kina desht",
+                        "ju": "kini desht",
+                        "ato": "kan desht",
+                        "variants": [
+                            {
+                                "un": "kom dasht",
+                                "taj": "ke dasht",
+                                "aj": "ka dasht",
+                                "ne": "kina dasht",
+                                "ju": "kini dasht",
+                                "ato": "kan dasht"
+                            },
+                            {
+                                "un": "kom dash",
+                                "taj": "ke dash",
+                                "aj": "ka dash",
+                                "ne": "kina dash",
+                                "ju": "kini dash",
+                                "ato": "kan dash"
+                            },
+                            {"ne": "kina/kimi desht", "ato": "kën/kajn desht"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "habitore",
+                        "un": "paskam desht",
+                        "taj": "paske desht",
+                        "aj": "paska desht",
+                        "ne": "paskim desht",
+                        "ju": "paski desht",
+                        "ato": "paskan desht",
+                        "variants": [
+                            {
+                                "un": "paskam dasht",
+                                "taj": "paske dasht",
+                                "aj": "paska dasht",
+                                "ne": "paskim dasht",
+                                "ju": "paski dasht",
+                                "ato": "paskan dasht"
+                            },
+                            {
+                                "un": "paskam dash",
+                                "taj": "paske dash",
+                                "aj": "paska dash",
+                                "ne": "paskim dash",
+                                "ju": "paski dash",
+                                "ato": "paskan dash"
+                            },
+                            {
+                                "un": "paham desht",
+                                "taj": "pahe desht",
+                                "aj": "paha desht",
+                                "ne": "pahim desht",
+                                "ju": "pahi desht",
+                                "ato": "pahan desht"
+                            },
+                            {"ato": "paskën desht"},
+                            {"ato": "pahën desht"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "lidhore",
+                        "un": "t’kem desht",
+                        "taj": "t’kesh desht",
+                        "aj": "t’ket desht",
+                        "ne": "t’kina desht",
+                        "ju": "t’kini desht",
+                        "ato": "t’ken desht",
+                        "variants": [
+                            {
+                                "un": "t’kem dasht",
+                                "taj": "t’kesh dasht",
+                                "aj": "t’ket dasht",
+                                "ne": "t’kina dasht",
+                                "ju": "t’kini dasht",
+                                "ato": "t’ken dasht"
+                            },
+                            {
+                                "un": "t’kem dash",
+                                "taj": "t’kesh dash",
+                                "aj": "t’ket dash",
+                                "ne": "t’kina dash",
+                                "ju": "t’kini dash",
+                                "ato": "t’ken dash"
+                            },
+                            {"ne": "t’kimi desht"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "kushtore",
+                        "un": "dë kisha dasht",
+                        "taj": "dë kishe dasht",
+                        "aj": "dë kish dasht",
+                        "ne": "dë kishim dasht",
+                        "ju": "dë kishi dasht",
+                        "ato": "dë kishin dasht",
+                        "variants": [
+                            {
+                                "un": "dë kisha dash",
+                                "taj": "dë kishe dash",
+                                "aj": "dë kish dash",
+                                "ne": "dë kishim dash",
+                                "ju": "dë kishi dash",
+                                "ato": "dë kishin dash"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "dëftore",
+                        "un": "kisha dasht",
+                        "taj": "kishe dasht",
+                        "aj": "kish dasht",
+                        "ne": "kishim dasht",
+                        "ju": "kishi dasht",
+                        "ato": "kishin dasht",
+                        "variants": [
+                            {
+                                "un": "kisha dash",
+                                "taj": "kishe dash",
+                                "aj": "kish dash",
+                                "ne": "kishim dash",
+                                "ju": "kishi dash",
+                                "ato": "kishin dash"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "habitore",
+                        "un": "pasksha dasht",
+                        "taj": "paskshe dasht",
+                        "aj": "paskësh dasht",
+                        "ne": "paskshim dasht",
+                        "ju": "paskshi dasht",
+                        "ato": "paskshin dasht",
+                        "variants": [
+                            {
+                                "un": "pasksha dash",
+                                "taj": "paskshe dash",
+                                "aj": "paskësh dash",
+                                "ne": "paskshim dash",
+                                "ju": "paskshi dash",
+                                "ato": "paskshin dash"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "lidhore",
+                        "un": "t’kisha dasht",
+                        "taj": "t’kishe dasht",
+                        "aj": "t’kish dasht",
+                        "ne": "t’kishim dasht",
+                        "ju": "t’kishi dasht",
+                        "ato": "t’kishin dasht",
+                        "variants": [
+                            {
+                                "un": "t’kisha dash",
+                                "taj": "t’kishe dash",
+                                "aj": "t’kish dash",
+                                "ne": "t’kishim dash",
+                                "ju": "t’kishi dash",
+                                "ato": "t’kishin dash"
+                            },
+                            {
+                                "un": "t’kisha dasht",
+                                "taj": "t’kishe dasht",
+                                "aj": "t’kishte dasht",
+                                "ne": "t’kishna dasht",
+                                "ju": "t’kishit dasht",
+                                "ato": "t’kishin dasht"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "kryera-tejshkuar",
+                        "mood": "dëftore",
+                        "un": "pata dasht",
+                        "taj": "pate dasht",
+                        "aj": "pat dasht",
+                        "ne": "patëm dasht",
+                        "ju": "patët dasht",
+                        "ato": "patën dasht"
+                    },
+                    {
+                        "tense": "ardhmja",
+                        "mood": "dëftore",
+                        "un": "dë du",
+                        "taj": "dë dush",
+                        "aj": "dë dose",
+                        "ne": "dë dum",
+                        "ju": "dë duni",
+                        "ato": "dë dun",
+                        "variants": [{"aj": "dë doje", "ju": "dë doni"}, {"ju": "dë dujni"}]
+                    },
+                    {
+                        "tense": "ardhmja-perparme",
+                        "mood": "dëftore",
+                        "un": "dë kem dasht",
+                        "taj": "dë kesh dasht",
+                        "aj": "dë ket dasht",
+                        "ne": "dë kina dasht",
+                        "ju": "dë kini dasht",
+                        "ato": "dë ken dasht",
+                        "variants": [
+                            {
+                                "un": "dë kem dash",
+                                "taj": "dë kesh dash",
+                                "aj": "dë ket dash",
+                                "ne": "dë kina dash",
+                                "ju": "dë kini dash",
+                                "ato": "dë ken dash"
+                            },
+                            {"ne": "dë kimi dasht"}
+                        ]
                     }
                 ]
             }
@@ -1469,10 +2996,10 @@
         "type": "fjale",
         "sub": "folje",
         "date": "2026-11-18",
-        "draft": true,
         "words": [
             {
                 "word": "ha",
+                "participle": "hongër",
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1482,7 +3009,212 @@
                         "aj": "ha",
                         "ne": "ham",
                         "ju": "hani",
-                        "ato": "han"
+                        "ato": "hanë",
+                        "variants": [{"taj": "han", "aj": "han"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "hajkam",
+                        "taj": "hajke",
+                        "aj": "hajka",
+                        "ne": "hajkim",
+                        "ju": "hajki",
+                        "ato": "hajkan",
+                        "variants": [{"ju": "hajkit"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "taj": "ha", "ju": "hani", "variants": [{"ju": "hajni"}]},
+                    {
+                        "tense": "tashmja",
+                        "mood": "lidhore",
+                        "un": "t’ha",
+                        "taj": "t’hash",
+                        "aj": "t’haje",
+                        "ne": "t’ham",
+                        "ju": "t’hani",
+                        "ato": "t’hanë"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "kushtore",
+                        "un": "dë hajsha",
+                        "taj": "dë hajshe",
+                        "aj": "dë hante",
+                        "ne": "dë hajshim",
+                        "ju": "dë hajshi",
+                        "ato": "dë hajshin",
+                        "variants": [{"ju": "dë hajshit"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "honksha",
+                        "taj": "honksh",
+                        "aj": "honkt",
+                        "ne": "honkshim",
+                        "ju": "honkshi",
+                        "ato": "honkshin",
+                        "variants": [{"ju": "honkshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "un": "hajsha",
+                        "taj": "hajshe",
+                        "aj": "hante",
+                        "ne": "hajshim",
+                        "ju": "hajshi",
+                        "ato": "hajshin",
+                        "variants": [{"ju": "hajshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "lidhore",
+                        "un": "t’hajsha",
+                        "taj": "t’hajshe",
+                        "aj": "t’hante",
+                        "ne": "t’hajshim",
+                        "ju": "t’hajshi",
+                        "ato": "t’hajshin",
+                        "variants": [{"ju": "t’hajshit"}]
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "un": "hongra",
+                        "taj": "hongre",
+                        "aj": "hongër",
+                        "ne": "hongrëm",
+                        "ju": "hongrët",
+                        "ato": "hongrën"
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "dëftore",
+                        "un": "kom hongër",
+                        "taj": "ke hongër",
+                        "aj": "ka hongër",
+                        "ne": "kina hongër",
+                        "ju": "kini hongër",
+                        "ato": "kan hongër",
+                        "variants": [{"ne": "kimi hongër", "ato": "kajn hongër"}, {"ato": "kën hongër"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "habitore",
+                        "un": "paskam hongër",
+                        "taj": "paske hongër",
+                        "aj": "paska hongër",
+                        "ne": "paskim hongër",
+                        "ju": "paski hongër",
+                        "ato": "paskan hongër",
+                        "variants": [
+                            {
+                                "un": "paham hongër",
+                                "taj": "pahe hongër",
+                                "aj": "paha hongër",
+                                "ne": "pahim hongër",
+                                "ju": "pahi hongër",
+                                "ato": "pahan hongër"
+                            },
+                            {"ato": "paskën hongër"},
+                            {"ato": "pahën hongër"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "lidhore",
+                        "un": "t’kem hongër",
+                        "taj": "t’kesh hongër",
+                        "aj": "t’ket hongër",
+                        "ne": "t’kina hongër",
+                        "ju": "t’kini hongër",
+                        "ato": "t’ken hongër",
+                        "variants": [{"ne": "t’kimi hongër"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "kushtore",
+                        "un": "dë kisha hongër",
+                        "taj": "dë kishe hongër",
+                        "aj": "dë kish hongër",
+                        "ne": "dë kishim hongër",
+                        "ju": "dë kishi hongër",
+                        "ato": "dë kishin hongër",
+                        "variants": [{"aj": "dë kishte hongër", "ne": "dë kishna hongër", "ju": "dë kishit hongër"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "dëftore",
+                        "un": "kisha hongër",
+                        "taj": "kishe hongër",
+                        "aj": "kish hongër",
+                        "ne": "kishim hongër",
+                        "ju": "kishi hongër",
+                        "ato": "kishin hongër",
+                        "variants": [{"aj": "kishte hongër", "ne": "kishna hongër", "ju": "kishit hongër"}]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "habitore",
+                        "un": "pasksha hongër",
+                        "taj": "paskshe hongër",
+                        "aj": "paskësh hongër",
+                        "ne": "paskshim hongër",
+                        "ju": "paskshi hongër",
+                        "ato": "paskshin hongër",
+                        "variants": [
+                            {
+                                "un": "paskisha hongër",
+                                "taj": "paskishe hongër",
+                                "aj": "paskish hongër",
+                                "ne": "paskishim hongër",
+                                "ju": "paskishi hongër",
+                                "ato": "paskishin hongër"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "lidhore",
+                        "un": "t’kisha hongër",
+                        "taj": "t’kishe hongër",
+                        "aj": "t’kish hongër",
+                        "ne": "t’kishim hongër",
+                        "ju": "t’kishi hongër",
+                        "ato": "t’kishin hongër",
+                        "variants": [{"aj": "t’kishte hongër", "ne": "t’kishna hongër", "ju": "t’kishit hongër"}]
+                    },
+                    {
+                        "tense": "kryera-tejshkuar",
+                        "mood": "dëftore",
+                        "un": "pata hongër",
+                        "taj": "pate hongër",
+                        "aj": "pat hongër",
+                        "ne": "patëm hongër",
+                        "ju": "patët hongër",
+                        "ato": "patën hongër"
+                    },
+                    {
+                        "tense": "ardhmja",
+                        "mood": "dëftore",
+                        "un": "dë ha",
+                        "taj": "dë hash",
+                        "aj": "dë haje",
+                        "ne": "dë ham",
+                        "ju": "dë hani",
+                        "ato": "dë hanë"
+                    },
+                    {
+                        "tense": "ardhmja-perparme",
+                        "mood": "dëftore",
+                        "un": "dë kem hongër",
+                        "taj": "dë kesh hongër",
+                        "aj": "dë ket hongër",
+                        "ne": "dë kina hongër",
+                        "ju": "dë kini hongër",
+                        "ato": "dë ken hongër",
+                        "variants": [{"ne": "dë kimi hongër"}]
                     }
                 ]
             }
@@ -1496,6 +3228,7 @@
             {
                 "word": "paj",
                 "std": "pi",
+                "participle": ["paj", "pajt"],
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1505,7 +3238,298 @@
                         "aj": "paj",
                         "ne": "pajm",
                         "ju": "pajni",
-                        "ato": "pajnë"
+                        "ato": "pajnë",
+                        "variants": [{"aj": "pajn"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "pajkam",
+                        "taj": "pajke",
+                        "aj": "pajka",
+                        "ne": "pajkim",
+                        "ju": "pajki",
+                        "ato": "pajkan",
+                        "variants": [{"ju": "pajkit"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "taj": "paj", "ju": "pajni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "lidhore",
+                        "un": "t’paj",
+                        "taj": "t’pajsh",
+                        "aj": "t’paje",
+                        "ne": "t’pajm",
+                        "ju": "t’pajni",
+                        "ato": "t’pajn"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "kushtore",
+                        "un": "dë pajsha",
+                        "taj": "dë pajshe",
+                        "aj": "dë pajnte",
+                        "ne": "dë pajshim",
+                        "ju": "dë pajshi",
+                        "ato": "dë pajshin",
+                        "variants": [{"ju": "dë pajshit"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "pajfsha",
+                        "taj": "pajfshe",
+                        "aj": "pajft",
+                        "ne": "pajfshim",
+                        "ju": "pajfshi",
+                        "ato": "pajfshin",
+                        "variants": [{"ju": "pajfshit"}]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "un": "pajsha",
+                        "taj": "pajshe",
+                        "aj": "pajnte",
+                        "ne": "pajshim",
+                        "ju": "pajshi",
+                        "ato": "pajshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "lidhore",
+                        "un": "t’pajsha",
+                        "taj": "t’pajshe",
+                        "aj": "t’pajnte",
+                        "ne": "t’pajshim",
+                        "ju": "t’pajshi",
+                        "ato": "t’pajshin",
+                        "variants": [{"ju": "t’pajshit"}]
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "un": "pajva",
+                        "taj": "pajve",
+                        "aj": "pajv",
+                        "ne": "pajvëm",
+                        "ju": "pajvët",
+                        "ato": "pajvën",
+                        "variants": [{"un": "pajta", "taj": "pajte", "ne": "pajtëm", "ju": "pajtët", "ato": "pajtën"}]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "dëftore",
+                        "un": "kom paj",
+                        "taj": "ke paj",
+                        "aj": "ka paj",
+                        "ne": "kina paj",
+                        "ju": "kini paj",
+                        "ato": "kan paj",
+                        "variants": [
+                            {
+                                "un": "kom pajt",
+                                "taj": "ke pajt",
+                                "aj": "ka pajt",
+                                "ne": "kina pajt",
+                                "ju": "kini pajt",
+                                "ato": "kan pajt"
+                            },
+                            {"ne": "kimi paj", "ato": "kajn/kën paj"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "habitore",
+                        "un": "paskam paj",
+                        "taj": "paske paj",
+                        "aj": "paska paj",
+                        "ne": "paskim paj",
+                        "ju": "paski paj",
+                        "ato": "paskan paj",
+                        "variants": [
+                            {
+                                "un": "paskam pajt",
+                                "taj": "paske pajt",
+                                "aj": "paska pajt",
+                                "ne": "paskim pajt",
+                                "ju": "paski pajt",
+                                "ato": "paskan pajt"
+                            },
+                            {
+                                "un": "paham paj",
+                                "taj": "pahe paj",
+                                "aj": "paha paj",
+                                "ne": "pahim paj",
+                                "ju": "pahi paj",
+                                "ato": "pahan paj"
+                            },
+                            {"ato": "paskën paj"},
+                            {"ato": "pahën paj"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "lidhore",
+                        "un": "t’kem paj",
+                        "taj": "t’kesh paj",
+                        "aj": "t’ket paj",
+                        "ne": "t’kina paj",
+                        "ju": "t’kini paj",
+                        "ato": "t’ken paj",
+                        "variants": [
+                            {
+                                "un": "t’kem pajt",
+                                "taj": "t’kesh pajt",
+                                "aj": "t’ket pajt",
+                                "ne": "t’kina pajt",
+                                "ju": "t’kini pajt",
+                                "ato": "t’ken pajt"
+                            },
+                            {"ne": "t’kimi paj"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-perbere",
+                        "mood": "kushtore",
+                        "un": "dë kisha paj",
+                        "taj": "dë kishe paj",
+                        "aj": "dë kish paj",
+                        "ne": "dë kishim paj",
+                        "ju": "dë kishi paj",
+                        "ato": "dë kishin paj",
+                        "variants": [
+                            {
+                                "un": "dë kisha pajt",
+                                "taj": "dë kishe pajt",
+                                "aj": "dë kish pajt",
+                                "ne": "dë kishim pajt",
+                                "ju": "dë kishi pajt",
+                                "ato": "dë kishin pajt"
+                            },
+                            {"aj": "dë kishte paj", "ne": "dë kishna paj", "ju": "dë kishit paj"}
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "dëftore",
+                        "un": "kisha paj",
+                        "taj": "kishe paj",
+                        "aj": "kish paj",
+                        "ne": "kishim paj",
+                        "ju": "kishi paj",
+                        "ato": "kishin paj",
+                        "variants": [
+                            {
+                                "un": "kisha pajt",
+                                "taj": "kishe pajt",
+                                "aj": "kish pajt",
+                                "ne": "kishim pajt",
+                                "ju": "kishi pajt",
+                                "ato": "kishin pajt"
+                            },
+                            {"aj": "kishte paj", "ne": "kishna paj", "ju": "kishit paj"}
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "habitore",
+                        "un": "pasksha paj",
+                        "taj": "paskshe paj",
+                        "aj": "paskësh paj",
+                        "ne": "paskshim paj",
+                        "ju": "paskshi paj",
+                        "ato": "paskshin paj",
+                        "variants": [
+                            {
+                                "un": "pasksha pajt",
+                                "taj": "paskshe pajt",
+                                "aj": "paskësh pajt",
+                                "ne": "paskshim pajt",
+                                "ju": "paskshi pajt",
+                                "ato": "paskshin pajt"
+                            },
+                            {
+                                "un": "paskisha paj",
+                                "taj": "paskishe paj",
+                                "aj": "paskish paj",
+                                "ne": "paskishim paj",
+                                "ju": "paskishi paj",
+                                "ato": "paskishin paj"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "mese-kryera",
+                        "mood": "lidhore",
+                        "un": "t’kisha paj",
+                        "taj": "t’kishe paj",
+                        "aj": "t’kish paj",
+                        "ne": "t’kishim paj",
+                        "ju": "t’kishi paj",
+                        "ato": "t’kishin paj",
+                        "variants": [
+                            {
+                                "un": "t’kisha pajt",
+                                "taj": "t’kishe pajt",
+                                "aj": "t’kish pajt",
+                                "ne": "t’kishim pajt",
+                                "ju": "t’kishi pajt",
+                                "ato": "t’kishin pajt"
+                            },
+                            {"aj": "t’kishte paj", "ne": "t’kishna paj", "ju": "t’kishit paj"}
+                        ]
+                    },
+                    {
+                        "tense": "kryera-tejshkuar",
+                        "mood": "dëftore",
+                        "un": "pata paj",
+                        "taj": "pate paj",
+                        "aj": "pat paj",
+                        "ne": "patëm paj",
+                        "ju": "patët paj",
+                        "ato": "patën paj",
+                        "variants": [
+                            {
+                                "un": "pata pajt",
+                                "taj": "pate pajt",
+                                "aj": "pat pajt",
+                                "ne": "patëm pajt",
+                                "ju": "patët pajt",
+                                "ato": "patën pajt"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "ardhmja",
+                        "mood": "dëftore",
+                        "un": "dë paj",
+                        "taj": "dë pajsh",
+                        "aj": "dë paje",
+                        "ne": "dë pajm",
+                        "ju": "dë pajni",
+                        "ato": "dë pajn"
+                    },
+                    {
+                        "tense": "ardhmja-perparme",
+                        "mood": "dëftore",
+                        "un": "dë kem paj",
+                        "taj": "dë kesh paj",
+                        "aj": "dë ket paj",
+                        "ne": "dë kina paj",
+                        "ju": "dë kini paj",
+                        "ato": "dë ken paj",
+                        "variants": [
+                            {
+                                "un": "dë kem pajt",
+                                "taj": "dë kesh pajt",
+                                "aj": "dë ket pajt",
+                                "ne": "dë kina pajt",
+                                "ju": "dë kini pajt",
+                                "ato": "dë ken pajt"
+                            },
+                            {"ne": "dë kimi paj"}
+                        ]
                     }
                 ]
             }
@@ -1520,6 +3544,9 @@
             {
                 "word": "shof",
                 "std": "shoh",
+                "audios": {"pat": "audio/pat-1a205fcbf54.mp3"},
+                "participle": "pa",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1530,6 +3557,49 @@
                         "ne": "shofim",
                         "ju": "shajfni",
                         "ato": "shofin"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "shajfkam",
+                        "taj": "shajfke",
+                        "aj": "shajfka",
+                        "ne": "shajfkim",
+                        "ju": "shajfki",
+                        "ato": "shajfkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "shif", "ju": "shifni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "un": "pafsha",
+                        "taj": "pafsh",
+                        "aj": "paft",
+                        "ne": "pafshim",
+                        "ju": "pafshi",
+                        "ato": "pafshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "shifsha",
+                        "taj": "shifshe",
+                        "aj": "shifte",
+                        "ne": "shifshim",
+                        "ju": "shifshi",
+                        "ato": "shifshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "pash",
+                        "taj": "pe",
+                        "aj": "pa",
+                        "ne": "pam",
+                        "ju": "pat",
+                        "ato": "pan"
                     }
                 ]
             }
@@ -1543,6 +3613,8 @@
         "words": [
             {
                 "word": "marr",
+                "participle": "marr",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1553,6 +3625,51 @@
                         "ne": "marrim",
                         "ju": "merrni",
                         "ato": "marrin"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "review": true,
+                        "un": "marrkam",
+                        "taj": "marrke",
+                        "aj": "marrka",
+                        "ne": "marrkim",
+                        "ju": "marrki",
+                        "ato": "marrkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "merr", "ju": "merrni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "marrsha",
+                        "taj": "marrsh",
+                        "aj": "marrt",
+                        "ne": "marrshim",
+                        "ju": "marrshi",
+                        "ato": "marrshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "merrsha",
+                        "taj": "merrshe",
+                        "aj": "merrte",
+                        "ne": "merrshim",
+                        "ju": "merrshi",
+                        "ato": "merrshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "mora",
+                        "taj": "more",
+                        "aj": "mori",
+                        "ne": "morëm",
+                        "ju": "morët",
+                        "ato": "morën"
                     }
                 ]
             }
@@ -1566,6 +3683,8 @@
         "words": [
             {
                 "word": "jap",
+                "participle": "dhon",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1576,6 +3695,61 @@
                         "ne": "japim",
                         "ju": "jepni",
                         "ato": "japin"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "jepkam",
+                        "taj": "jepke",
+                        "aj": "jepka",
+                        "ne": "jepkim",
+                        "ju": "jepki",
+                        "ato": "jepkan",
+                        "variants": [{"un": "apkam", "taj": "apke", "aj": "apka", "ne": "apkim", "ju": "apki", "ato": "apkan"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "jep", "ju": "jepni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "japsha",
+                        "taj": "japsh",
+                        "aj": "japt",
+                        "ne": "japshim",
+                        "ju": "japshi",
+                        "ato": "japshin",
+                        "variants": [
+                            {
+                                "un": "jepsha",
+                                "taj": "jepsh",
+                                "aj": "jept",
+                                "ne": "jepshim",
+                                "ju": "jepshi",
+                                "ato": "jepshin"
+                            }
+                        ]
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "jepsha",
+                        "taj": "jepshe",
+                        "aj": "jepte",
+                        "ne": "jepshim",
+                        "ju": "jepshi",
+                        "ato": "jepshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "dhash",
+                        "taj": "dhe",
+                        "aj": "dha",
+                        "ne": "dham",
+                        "ju": "dhat",
+                        "ato": "dhan"
                     }
                 ]
             }
@@ -1590,6 +3764,8 @@
             {
                 "word": "thom",
                 "std": "them",
+                "participle": "thon",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1600,6 +3776,50 @@
                         "ne": "thomi",
                         "ju": "thoni",
                         "ato": "thon"
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "un": "thujkam",
+                        "taj": "thujke",
+                        "aj": "thujka",
+                        "ne": "thujkim",
+                        "ju": "thujki",
+                        "ato": "thujkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "thuj", "ju": "thoni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "thofsha",
+                        "taj": "thofsh",
+                        "aj": "thoft",
+                        "ne": "thofshim",
+                        "ju": "thofshi",
+                        "ato": "thofshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "thojsha",
+                        "taj": "thojshe",
+                        "aj": "thonte",
+                        "ne": "thojshim",
+                        "ju": "thojshi",
+                        "ato": "thojshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "thash",
+                        "taj": "the",
+                        "aj": "tha",
+                        "ne": "tham",
+                        "ju": "that",
+                        "ato": "than"
                     }
                 ]
             }
@@ -1950,6 +4170,8 @@
             {
                 "word": "ngjoj",
                 "std": "dëgjoj",
+                "participle": "ngju",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1971,6 +4193,29 @@
                                 "ato": "nëgojn"
                             }
                         ]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "ngjo", "ju": "ngjoni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "ngjofsha",
+                        "taj": "ngjofsh",
+                        "aj": "ngjoft",
+                        "ne": "ngjofshim",
+                        "ju": "ngjofshi",
+                        "ato": "ngjofshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "ngjova",
+                        "taj": "ngjove",
+                        "aj": "ngjoj",
+                        "ne": "ngjum",
+                        "ju": "ngjut",
+                        "ato": "ngjun"
                     }
                 ]
             }
@@ -1985,6 +4230,8 @@
             {
                 "word": "ngjohem",
                 "std": "dëgjohem",
+                "participle": "ngju",
+                "participleReview": true,
                 "conjugation": [
                     {
                         "tense": "tashmja",
@@ -1996,6 +4243,51 @@
                         "ju": "ngjoheni",
                         "ato": "ngjohen",
                         "variants": [{"ne": "ngjona", "ju": "ngjoni"}]
+                    },
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "review": true,
+                        "un": "u ngjojkam",
+                        "taj": "u ngjojke",
+                        "aj": "u ngjojka",
+                        "ne": "u ngjojkim",
+                        "ju": "u ngjojki",
+                        "ato": "u ngjojkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "ngjohu", "ju": "ngjohni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "u ngjofsha",
+                        "taj": "u ngjofsh",
+                        "aj": "u ngjoft",
+                        "ne": "u ngjofshim",
+                        "ju": "u ngjofshi",
+                        "ato": "u ngjofshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "ngjohesha",
+                        "taj": "ngjoheshe",
+                        "aj": "ngjohej",
+                        "ne": "ngjoheshim",
+                        "ju": "ngjoheshi",
+                        "ato": "ngjoheshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "u ngjova",
+                        "taj": "u ngjove",
+                        "aj": "u ngju",
+                        "ne": "u ngjum",
+                        "ju": "u ngjut",
+                        "ato": "u ngjun"
                     }
                 ]
             }
@@ -2009,7 +4301,21 @@
         "words": [
             {
                 "word": "laj",
+                "participle": "la",
+                "participleReview": true,
                 "conjugation": [
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "laj",
+                        "taj": "lajsh",
+                        "aj": "lan",
+                        "ne": "lajm",
+                        "ju": "lajni",
+                        "ato": "lajn",
+                        "variants": [{"taj": "lan"}]
+                    },
                     {
                         "tense": "tashmja",
                         "mood": "habitore",
@@ -2019,6 +4325,40 @@
                         "ne": "lajkim",
                         "ju": "lajki(t)*",
                         "ato": "lajkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "laj", "ju": "lajni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "lafsha",
+                        "taj": "lafsh",
+                        "aj": "laft",
+                        "ne": "lafshim",
+                        "ju": "lafshi",
+                        "ato": "lafshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "lajsha",
+                        "taj": "lajshe",
+                        "aj": "lante",
+                        "ne": "lajshim",
+                        "ju": "lajshi",
+                        "ato": "lajshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "lava",
+                        "taj": "lave",
+                        "aj": "lau",
+                        "ne": "lam",
+                        "ju": "lat",
+                        "ato": "lan"
                     }
                 ]
             }
@@ -2032,7 +4372,20 @@
         "words": [
             {
                 "word": "lahem",
+                "participle": "la",
+                "participleReview": true,
                 "conjugation": [
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "lahem",
+                        "taj": "lahesh",
+                        "aj": "lahet",
+                        "ne": "lahena",
+                        "ju": "laheni",
+                        "ato": "lahen"
+                    },
                     {
                         "tense": "tashmja",
                         "mood": "habitore",
@@ -2042,6 +4395,40 @@
                         "ne": "u lajkim",
                         "ju": "u lajki(t)*",
                         "ato": "u lajkin"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "lahu", "ju": "lahni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "u lafsha",
+                        "taj": "u lafsh",
+                        "aj": "u laft",
+                        "ne": "u lafshim",
+                        "ju": "u lafshi",
+                        "ato": "u lafshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "lahesha",
+                        "taj": "laheshe",
+                        "aj": "lahej",
+                        "ne": "laheshim",
+                        "ju": "laheshi",
+                        "ato": "laheshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "u lava",
+                        "taj": "u lave",
+                        "aj": "u la",
+                        "ne": "u lam",
+                        "ju": "u lat",
+                        "ato": "u lan"
                     }
                 ]
             }
@@ -2052,19 +4439,7 @@
         "sub": "folje",
         "date": "2025-05-26",
         "draft": true,
-        "words": [
-            {
-                "std": "fik",
-                "conjugation": [
-                    {
-                        "tense": "tashmja",
-                        "mood": "urdhërore",
-                        "taj": "fajke",
-                        "ju": ["fajknja", "fajkjani (asaj)", "fajkvani (atine)"]
-                    }
-                ]
-            }
-        ]
+        "words": [{"std": "fik", "conjugation": [{"tense": "tashmja", "mood": "urdhërore", "taj": "fajk", "ju": "fajkni"}]}]
     },
     {
         "type": "fjale",
@@ -2074,14 +4449,7 @@
         "words": [
             {
                 "std": "shkym/shemb",
-                "conjugation": [
-                    {
-                        "tense": "tashmja",
-                        "mood": "urdhërore",
-                        "taj": "shime",
-                        "ju": ["shimnja", "shimjani (atij)", "shimvani (atine)"]
-                    }
-                ]
+                "conjugation": [{"tense": "tashmja", "mood": "urdhërore", "taj": "shim", "ju": "shimni"}]
             }
         ]
     },
@@ -2094,7 +4462,33 @@
             {
                 "word": "shkruj/shkrauj",
                 "std": "shkruaj",
+                "participle": "shkru",
+                "participleReview": true,
                 "conjugation": [
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "shkruj",
+                        "taj": "shkrujsh",
+                        "aj": "shkrun",
+                        "ne": "shkrujm",
+                        "ju": "shkrujni",
+                        "ato": "shkrujn",
+                        "variants": [{"taj": "shkrun"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "shkruj", "ju": "shkrujni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "shkrofsha",
+                        "taj": "shkrofsh",
+                        "aj": "shkroft",
+                        "ne": "shkrofshim",
+                        "ju": "shkrofshi",
+                        "ato": "shkrofshin"
+                    },
                     {
                         "tense": "pakryera",
                         "mood": "dëftore",
@@ -2104,6 +4498,17 @@
                         "ne": "shkrujshim",
                         "ju": "shkrujshit",
                         "ato": "shkrujshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "shkrova",
+                        "taj": "shkrove",
+                        "aj": "shkroj",
+                        "ne": "shkrum",
+                        "ju": "shkrut",
+                        "ato": "shkrun"
                     }
                 ]
             }
@@ -2118,7 +4523,32 @@
             {
                 "word": "çeshi",
                 "std": "qesh",
+                "participle": "çesh",
+                "participleReview": true,
                 "conjugation": [
+                    {
+                        "tense": "tashmja",
+                        "mood": "habitore",
+                        "review": true,
+                        "un": "çeshkam",
+                        "taj": "çeshke",
+                        "aj": "çeshka",
+                        "ne": "çeshkim",
+                        "ju": "çeshki",
+                        "ato": "çeshkan"
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "çesh", "ju": "çeshni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "çeshsha",
+                        "taj": "çeshsh",
+                        "aj": "çesht",
+                        "ne": "çeshshim",
+                        "ju": "çeshshi",
+                        "ato": "çeshshin"
+                    },
                     {
                         "tense": "pakryera",
                         "mood": "dëftore",
@@ -2128,6 +4558,17 @@
                         "ne": "çeshshim",
                         "ju": "çeshshit",
                         "ato": "çeshshin"
+                    },
+                    {
+                        "tense": "kryera-thjeshte",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "çesha",
+                        "taj": "çeshe",
+                        "aj": "çeshi",
+                        "ne": "çeshëm",
+                        "ju": "çeshët",
+                        "ato": "çeshën"
                     }
                 ]
             }
@@ -2142,7 +4583,44 @@
             {
                 "word": "ndaj",
                 "std": "ndiej, geg: nij",
+                "participle": "ndajt",
+                "participleReview": true,
                 "conjugation": [
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "ndaj",
+                        "taj": "ndajsh",
+                        "aj": "ndan",
+                        "ne": "ndajm",
+                        "ju": "ndajni",
+                        "ato": "ndajn",
+                        "variants": [{"taj": "ndan"}]
+                    },
+                    {"tense": "tashmja", "mood": "urdhërore", "review": true, "taj": "ndaj", "ju": "ndajni"},
+                    {
+                        "tense": "tashmja",
+                        "mood": "dëshirore",
+                        "review": true,
+                        "un": "ndajtsha",
+                        "taj": "ndajtsh",
+                        "aj": "ndajt",
+                        "ne": "ndajtshim",
+                        "ju": "ndajtshi",
+                        "ato": "ndajtshin"
+                    },
+                    {
+                        "tense": "pakryera",
+                        "mood": "dëftore",
+                        "review": true,
+                        "un": "ndajsha",
+                        "taj": "ndajshe",
+                        "aj": "ndante",
+                        "ne": "ndajshim",
+                        "ju": "ndajshi",
+                        "ato": "ndajshin"
+                    },
                     {
                         "tense": "kryera-thjeshte",
                         "mood": "dëftore",

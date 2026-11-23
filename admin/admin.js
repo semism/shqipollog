@@ -4,9 +4,15 @@ const ITEMS = TAXONOMY.grammarMenu.flatMap((g) => g.items.map((x) => ({ ...x, gr
 const PRONOUNS = ITEMS.filter((x) => x.group === 'Përemra').map((x) => x.id);
 const LABEL = Object.fromEntries([...TAXONOMY.dictionaryCategories, ...TAXONOMY.blog, ...ITEMS].map((x) => [x.id, x.label]));
 const { PERSON_KEYS: PERSONS, PERSON_LABEL: PLABEL, CASES, asList, day, personsOf } = SHARED;
-const ORDER = ['id', 'type', 'sub', 'cat', 'tense', 'mood', 'pronoun', 'case', 'date', 'place', 'draft', 'title', 'word', 'gender', 'pos',
-    'std', 'pronunciation', 'video', 'intro', 'meaning', ...PERSONS, 'm', 'f', 'njejes', 'shumes', 'pashquar', 'shquar', ...CASES.map((c) => c[0]),
-    'participle', 'variants', 'variantsNote', 'declension', 'words', 'conjugation', 'examples', 'footnotes', 'text', 'body'];
+const ORDER = ['id', 'type', 'sub', 'cat', 'tense', 'mood', 'pronoun', 'case', 'date', 'place', 'draft', 'review', 'title', 'word', 'gender', 'pos',
+    'std', 'pronunciation', 'audio', 'audios', 'video', 'intro', 'meaning', ...PERSONS, 'm', 'f', 'njejes', 'shumes', 'pashquar', 'shquar', ...CASES.map((c) => c[0]),
+    'participle', 'participleReview', 'variants', 'variantsNote', 'declension', 'words', 'conjugation', 'examples', 'footnotes', 'text', 'body'];
+// true/false flags that are left out of the file when false
+const REVIEW_KEYS = ['draft', 'review', 'participleReview'];
+// filled in without a speaker's check yet: a tense with review: true, or a verb with participleReview: true
+const needsReview = (e) => (e.words || []).some((w) => w.participleReview || (w.conjugation || []).some((z) => z.review));
+const reviewBox = (obj, key) => h('label', { class: 'check review', title: 'Format u mbushën pa u kontrollu nga një folës. Hiqe kur t’i kesh kontrollu.' },
+    h('input', { type: 'checkbox', checked: !!obj[key], onchange: (ev) => { if (ev.target.checked) obj[key] = true; else delete obj[key]; changed(); } }), 'pret rishikim');
 const today = () => new Date().toLocaleDateString('sv');
 const { norm } = SHARED;
 
@@ -38,7 +44,7 @@ const order = (o) => {
 };
 const clean = (v, key, top) => {
     if (typeof v === 'string') { const t = v.trim(); return t === '' ? undefined : t; }
-    if (typeof v === 'boolean') return key === 'draft' && !v ? undefined : v;
+    if (typeof v === 'boolean') return REVIEW_KEYS.includes(key) && !v ? undefined : v;
     if (Array.isArray(v)) {
         const out = v.map((x) => clean(x, key)).filter((x) => x !== undefined);
         return out.length ? out : undefined;
@@ -89,6 +95,150 @@ const set = (obj, key, val) => {
     changed();
 };
 
+// ---------- recordings ----------
+// ● records from the microphone; ■ stops and sends it to serve.py, which stores it in docs/audio/ (as .mp3) and returns the path.
+// A headword's clip goes in its `audio`. A single form's (a table cell, a variant) goes in `audios` of the word that owns it,
+// keyed by the form's spelling, so one form in several tenses shares one clip. Recording any form is optional.
+// Old files are deleted only when a save no longer points to them (see serve.py), so leaving without saving loses nothing.
+const RECORD_TYPES = ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/mp4', 'audio/webm'];
+const slugAscii = (t) => norm(t || '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'fjale';
+let recording = null; // one at a time: { stop }
+// Records one clip. ui: tick(seconds), saving(), done(path, error). Resolves true once recording has started.
+const startRecording = async (name, ui) => {
+    if (recording) return false;
+    recording = { stop: () => {} }; // taken while the browser asks for the microphone
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: true, autoGainControl: true } }); }
+    catch (err) { recording = null; ui.done(null, 'S’ka qasje te mikrofoni'); return false; }
+    const type = RECORD_TYPES.find((t) => window.MediaRecorder && MediaRecorder.isTypeSupported(t)) || '';
+    const rec = new MediaRecorder(stream, type ? { mimeType: type } : {});
+    const chunks = [];
+    rec.ondataavailable = (ev) => { if (ev.data.size) chunks.push(ev.data); };
+    const t0 = Date.now();
+    const timer = setInterval(() => ui.tick(Math.round((Date.now() - t0) / 1000)), 250);
+    rec.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        clearInterval(timer);
+        recording = null;
+        ui.saving();
+        const blob = new Blob(chunks, { type: rec.mimeType || type || 'audio/webm' });
+        try {
+            const r = await fetch('/api/audio', { method: 'POST', headers: { 'Content-Type': blob.type, 'X-Token': TOKEN, 'X-Name': name }, body: blob });
+            const res = await r.json();
+            if (!r.ok) throw new Error(res.error || r.status);
+            ui.done(res.path);
+        } catch (err) { ui.done(null, 'Nuk u ruajt: ' + err.message); }
+    };
+    recording = { stop: () => { if (rec.state !== 'inactive') rec.stop(); } };
+    rec.start();
+    ui.tick(0);
+    return true;
+};
+const playClip = (path) => new Audio('/' + path).play().catch(() => {});
+// several clips one after another (a form the linker builds from pieces)
+const playChain = (paths) => {
+    const a = new Audio();
+    const rest = [...paths];
+    const next = () => { if (rest.length) { a.src = '/' + rest.shift(); a.play().catch(() => {}); } };
+    a.onended = next;
+    next();
+};
+const redrawForm = () => { const y = formEl.scrollTop; draw(); formEl.scrollTop = y; };
+// the e tashme (dëftore) "un" form of a verb shares the headword's recording (`audio`), not an `audios` entry
+const linkedToHead = (owner, form) => !!owner.conjugation && form === SHARED.headForm(owner);
+// a saved clip's length ("1.4 s"), read from the file itself, so older clips show it too
+const clipLength = (path) => {
+    const tag = h('span', { class: 'clip-len' });
+    const a = new Audio();
+    a.preload = 'metadata';
+    a.onloadedmetadata = () => { if (isFinite(a.duration)) tag.textContent = `${a.duration.toFixed(1)} s`; };
+    a.onerror = () => { tag.textContent = 'mungon skedari'; tag.title = path; };
+    a.src = '/' + path;
+    return tag;
+};
+
+// The headword's `audio` row. The ● button stays the same element while recording, so ■ can be pressed anywhere on it.
+const recorder = (obj) => {
+    let live = false;
+    const btn = h('button', { class: 'btn small', type: 'button', disabled: !SERVED });
+    const tools = h('span', { class: 'rec-tools' });
+    const status = h('span', { class: 'hint' });
+    const draw = (msg) => {
+        btn.textContent = live ? '■ ndalo' : '● inçizo';
+        btn.title = live ? 'Ndalo dhe ruaje' : 'Inçizo (mikrofoni)';
+        btn.classList.toggle('live', live);
+        tools.replaceChildren(...(obj.audio && !live ? [
+            h('button', { class: 'btn small', type: 'button', title: obj.audio, onclick: () => playClip(obj.audio) }, '▶'),
+            clipLength(obj.audio),
+            removeBtn('Hiqe inçizimin', () => { set(obj, 'audio', ''); redrawForm(); })] : []));
+        status.textContent = msg !== undefined ? msg : obj.audio ? obj.audio.replace('audio/', '') : SERVED ? '' : 'vetëm me serve.py';
+    };
+    btn.onclick = async () => {
+        if (live) { recording.stop(); return; }
+        const started = await startRecording(slugAscii(obj.word || obj.std), {
+            tick: (sec) => { status.textContent = `● ${sec} s`; },
+            saving: () => { live = false; draw('Po ruhet…'); },
+            done: (path, err) => { live = false; if (path) { set(obj, 'audio', path); return redrawForm(); } draw(err); },
+        });
+        if (started) { live = true; draw('● 0 s'); }
+    };
+    draw();
+    return h('div', { class: 'rec' }, h('label', {}, 'audio'), btn, tools, status);
+};
+
+// A small ● for one form; once recorded, ▶ and ✕. The clip goes in owner.audios[form].
+const formMic = (owner, form) => {
+    let live = false;
+    const box = h('span', { class: 'mic' });
+    const msg = h('span', { class: 'mic-msg' });
+    const head = linkedToHead(owner, form);
+    const clip = () => (head ? owner.audio : owner.audios && owner.audios[form]);
+    const forget = () => {
+        if (head) { set(owner, 'audio', ''); return redrawForm(); }
+        delete owner.audios[form]; if (!Object.keys(owner.audios).length) delete owner.audios; changed(); redrawForm();
+    };
+    const toggle = async () => {
+        if (live) { recording.stop(); return; }
+        const started = await startRecording(slugAscii(form), {
+            tick: (sec) => { msg.textContent = `${sec}s`; },
+            saving: () => { msg.textContent = '…'; },
+            done: (path, err) => {
+                live = false;
+                msg.textContent = err ? '!' : '';
+                msg.title = err || '';
+                if (path && head) { set(owner, 'audio', path); return redrawForm(); }
+                if (path) { owner.audios = { ...(owner.audios || {}), [form]: path }; changed(); return redrawForm(); }
+                draw();
+            },
+        });
+        if (started) { live = true; draw(); }
+    };
+    const draw = () => {
+        const has = clip();
+        // no recording of its own, but the site can build it from recorded pieces (SHARED.clipChain): show and play that
+        const chain = !has && !live ? SHARED.clipChain(owner.conjugation ? SHARED.clipsOf(owner) : owner.audios, form, owner.conjugation ? helper() : null) : null;
+        box.replaceChildren(...[ // replaceChildren would print null as "null": drop the empty slots
+            chain ? h('button', { class: 'm linked', type: 'button', title: `Dëgjo nga pjesët (${chain.paths.length}): ${form}. Inçizimi i vet e zëvendëson.`, onclick: () => playChain(chain.paths) }, '▶ pjesët') : null,
+            has && !live ? h('button', { class: 'm', type: 'button', title: `Dëgjo: ${form}`, onclick: () => playClip(has) }, '▶')
+                : h('button', { class: 'm' + (live ? ' live' : ''), type: 'button', disabled: !SERVED, title: live ? 'Ndalo dhe ruaje' : `Inçizo: ${form}`, onclick: toggle }, live ? '■' : '●'),
+            has && !live ? clipLength(has) : null,
+            has && !live ? h('button', { class: 'm', type: 'button', title: `Hiqe inçizimin: ${form}`, onclick: forget }, '✕') : null,
+            msg].filter(Boolean));
+    };
+    draw();
+    return box;
+};
+// One mic per form in a box (a box can hold several forms, one per line). redraw() after the text changes.
+const formMics = (owner, getForms) => {
+    const box = h('div', { class: 'mics' });
+    box.redraw = () => {
+        const forms = [...new Set(getForms().map((f) => String(f).trim()).filter(Boolean))];
+        box.replaceChildren(...forms.map((f) => h('span', { class: 'mic-form' }, forms.length > 1 ? h('span', { class: 'mic-label' }, f) : null, formMic(owner, f))));
+    };
+    box.redraw();
+    return box;
+};
+
 // ---------- field builders ----------
 const row = (label, input) => h('div', { class: 'row' }, h('label', {}, label), input);
 const text = (obj, key, label = key, ph = '') => row(label, h('input', { type: 'text', value: obj[key] || '', placeholder: ph, oninput: (ev) => set(obj, key, ev.target.value) }));
@@ -97,14 +247,18 @@ const choose = (obj, key, label, options, onchange) => row(label, h('select', {
 }, options.map(([v, l]) => h('option', { value: v, selected: (obj[key] || '') === v }, l))));
 
 // a list of strings, one box per item
-const lines = (obj, key, label = key, hint) => {
+const lines = (obj, key, label = key, hint, owner = null) => {
     const box = h('div', { class: 'lines' });
     const draw = () => {
         const arr = obj[key] || [];
         box.replaceChildren(
-            ...arr.map((t, i) => h('div', {},
-                h('textarea', { rows: 1, value: t, oninput: (ev) => { arr[i] = ev.target.value; set(obj, key, arr); } }),
-                h('button', { class: 'x', type: 'button', title: 'Hiqe', onclick: () => { arr.splice(i, 1); set(obj, key, arr); draw(); } }, '✕'))),
+            ...arr.map((t, i) => {
+                const mics = owner ? formMics(owner, () => [arr[i] || '']) : null;
+                return h('div', {},
+                h('textarea', { rows: 1, value: t, oninput: (ev) => { arr[i] = ev.target.value; set(obj, key, arr); if (mics) mics.redraw(); } }),
+                mics,
+                h('button', { class: 'x', type: 'button', title: 'Hiqe', onclick: () => { arr.splice(i, 1); set(obj, key, arr); draw(); } }, '✕'));
+            }),
             h('button', { class: 'btn small', type: 'button', onclick: () => { obj[key] = [...arr, '']; changed(); draw(); box.querySelectorAll('textarea')[arr.length]?.focus(); } }, '+ shto'),
         );
     };
@@ -118,7 +272,7 @@ const mark = (obj, key) => { if (!autoMarks.has(obj)) autoMarks.set(obj, new Set
 const marked = (obj, key) => !!(autoMarks.get(obj) && autoMarks.get(obj).has(key));
 
 // one cell that can hold several forms (one per line)
-const cellInput = (obj, key) => h('textarea', {
+const cellInput = (obj, key, after) => h('textarea', {
     rows: 1,
     class: marked(obj, key) ? 'auto' : null,
     value: asList(obj[key]).join('\n'),
@@ -127,13 +281,20 @@ const cellInput = (obj, key) => h('textarea', {
         ev.target.classList.remove('auto');
         const parts = ev.target.value.split('\n').filter((l) => l.trim());
         set(obj, key, parts.length > 1 ? parts : parts[0] || '');
+        if (after) after();
     },
 });
+// a form box with a mic per form; owner: the word whose `audios` holds the clips (none: no mics)
+const formCell = (obj, key, owner) => {
+    if (!owner) return cellInput(obj, key);
+    const mics = formMics(owner, () => asList(obj[key]));
+    return h('div', { class: 'fcell' }, cellInput(obj, key, () => mics.redraw()), mics);
+};
 
 const swap = (arr, i, j) => { [arr[i], arr[j]] = [arr[j], arr[i]]; };
 
 // persons grid: main forms plus variant columns
-const personGrid = (target, redraw, persons = PERSONS) => {
+const personGrid = (target, redraw, persons = PERSONS, owner = null) => {
     const vars = target.variants || [];
     const empty = (v) => v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length);
     const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -160,16 +321,19 @@ const personGrid = (target, redraw, persons = PERSONS) => {
         vars.map((v, i) => h('th', { class: 'gs' }, `variant ${i + 1} `, arrows(i + 1),
             h('button', { class: 'x', type: 'button', title: 'Hiqe variantin', onclick: () => { vars.splice(i, 1); set(target, 'variants', vars); redraw(); } }, '✕'))),
         h('th', {}, h('button', { class: 'btn small', type: 'button', onclick: () => { target.variants = [...vars, {}]; changed(); redraw(); } }, '+ variant')));
-    const body = persons.map((p) => h('tr', {}, h('th', {}, PLABEL[p]), h('td', {}, cellInput(target, p)),
-        vars.map((v) => h('td', { class: 'gs' }, cellInput(v, p))), h('td')));
+    const body = persons.map((p) => h('tr', {}, h('th', {}, PLABEL[p]), h('td', {}, formCell(target, p, owner)),
+        vars.map((v) => h('td', { class: 'gs' }, formCell(v, p, owner))), h('td')));
     return h('div', { class: 'scroll' }, h('table', { class: 'grid' }, h('thead', {}, head), h('tbody', {}, body)),
         h('p', { class: 'hint' }, 'Enter brenda një kutie = formë tjetër për të njëjtin person. Variantet 1, 2… mbushen vetëm aty ku ndryshojnë nga varianti 0.'));
 };
 
 // m/f × njëjës/shumës grid for adjectives
-const adjGrid = (w) => {
+const adjGrid = (w, owner = w) => {
     const put = (n, g, val) => { w[n] = w[n] || {}; set(w[n], g, val); if (!Object.keys(w[n]).length) delete w[n]; };
-    const inp = (n, g) => h('textarea', { rows: 1, value: (w[n] || {})[g] || '', oninput: (ev) => put(n, g, ev.target.value) });
+    const inp = (n, g) => {
+        const mics = formMics(owner, () => asList((w[n] || {})[g]));
+        return h('div', { class: 'fcell' }, h('textarea', { rows: 1, value: (w[n] || {})[g] || '', oninput: (ev) => { put(n, g, ev.target.value); mics.redraw(); } }), mics);
+    };
     return h('table', { class: 'grid' },
         h('thead', {}, h('tr', {}, h('th'), h('th', {}, 'njëjës'), h('th', {}, 'shumës'))),
         h('tbody', {}, [['m', 'mashkullore'], ['f', 'femërore']].map(([g, l]) => h('tr', {}, h('th', {}, l), h('td', {}, inp('njejes', g)), h('td', {}, inp('shumes', g))))));
@@ -194,7 +358,11 @@ const nounGrid = (e) => {
             h('tr', {}, h('th'), h('th', { colspan: 2 }, 'njëjës'), h('th', { colspan: 2, class: 'gs' }, 'shumës')),
             h('tr', {}, h('th'), cols.map(([, d], i) => h('th', { class: i === 2 ? 'gs' : null }, d === 'shquar' ? 'e shquar' : 'e pashquar')))),
         h('tbody', {}, CASES.map(([k, l]) => h('tr', {}, h('th', {}, l),
-            cols.map(([n, d], i) => h('td', { class: i === 2 ? 'gs' : null }, h('textarea', { rows: 1, value: get(n, d, k), oninput: (ev) => put(n, d, k, ev.target.value) }))))))));
+            cols.map(([n, d], i) => {
+                const mics = formMics(e, () => [get(n, d, k)]);
+                return h('td', { class: i === 2 ? 'gs' : null }, h('div', { class: 'fcell' },
+                    h('textarea', { rows: 1, value: get(n, d, k), oninput: (ev) => { put(n, d, k, ev.target.value); mics.redraw(); } }), mics));
+            }))))));
 };
 
 const section = (legend, ...kids) => h('fieldset', {}, h('legend', {}, legend), ...kids);
@@ -312,11 +480,20 @@ const derive = (r, w) => {
     const cols = fullCols(t);
     const out = [build(cols[0], P[0]), ...P.slice(1).map((pj) => build(cols[0], pj)), ...cols.slice(1).map((c) => build(c, P[0]))];
     const main = out[0];
+    let note = '';
+    if (used.aj) {
+        // aj/ajo is its own form here, not the source's: drop the copied ones and build it from "un"
+        out.forEach((c) => delete c.aj);
+        const un = firstPerson(w, {});
+        const p = un && used.aj.find((x) => new RegExp(`(${x.match})$`).test(un));
+        if (p) main.aj = (r.pre || '') + (p.cut ? un.slice(0, -p.cut) : un) + p.add;
+        else note = `aj/ajo mbetet bosh: asnjë rregull për foljet si “${un || '…'}”`;
+    }
     const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
     const variants = out.slice(1)
         .map((c) => Object.fromEntries(Object.entries(c).filter(([p, v]) => !same(v, main[p]))))
         .filter((c, i, all) => Object.keys(c).length && all.findIndex((x) => same(x, c)) === i);
-    return { main, variants };
+    return { main, variants, note };
 };
 // fill only the empty boxes; add variant columns only if there are none yet
 const fill = (z, d) => {
@@ -349,6 +526,50 @@ const progress = (e) => {
     }));
     return { done, total, missing };
 };
+// ---------- recording count: own clip / built from pieces (the linker) / nothing yet ----------
+// Every distinct form of a Fjalor entry, with the word whose recordings it belongs to.
+const formsOf = (e) => {
+    const out = [];
+    const add = (owner, v) => asList(v).forEach((f) => { const t = String(f).trim(); if (t) out.push([owner, t]); });
+    if (e.type !== 'fjale') return out;
+    if (e.sub === 'folje') (e.words || []).forEach((w) => {
+        add(w, w.participle);
+        (w.conjugation || []).forEach((z) => [z, ...(z.variants || [])].forEach((o) => PERSONS.forEach((p) => add(w, o[p]))));
+    });
+    else if (e.sub === 'mbiemra') (e.words || []).forEach((w) => [w, ...(w.variants || [])].forEach((v) => {
+        add(w, v.word);
+        ['njejes', 'shumes'].forEach((n) => ['m', 'f'].forEach((g) => add(w, (v[n] || {})[g])));
+    }));
+    else {
+        add(e, e.word);
+        Object.values(e.declension || {}).forEach((a) => Object.values(a).forEach((b) => Object.values(b).forEach((f) => add(e, f))));
+        (e.variants || []).forEach((v) => add(e, v));
+    }
+    return out;
+};
+const audioStats = (e) => {
+    const seen = new Set();
+    const n = { own: 0, linked: 0, none: 0 };
+    const aux = helper();
+    formsOf(e).forEach(([owner, f]) => {
+        const key = (owner.word || owner.std || '') + '\u0000' + f.replace(/'/g, '’');
+        if (seen.has(key)) return;
+        seen.add(key);
+        // a headword's own clip is its `audio` (for verbs SHARED.clipsOf already maps it to the present's "un")
+        const own = owner.conjugation ? SHARED.clipsOf(owner) : { ...(owner.audios || {}), ...(owner.audio && owner.word ? { [owner.word]: owner.audio } : {}) };
+        const c = SHARED.clipChain(own, f, owner.conjugation ? aux : null);
+        n[!c ? 'none' : c.linked ? 'linked' : 'own'] += 1;
+    });
+    return n;
+};
+// shown once anything of the entry can be heard
+const audioTag = (e) => {
+    const n = audioStats(e);
+    if (!n.own && !n.linked) return null;
+    return h('span', { class: 'tag-audio', title: `${n.own} me inçizim të vet, ${n.linked} nga pjesët (zëvendësoji me inçizim të vet), ${n.none} pa zë` },
+        `🎙 ${n.own}`, n.linked ? ` · pjesët ${n.linked}` : '', n.none ? ` · pa ${n.none}` : '');
+};
+
 const progressTag = (e) => {
     if (e.type !== 'fjale' || e.sub !== 'folje') return null;
     const pr = progress(e);
@@ -363,7 +584,8 @@ const verbEditor = (e) => {
     const redraw = () => box.replaceChildren(...e.words.map((w, wi) => section(
         [`folja ${e.words.length > 1 ? wi + 1 : ''}`, e.words.length > 1 ? removeBtn('Hiqe foljen', () => { e.words.splice(wi, 1); changed(); redraw(); }) : null],
         h('div', { class: 'inline' }, text(w, 'word', 'word'), text(w, 'std', 'std'),
-            h('div', { class: 'row' }, h('label', {}, 'participle'), h('div', {}, cellInput(w, 'participle')))),
+            h('div', { class: 'row' }, h('label', {}, 'participle'), h('div', {}, formCell(w, 'participle', w))), reviewBox(w, 'participleReview')),
+        recorder(w),
         h('p', { class: 'hint' }, 'Pjesorja: një për rresht nëse ka variacione. Përdoret për t’i mbushur kohët e përbëra.'),
         (w.conjugation = w.conjugation || []).map((z, zi) => {
             const rule = ruleFor(z, w);
@@ -373,9 +595,10 @@ const verbEditor = (e) => {
                     comboSelect(w, z, redraw),
                     // the present is filled from its own "un" box, which may be typed after this was drawn: work the rule out on click
                     rule ? h('button', { class: 'btn small', type: 'button', disabled: !!d.missing && !selfStem(z), title: 'Mbush kutitë bosh sipas rregullit', onclick: () => { const r = ruleFor(z, w); if (r) fill(z, deriveAny(r, w, z)); changed(); redraw(); } }, 'Mbush') : null,
+                    reviewBox(z, 'review'),
                     removeBtn('Hiqe këtë kohë', () => { w.conjugation.splice(zi, 1); changed(); redraw(); })),
-                rule ? h('p', { class: 'hint' }, `Rregull: ${describe(rule, w, z)}.${d.missing ? ' Mungon: ' + d.missing + '.' : ''}`) : null,
-                personGrid(z, redraw, personsOf(z.mood)),
+                rule ? h('p', { class: 'hint' }, `Rregull: ${describe(rule, w, z)}.${d.missing ? ' Mungon: ' + d.missing + '.' : ''}${d.note ? ' ' + d.note + '.' : ''}`) : null,
+                personGrid(z, redraw, personsOf(z.mood), w),
                 lines(z, 'footnotes', 'shënime', 'Shënime vetëm për këtë kohë. Dalin nën tabelë.'));
         }),
         h('div', { class: 'adds sub-box' }, h('button', { class: 'btn small', type: 'button', disabled: !freeCombo(w), onclick: () => {
@@ -397,13 +620,14 @@ const adjEditor = (e) => {
     const redraw = () => box.replaceChildren(...e.words.map((w, wi) => section(
         [`mbiemri ${e.words.length > 1 ? wi + 1 : ''}`, e.words.length > 1 ? removeBtn('Hiqe', () => { e.words.splice(wi, 1); changed(); redraw(); }) : null],
         h('div', { class: 'inline' }, text(w, 'word', 'word'), text(w, 'std', 'std')),
+        recorder(w),
         adjGrid(w),
         (w.variants || []).map((v, vi) => h('div', { class: 'sub-box' },
-            h('div', { class: 'inline' }, text(v, 'word', 'variant'),
+            h('div', { class: 'inline' }, text(v, 'word', 'variant'), formMics(w, () => [v.word || '']),
                 h('button', { class: 'x', type: 'button', title: 'Lart', disabled: vi === 0, onclick: () => { swap(w.variants, vi, vi - 1); changed(); redraw(); } }, '↑'),
                 h('button', { class: 'x', type: 'button', title: 'Posht', disabled: vi === w.variants.length - 1, onclick: () => { swap(w.variants, vi, vi + 1); changed(); redraw(); } }, '↓'),
                 removeBtn('Hiqe variantin', () => { w.variants.splice(vi, 1); set(w, 'variants', w.variants); redraw(); })),
-            adjGrid(v))),
+            adjGrid(v, w))),
         h('button', { class: 'btn small', type: 'button', onclick: () => { w.variants = [...(w.variants || []), {}]; changed(); redraw(); } }, '+ variant'),
     ), h('button', { class: 'btn small', type: 'button', onclick: () => { e.words.push({}); changed(); redraw(); } }, '+ mbiemër tjetër në këtë kartë')));
     redraw();
@@ -419,13 +643,14 @@ const fjaleEditor = (e) => {
             e.sub === 'emra' ? choose(e, 'gender', 'gender', [['', '—'], ['mashkullore', 'mashkullore'], ['femërore', 'femërore'], ['asnjanëse', 'asnjanëse']]) : null,
             e.sub === 'ndajfolje' ? text(e, 'pos', 'pos', 'p.sh. ndajfolje kohe') : null,
             words ? null : text(e, 'std', 'std'),
+            words ? null : recorder(e),
             text(e, 'pronunciation', 'pronunciation')),
         e.sub === 'folje' ? verbEditor(e) : null,
         e.sub === 'mbiemra' ? adjEditor(e) : null,
         e.sub === 'emra' ? section('declension', nounGrid(e)) : null,
         section('tekst',
             lines(e, 'meaning', 'meaning'),
-            lines(e, 'variants', 'variants', 'Fjalë variacion (lista nën “variacion”).'),
+            lines(e, 'variants', 'variants', 'Fjalë variacion (lista nën “variacion”).', e),
             text(e, 'variantsNote', 'variantsNote'),
             lines(e, 'examples', 'examples'),
             lines(e, 'footnotes', 'footnotes'),
@@ -547,7 +772,7 @@ const draw = () => {
             oninput: (ev) => { headOf(e).set(ev.target.value); changed(); },
             onchange: () => { const y = formEl.scrollTop; draw(); formEl.scrollTop = y; } })
             : h('h2', { id: 'title' }, titleOf(e)),
-        h('p', { class: 'hint' }, kindOf(e), e.sub === 'folje' ? progressTag(e) : null),
+        h('p', { class: 'hint' }, kindOf(e), e.sub === 'folje' ? progressTag(e) : null, audioTag(e)),
         h('div', { class: 'actions' },
             h('button', { class: 'btn small', type: 'button', onclick: duplicate }, 'Dupliko'),
             h('button', { class: 'btn small danger', type: 'button', onclick: remove }, 'Fshi')),
@@ -556,7 +781,7 @@ const draw = () => {
     );
 };
 
-const FILTERS = [['all', 'Të gjitha'], ['gramatike', 'Gramatikë'], ...TAXONOMY.dictionaryCategories.map((x) => [x.id, x.label]), ['blog', 'Blog'], ['draft', 'Fshehur']];
+const FILTERS = [['all', 'Të gjitha'], ['gramatike', 'Gramatikë'], ...TAXONOMY.dictionaryCategories.map((x) => [x.id, x.label]), ['blog', 'Blog'], ['draft', 'Fshehur'], ['review', 'Rishikim'], ['linked', 'Pjesët']];
 const filtersEl = document.getElementById('filters');
 const itemsEl = document.getElementById('items');
 const qEl = document.getElementById('q');
@@ -565,13 +790,13 @@ const renderList = () => {
     filtersEl.replaceChildren(...FILTERS.map(([id, label]) => h('button', { type: 'button', 'aria-pressed': String(filter === id), onclick: () => { filter = id; renderList(); } }, label)));
     const q = norm(qEl.value.trim());
     const idx = entries.map((e, i) => i)
-        .filter((i) => { const e = entries[i]; return filter === 'all' || (filter === 'draft' ? e.draft : groupOf(e) === filter); })
+        .filter((i) => { const e = entries[i]; return filter === 'all' || (filter === 'draft' ? e.draft : filter === 'review' ? needsReview(e) : filter === 'linked' ? audioStats(e).linked > 0 : groupOf(e) === filter); })
         .filter((i) => !q || norm(JSON.stringify(entries[i])).includes(q))
         .sort((a, b) => TYPE_RANK[entries[a].type] - TYPE_RANK[entries[b].type] || (entries[b].date || '').localeCompare(entries[a].date || ''));
     itemsEl.replaceChildren(...idx.map((i) => {
         const e = entries[i];
         return h('button', { class: 'item', type: 'button', 'aria-current': String(i === cur), onclick: () => select(i) },
-            h('b', {}, titleOf(e)), e.draft ? h('span', { class: 'tag-draft' }, 'fshehur') : null, progressTag(e),
+            h('b', {}, titleOf(e)), e.draft ? h('span', { class: 'tag-draft' }, 'fshehur') : null, needsReview(e) ? h('span', { class: 'tag-review' }, 'rishikim') : null, progressTag(e), audioTag(e),
             h('small', {}, `${kindOf(e)}, ${day(e.date)}`));
     }));
 };

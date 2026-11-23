@@ -77,6 +77,7 @@ button { cursor: pointer; }
 .item b { font-weight: 500; }
 .item small { display: block; color: var(--muted); font-size: 12px; }
 .tag-draft { color: var(--draft); font-size: 11px; margin-left: 6px; font-family: var(--mono); }
+.tag-review { color: var(--draft); font-size: 11px; margin-left: 6px; font-family: var(--mono); }
 .tag-done { color: var(--ok); font-size: 11px; margin-left: 6px; font-family: var(--mono); }
 .tag-count { color: var(--faint); font-size: 11px; margin-left: 6px; font-family: var(--mono); }
 
@@ -100,7 +101,7 @@ select { width: auto; }
 textarea { resize: vertical; min-height: 32px; display: block; overflow: hidden; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--line); background: var(--field-focus); }
 .check { display: flex; gap: 6px; align-items: center; color: var(--muted); }
-.check.draft { color: var(--draft); }
+.check.draft, .check.review { color: var(--draft); }
 .lines > div { display: flex; gap: 4px; align-items: start; margin-bottom: 4px; }
 .hint { color: var(--faint); font-size: 12px; margin: 2px 0 8px; }
 
@@ -128,3 +129,25 @@ textarea.auto, textarea.auto:focus { background: var(--auto); }
     .app { grid-template-columns: 220px minmax(0, 1fr); }
     .prev { display: none; }
 }
+
+/* recorder: ● inçizo / ■ ndalo, ▶, ✕ and the file name or status */
+.rec { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 6px 0; }
+.rec > label { width: 110px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+.rec .live { color: #fff; background: #b3261e; }
+.rec .hint { margin: 0; }
+
+/* per-form mics under a form box: ● (record), ▶ ✕ once recorded */
+.fcell { display: grid; gap: 2px; }
+.mics { display: flex; flex-wrap: wrap; gap: 2px 8px; min-height: 0; }
+.mic-form { display: inline-flex; align-items: center; gap: 3px; }
+.mic-label { font-size: 11px; color: var(--faint); }
+.mic { display: inline-flex; align-items: center; gap: 2px; }
+.mic .m { all: unset; cursor: pointer; font-size: 11px; line-height: 1; padding: 2px 4px; border-radius: 4px; color: var(--faint); }
+.mic .m:hover { color: var(--text); background: var(--hover); }
+.mic .m:disabled { cursor: default; opacity: .4; }
+.mic .m.live { color: #fff; background: #b3261e; }
+.mic-msg { font: 11px var(--mono); color: var(--faint); }
+.clip-len { font: 11px var(--mono); color: var(--faint); }
+.rec .clip-len { font-size: 12px; }
+.mic .m.linked { font-style: italic; color: var(--muted); }
+.tag-audio { color: var(--faint); font-size: 11px; margin-left: 6px; font-family: var(--mono); white-space: nowrap; }

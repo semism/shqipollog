@@ -18,20 +18,31 @@ const boot = (ALL, focus, withDrafts) => {
     const slug = (t) => norm(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const std = (t) => (t ? `<p class="std">std: ${fmt(t)}</p>` : '');
 
-    const list = (items) => `<ul>${items.map((t) => `<li>${t ? fmt(t) : '&nbsp;'}</li>`).join('')}</ul>`;
+    // a small ▶ after a form that has a recording (au: the owning word's `audios`, keyed by the form's spelling)
+    // ▶ after a form that can be heard (see SHARED.clipChain). au: the owning word's recordings (`audios`), or for a verb
+    // { verb } so the helper verb's recordings can fill in pieces.
+    const helperWord = (VERBS.find((v) => SHARED.isHelper(v.w)) || {}).w;
+    const verbClips = (w) => ({ verb: w });
+    const playSm = (au, v) => {
+        const c = !v || !au ? null : au.verb ? SHARED.clipChain(SHARED.clipsOf(au.verb), v, helperWord) : SHARED.clipChain(au, v);
+        if (!c) return '';
+        const tip = c.linked ? 'Dëgjo (nga pjesët)' : 'Dëgjo';
+        return `<button type="button" class="play sm" data-audio="${esc(c.paths.join(' '))}" aria-label="${tip}: ${esc(v)}" title="${tip}">▶</button>`;
+    };
+    const list = (items, au) => `<ul>${items.map((t) => `<li>${t ? fmt(t) + playSm(au, t) : '&nbsp;'}</li>`).join('')}</ul>`;
     const headCell = (h) => {
         if (!h) return '';
         if (typeof h === 'string') return h === 'variant' ? `<span class="var">${h}</span>` : fmt(h);
         return `${h.word ? fmt(h.word) : ''}${h.std ? `<span class="hstd">std: ${fmt(h.std)}</span>` : ''}`;
     };
     const MISS = '\u0000';
-    const cell = (v) => (v === MISS ? '<span class="miss" title="mungon e dhona">—</span>' : v ? fmt(v) : '');
+    const cell = (v, au) => (v === MISS ? '<span class="miss" title="mungon e dhona">—</span>' : v ? fmt(v) + playSm(au, v) : '');
     const wrapTable = (t) => `<div class="table-wrap">${t}</div>${t.includes('class="miss"') ? '<p class="miss-key">— mungon e dhona</p>' : ''}`;
     const table = (b) => {
         const sep = (b.heads || []).map((h, i) => i > 0 && h && typeof h === 'object' && (h.word || h.std));
         const cls = (i) => (sep[i] ? ' class="gs"' : '');
         const head = b.heads ? `<thead><tr><th></th>${b.heads.map((h, i) => `<th${cls(i)}>${headCell(h)}</th>`).join('')}</tr></thead>` : '';
-        const rows = (b.rows || TAXONOMY.persons).map((who, i) => `<tr><th class="p" scope="row">${who}</th>${b.table.map((c, j) => `<td${cls(j)}>${cell(c[i])}</td>`).join('')}</tr>`).join('');
+        const rows = (b.rows || TAXONOMY.persons).map((who, i) => `<tr><th class="p" scope="row">${who}</th>${b.table.map((c, j) => `<td${cls(j)}>${cell(c[i], (b.audios || [])[j])}</td>`).join('')}</tr>`).join('');
         return wrapTable(`<table class="conj">${head}<tbody>${rows}</tbody></table>`);
     };
     const block = (b) => {
@@ -52,10 +63,10 @@ const boot = (ALL, focus, withDrafts) => {
     const personBlock = (words, keys = PERSON_KEYS) => {
         const cols = [];
         words.forEach((w) => {
-            cols.push({ head: w.word || w.std ? { word: w.word, std: w.std } : '', forms: w.forms || {}, main: true });
-            (w.variants || []).forEach((v) => cols.push({ head: 'variant', forms: v }));
+            cols.push({ head: w.word || w.std ? { word: w.word, std: w.std } : '', forms: w.forms || {}, main: true, audios: w.audios });
+            (w.variants || []).forEach((v) => cols.push({ head: 'variant', forms: v, audios: w.audios }));
         });
-        const extra = [...new Set(cols.flatMap((c) => Object.keys(c.forms).filter((k) => !PERSON_KEYS.includes(k) && !['word', 'std', 'variants', 'tense', 'mood', 'footnotes', 'participle', 'conjugation'].includes(k))))];
+        const extra = [...new Set(cols.flatMap((c) => Object.keys(c.forms).filter((k) => !PERSON_KEYS.includes(k) && !['word', 'std', 'variants', 'tense', 'mood', 'footnotes', 'participle', 'conjugation', 'review'].includes(k))))];
         const rows = [];
         const cells = cols.map(() => []);
         [...keys, ...extra].forEach((k) => {
@@ -65,7 +76,7 @@ const boot = (ALL, focus, withDrafts) => {
                 cols.forEach((c, i) => cells[i].push(asList(c.forms[k])[r] || (c.main ? MISS : '')));
             }
         });
-        const block = { rows, table: cells };
+        const block = { rows, table: cells, audios: cols.map((c) => c.audios) };
         if (cols.some((c) => c.head)) block.heads = cols.map((c) => c.head);
         return block;
     };
@@ -113,7 +124,7 @@ const boot = (ALL, focus, withDrafts) => {
 
     const meta = (label, e, cls) => `<div class="head"><span class="tag ${cls}">${label}</span><span class="meta">${day(e.date)}${e.place ? ', ' + esc(e.place) : ''}</span></div>`;
     // A quiet "shpërndaj" link at the bottom of a card: the phone's share sheet where there is one, otherwise copy the link.
-    const shareBtn = (hash, title) => `<p class="share-row"><button type="button" class="share" data-share="${esc(hash)}" data-title="${esc(title || 'Shqipollog')}">shpërndaj</button></p>`;
+    const shareBtn = (hash, title) => `<p class="share-row"><button type="button" class="share" data-save="${esc(hash)}">ruaj</button><button type="button" class="share" data-share="${esc(hash)}" data-title="${esc(title || 'Shqipollog')}">shpërndaj</button></p>`;
     const caption = (t) => (t && t.length ? `<div class="caption">${t.map((x) => `<p>${fmt(x)}</p>`).join('')}</div>` : '');
 
     const formsFor = (w, c0) => {
@@ -123,6 +134,8 @@ const boot = (ALL, focus, withDrafts) => {
         return own || null;
     };
     const tenseChoice = {};
+    // Forms filled in without a speaker's check yet carry review: true (see the README); say so under the table.
+    const reviewNote = (ws, c) => (ws.some((w) => (formsFor(w, c) || {}).review) ? '<p class="miss-key">pa rishikuar</p>' : '');
     // Not used for these verbs: true only if it is unused for every one of them (checked per verb, see shared.js).
     const unused = (c, words) => (words.length ? words : [null]).every((w) => SHARED.unusedFor(w, comboKey(c)));
 
@@ -150,7 +163,7 @@ const boot = (ALL, focus, withDrafts) => {
             <div class="vsug" hidden></div>` : '');
     const gOf = (c) => ENTRIES.find((e) => e.type === 'gramatike' && e.tense === c.tense && e.mood === c.mood);
     // A verb table for one tense + mood. heads: show each verb's word/std above its columns.
-    const verbTable = (ws, c, heads = true) => table(personBlock(ws.map((w) => { const f = formsFor(w, c) || {}; return { word: heads ? w.word : '', std: heads ? w.std : '', forms: f, variants: f.variants }; }), personsOf(c.mood)));
+    const verbTable = (ws, c, heads = true) => table(personBlock(ws.map((w) => { const f = formsFor(w, c) || {}; return { word: heads ? w.word : '', std: heads ? w.std : '', forms: f, variants: f.variants, audios: verbClips(w) }; }), personsOf(c.mood)));
     const randomFrom = (pool, not) => { const o = pool.filter((v) => vKey(v.w) !== not); const l = o.length ? o : pool; return l[Math.floor(Math.random() * l.length)]; };
     const shownFor = (c) => {
         const key = comboKey(c);
@@ -173,7 +186,7 @@ const boot = (ALL, focus, withDrafts) => {
         pickState.shown[comboKey(cur)] = shown.verbs.length === 1 ? vKey(shown.verbs[0]) : null;
         const pool = poolFor(cur);
         const picker = pickerHtml(pool, 'Kërko folje për kët koh');
-        const body = shown.verbs.length ? verbTable(shown.verbs, cur) + (shown.link ? `<p class="miss-key"><a href="#${shown.link}">te fjalori →</a></p>` : '')
+        const body = shown.verbs.length ? verbTable(shown.verbs, cur) + reviewNote(shown.verbs, cur) + (shown.link ? `<p class="miss-key"><a href="#${shown.link}">te fjalori →</a></p>` : '')
             : missMsg(cur);
         const parts = [
             ...(g ? g.intro || [] : []).map((t) => `<p>${fmt(t)}</p>`),
@@ -211,10 +224,10 @@ const boot = (ALL, focus, withDrafts) => {
         const opts = tenses.map((k) => `<option value="${esc(k)}"${k === cur.tense ? ' selected' : ''}>${esc(INDEFINITE[k] || LABEL[k] || k)}${tagOf(k)}</option>`).join('');
         const moods = COMBOS.filter((c) => c.tense === cur.tense);
         const chips = moods.length > 1 ? chipRow(moods.map((c) => ({ label: c.mood, attrs: `data-zgm="${e.id}" data-combo="${esc(comboKey(c))}"`, pressed: c === cur, empty: !has(c) })), { label: 'Mënyra' }) : `<span>${esc(cur.mood)}</span>`;
-        const body = has(cur) ? verbTable(e.words, cur, e.words.length > 1) : missMsg(cur, e.words);
+        const body = has(cur) ? verbTable(e.words, cur, e.words.length > 1) + reviewNote(e.words, cur) : missMsg(cur, e.words);
         const notes = e.words.flatMap((w) => { const f = formsFor(w, cur); return f ? f.footnotes || [] : []; });
         const pj = e.words.map((w) => asList(w.participle).join(' / ')).filter(Boolean);
-        const pjLine = pj.length ? `<p class="std">pjesore: ${pj.map(fmt).join(', ')}</p>` : '';
+        const pjLine = pj.length ? `<p class="std">pjesore: ${e.words.flatMap((w) => asList(w.participle).map((p) => fmt(p) + playSm(verbClips(w), p))).join(' / ')}${e.words.some((w) => w.participleReview) ? ' (pa rishikuar)' : ''}</p>` : '';
         return `${pjLine}<div class="sect"><div class="zg"><label class="zg"><span>Koha</span><select data-zg="${e.id}" data-cur="${esc(comboKey(cur))}">${opts}</select></label>${chips}</div>${body}${notes.map((n) => `<p class="note">${fmt(n)}</p>`).join('')}</div>`;
     };
 
@@ -224,18 +237,18 @@ const boot = (ALL, focus, withDrafts) => {
         const cols = [['njejes', 'pashquar'], ['njejes', 'shquar'], ['shumes', 'pashquar'], ['shumes', 'shquar']];
         const val = (n, d, k) => (L[n] && L[n][d] && L[n][d][k]) || MISS;
         const head = `<thead><tr><th></th><th colspan="2">njëjës</th><th colspan="2" class="gs">shumës</th></tr><tr><th></th>${cols.map(([n, d], i) => `<th class="sub${i === 2 ? ' gs' : ''}">${d === 'shquar' ? 'e shquar' : 'e pashquar'}</th>`).join('')}</tr></thead>`;
-        const rows = CASES.map(([k, label]) => `<tr><th class="p" scope="row">${label}</th>${cols.map(([n, d], i) => `<td${i === 2 ? ' class="gs"' : ''}>${cell(val(n, d, k))}</td>`).join('')}</tr>`).join('');
+        const rows = CASES.map(([k, label]) => `<tr><th class="p" scope="row">${label}</th>${cols.map(([n, d], i) => `<td${i === 2 ? ' class="gs"' : ''}>${cell(val(n, d, k), e.audios)}</td>`).join('')}</tr>`).join('');
         return `<div class="sect"><p class="sect-label">Lakimi</p>${wrapTable(`<table class="conj">${head}<tbody>${rows}</tbody></table>`)}</div>`;
     };
 
     const adjSection = (e) => {
         const cols = [];
         e.words.forEach((w) => {
-            cols.push({ head: fmt(w.word), w, first: true });
-            (w.variants || []).forEach((v) => cols.push({ head: `<span class="var">variant</span> ${fmt(v.word || '')}`, w: v, first: true }));
+            cols.push({ head: fmt(w.word) + playSm(w.audios, w.word), w, au: w.audios, first: true });
+            (w.variants || []).forEach((v) => cols.push({ head: `<span class="var">variant</span> ${fmt(v.word || '')}${playSm(w.audios, v.word)}`, w: v, au: w.audios, first: true }));
         });
         const head = `<thead><tr><th></th>${cols.map((c, i) => `<th colspan="2"${i ? ' class="gs"' : ''}>${c.head}</th>`).join('')}</tr><tr><th></th>${cols.map((c, i) => `<th class="sub${i ? ' gs' : ''}">njëjës</th><th class="sub">shumës</th>`).join('')}</tr></thead>`;
-        const rows = [['m', 'mashkullore'], ['f', 'femërore']].map(([g, label]) => `<tr><th class="p" scope="row">${label}</th>${cols.map((c, i) => `<td${i ? ' class="gs"' : ''}>${cell((c.w.njejes || {})[g] || MISS)}</td><td>${cell((c.w.shumes || {})[g] || MISS)}</td>`).join('')}</tr>`).join('');
+        const rows = [['m', 'mashkullore'], ['f', 'femërore']].map(([g, label]) => `<tr><th class="p" scope="row">${label}</th>${cols.map((c, i) => `<td${i ? ' class="gs"' : ''}>${cell((c.w.njejes || {})[g] || MISS, c.au)}</td><td>${cell((c.w.shumes || {})[g] || MISS, c.au)}</td>`).join('')}</tr>`).join('');
         return `<div class="sect">${wrapTable(`<table class="conj">${head}<tbody>${rows}</tbody></table>`)}</div>`;
     };
 
@@ -243,15 +256,18 @@ const boot = (ALL, focus, withDrafts) => {
     const defOf = (e) => e.def || (e.declension && e.declension.njejes && e.declension.njejes.shquar && e.declension.njejes.shquar.emerore);
     const multiStd = (e) => (e.words && e.words.length === 1 ? e.words[0].std : null);
 
+    // ▶ for each recording: the entry's own (emra, ndajfolje) or each word's (folje, mbiemra)
+    const playBtns = (e) => [e, ...(e.words || [])].filter((x) => x.audio)
+        .map((x) => `<button type="button" class="play" data-audio="${esc(x.audio)}" aria-label="Dëgjo${x.word ? ': ' + esc(x.word) : ''}" title="Dëgjo${x.word ? ': ' + esc(x.word) : ''}">▶</button>`).join('');
     const wordCard = (e) => `
         <article class="entry" id="${e.id}">
             ${meta(LABEL[e.sub] || 'Fjalë', e, 'fjala')}
-            <h3><a href="#${e.id}">${fmt(wordTitle(e))}</a>${defOf(e) ? `<span class="def">${fmt(defOf(e))}</span>` : ''}</h3>
+            <h3><a href="#${e.id}">${fmt(wordTitle(e))}</a>${defOf(e) ? `<span class="def">${fmt(defOf(e))}</span>` : ''}${playBtns(e)}</h3>
             ${posOf(e) ? `<p class="pos">${fmt(posOf(e))}</p>` : ''}
             ${std(e.std || multiStd(e))}
             ${e.pronunciation ? `<p class="std">shqiptime kryesore: ${fmt(e.pronunciation)}</p>` : ''}
             ${e.meaning ? `<div class="forms">${e.meaning.map((t) => `<p>${fmt(t)}</p>`).join('')}</div>` : ''}
-            ${e.variants ? `<div class="sect"><p class="sect-label">variacion${e.variantsNote ? ` <span class="sect-note">${fmt(e.variantsNote)}</span>` : ''}</p>${list(e.variants)}</div>` : ''}
+            ${e.variants ? `<div class="sect"><p class="sect-label">variacion${e.variantsNote ? ` <span class="sect-note">${fmt(e.variantsNote)}</span>` : ''}</p>${list(e.variants, e.audios)}</div>` : ''}
             ${e.sub === 'folje' ? verbSection(e) : e.sub === 'emra' ? nounSection(e) : e.sub === 'mbiemra' ? adjSection(e) : ''}
             ${e.examples ? `<ul class="examples">${e.examples.map((t) => `<li>${fmt(t)}</li>`).join('')}</ul>` : ''}
             ${(e.footnotes || []).map((n) => `<p class="note">${fmt(n)}</p>`).join('')}
@@ -458,7 +474,7 @@ const boot = (ALL, focus, withDrafts) => {
     });
 
     document.addEventListener('click', async (e) => {
-        const b = e.target.closest('.share');
+        const b = e.target.closest('[data-share]');
         if (!b) return;
         const url = `${location.origin}${location.pathname}#${b.dataset.share}`;
         if (navigator.share && matchMedia('(pointer: coarse)').matches) {
@@ -467,6 +483,114 @@ const boot = (ALL, focus, withDrafts) => {
         }
         try { await navigator.clipboard.writeText(url); b.textContent = 'u kopjau'; } catch (err) { b.textContent = url; }
         setTimeout(() => { b.textContent = 'shpërndaj'; }, 1600);
+    });
+
+    // ▶: one player for the page; pressing the playing one again stops it
+    const player = new Audio();
+    let playing = null;
+    const playDone = () => { if (playing) { playing.setAttribute('aria-pressed', 'false'); playing.textContent = '▶'; } playing = null; };
+    let queue = []; // the rest of a linked form's clips
+    player.addEventListener('ended', () => { if (queue.length) { player.src = queue.shift(); player.play().catch(playDone); } else playDone(); });
+    player.addEventListener('error', playDone);
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-audio]');
+        if (!b) return;
+        const again = playing === b;
+        player.pause();
+        queue = [];
+        playDone();
+        if (again) return;
+        [player.src, ...queue] = b.dataset.audio.split(' ');
+        player.play().then(() => { playing = b; b.setAttribute('aria-pressed', 'true'); b.textContent = '■'; }).catch(playDone);
+    });
+
+    // "ruaj": the card as a PNG. html2canvas (docs/vendor, loaded on first use) draws it; it is then set on the page colour
+    // with the card's slab edge and the site's name, and handed to the share sheet (phones) or downloaded.
+    let h2c = null;
+    const loadH2c = () => h2c || (h2c = new Promise((ok, fail) => {
+        const s = document.createElement('script');
+        s.src = 'vendor/html2canvas.min.js';
+        s.onload = () => ok(window.html2canvas);
+        s.onerror = () => { h2c = null; fail(new Error('html2canvas')); };
+        document.head.append(s);
+    }));
+    const cardPng = async (card) => {
+        const html2canvas = await loadH2c();
+        await document.fonts.ready;
+        const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
+        // wide tables scroll inside the card: widen the copy so they show in full
+        const extra = Math.max(0, ...[...card.querySelectorAll('.table-wrap')].map((t) => t.scrollWidth - t.clientWidth));
+        const width = card.offsetWidth + extra;
+        card.dataset.snap = '';
+        let shot;
+        try {
+            shot = await html2canvas(card, {
+                scale, backgroundColor: null, logging: false, windowWidth: Math.max(window.innerWidth, width + 64),
+                onclone: (doc) => {
+                    const c = doc.querySelector('[data-snap]');
+                    // controls and links mean nothing in a picture
+                    c.querySelectorAll('.share-row, .vpick, .vsug, .play').forEach((x) => x.remove());
+                    c.querySelectorAll('.miss-key').forEach((x) => { if (x.querySelector('a')) x.remove(); });
+                    // html2canvas draws the panel's stepped shadow as a frame: keep just the lighter panel
+                    c.querySelectorAll('.table-wrap').forEach((x) => { x.style.overflow = 'visible'; x.style.boxShadow = 'none'; });
+                    // a tense page's card has its title outside it: put the tense (and mood) on top
+                    if (c.dataset.tense && !c.querySelector('h3')) {
+                        const t = doc.createElement('h3');
+                        t.textContent = (LABEL[c.dataset.tense] || '') + (c.dataset.mood ? ', ' + c.dataset.mood : '');
+                        c.prepend(t);
+                    }
+                    Object.assign(c.style, { width: width + 'px', maxWidth: 'none', boxShadow: 'none', outline: 'none' });
+                    if (c.classList.contains('post')) Object.assign(c.style, { borderTop: '0', paddingTop: '0' }); // no divider line above a lone post
+                },
+            });
+        } finally { delete card.dataset.snap; }
+        const css = getComputedStyle(card);
+        const page = getComputedStyle(document.body);
+        const pad = 28 * scale, edge = 6 * scale, foot = 24 * scale, r = 10 * scale;
+        const out = document.createElement('canvas');
+        out.width = shot.width + edge + pad * 2;
+        out.height = shot.height + edge + pad * 2 + foot;
+        const ctx = out.getContext('2d');
+        ctx.fillStyle = page.backgroundColor;
+        ctx.fillRect(0, 0, out.width, out.height);
+        const slab = (x, y) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, shot.width, shot.height, r); else ctx.rect(x, y, shot.width, shot.height); ctx.fill(); };
+        ctx.fillStyle = css.getPropertyValue('--card-side').trim() || '#000';
+        if (card.classList.contains('entry')) slab(pad, pad + edge); // the solid side face, down-left like on the page (blog posts have no card)
+        ctx.drawImage(shot, pad + edge, pad);
+        ctx.font = `${11 * scale}px 'IBM Plex Mono', ui-monospace, monospace`;
+        ctx.fillStyle = page.color;
+        ctx.globalAlpha = 0.6;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillText('shqipollog.com', out.width - pad, out.height - pad * 0.7);
+        return new Promise((ok) => out.toBlob(ok, 'image/png'));
+    };
+    const savePng = async (blob, name) => {
+        const file = new File([blob], name, { type: 'image/png' });
+        if (matchMedia('(pointer: coarse)').matches && navigator.canShare && navigator.canShare({ files: [file] })) {
+            try { await navigator.share({ files: [file] }); return; } catch (err) { if (err.name === 'AbortError') return; /* no gesture left: download instead */ }
+        }
+        const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+        document.body.append(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    };
+    document.addEventListener('click', async (e) => {
+        const b = e.target.closest('[data-save]');
+        if (!b || b.disabled) return;
+        const card = b.closest('.entry, .post');
+        if (!card) return;
+        b.disabled = true;
+        b.textContent = 'po ruhet…';
+        try {
+            await savePng(await cardPng(card), `shqipollog-${b.dataset.save || 'karta'}.png`);
+            b.textContent = 'ruaj';
+        } catch (err) {
+            b.textContent = 's’u ruajt';
+            setTimeout(() => { b.textContent = 'ruaj'; }, 1600);
+        }
+        b.disabled = false;
     });
 
     view.addEventListener('click', (e) => {

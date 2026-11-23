@@ -71,6 +71,7 @@ These rules live in `docs/taxonomy.js` (`rules`, `stems`, `auxiliaryForms`, `sam
   - `docs/taxonomy.js`: the tabs' structure (tenses, categories, person labels, order of moods/cases).
   - `docs/index.html`, `docs/site.css`, `docs/site.js`: render them.
   - `docs/shared.js`: logic the site and the admin both use (search matching, "nuk përdoret", the rule text).
+- `docs/audio/`: recordings made in the admin (see Editing). `docs/vendor/`: html2canvas, for the "ruaj" (save as PNG) button.
 - `admin/` (`index.html`, `admin.css`, `admin.js`) and `serve.py`: the editor. Not published.
 - `resources/`: reference material (the standard spelling rules). Not published.
 
@@ -88,6 +89,58 @@ The examples below are written the short way; in `entries.json` keys and strings
 
 Text anywhere can use `{a}` to highlight letters (red) and `**word**` for bold.
 
+## Recordings
+
+Every word and every form can have a recording; all of it is optional. The site shows ▶ wherever there is something to hear.
+
+**Recording (admin, needs `serve.py` running):**
+
+- **● inçizo** next to a word records the headword. **■ ndalo** stops; the clip is saved right away and shows as ▶ (with its length) and ✕.
+- The small **●** under every form box records that one form: table cells (every tense, every variant column), pjesore,
+  noun declension cells, variant words. A box with several forms (one per line) gets one ● per form.
+- A verb's headword *is* its e tashme (dëftore) "un", so those two share one recording: recording either one sets both.
+- The browser asks for the microphone the first time (works because the admin runs on 127.0.0.1).
+- Recordings are linked to the entry only when you **save** (Ruaj). Restarting `serve.py` changes the admin's token, so an admin tab
+  that was already open can no longer save: save before restarting, and reload the admin afterwards.
+
+**What happens to a clip (`serve.py`):** it goes to `docs/audio/<form>-<id>.mp3`, run through `ffmpeg`: silence below −45 dB cut
+from both ends, loudness evened out (`loudnorm`), mono 64 kbps MP3, so every browser and every iPhone can play it (about 5–10 KB
+per word). The settings are `TRIM` at the top of `serve.py`. Without `ffmpeg` the browser's own format is kept (Opus/WebM, which
+older iPhones can't play).
+
+**In the data:**
+
+| Field | On | Holds |
+|---|---|---|
+| `audio` | the entry (emra, ndajfolje) or each word in `words` (folje, mbiemra) | the headword's clip |
+| `audios` | same place | `{ "form": "audio/….mp3" }`: one clip per form, keyed by the form's exact spelling, so one form in several tenses shares one clip. Change a form's spelling and its clip no longer matches; record it again. |
+
+**The linker (pieces):** a form with no recording of its own can still be heard if it is made of recorded pieces: *kom ardh* plays
+*kom* then *ardh*, *dë kisha ardh* plays *dë kisha* then *ardh* (longest recorded piece first). Pieces are looked up in the word's own
+recordings, then (verbs only) in the helper verb's (kom), so kom's forms, recorded once, serve every verb's compound tenses.
+`'` and `’` count as the same. Joined pieces don't sound as natural as one take, so they are a stand-in: a recording of the whole form
+always wins, and removing it (✕) brings the pieces back. The logic is `SHARED.clipChain` in `docs/shared.js`, used by site and admin alike.
+In the admin such a form shows *▶ pjesët* next to its ●.
+
+**Keeping track:** the admin list and each entry's header show **🎙 own · pjesët built from pieces · pa nothing yet**, counting each
+distinct form once. The **Pjesët** filter lists the entries that still have forms built from pieces, i.e. still to record properly.
+
+**Cleanup:** a save deletes only the clips it stops using (re-recorded or removed), comparing the previous `entries.json` with the new
+one. A clip that was recorded but never saved is never deleted; clear those out of `docs/audio/` by hand if you want.
+
+**Publishing:** no server needed. Commit `docs/audio/` together with `entries.json` and push; GitHub Pages serves the files like the
+videos (the site can grow to 1 GB, i.e. well over 100,000 clips). Git keeps every replaced take in its history; to drop it, wipe the
+history now and then:
+
+    git checkout --orphan fresh && git add -A && git commit -m "snapshot"
+    git branch -D main && git branch -m main && git push --force origin main
+
+(That resets the history of everything, not just audio; other clones have to be cloned again.)
+Don't use Git LFS for the audio: GitHub Pages would serve LFS's pointer files instead of the sound.
+
+**On the site:** ▶ next to the headword, a smaller ▶ after each form that can be heard (tooltip "nga pjesët" when built from pieces).
+Pressing a playing ▶ again stops it. The ▶ buttons are left out of the PNG the "ruaj" button saves.
+
 ---
 
 ## Fjalor: `type: 'fjale'`
@@ -99,6 +152,8 @@ Shared optional fields, shown in this order on the card:
 |---|---|
 | `std: 'borë'` | standard form, omit if identical |
 | `pronunciation: 'shæj/shaj/shoj'` | "shqiptime kryesore: …" |
+| `audio: 'audio/vdore-1a2b3c.mp3'` | ▶ next to the headword (folje, mbiemra: on each word in `words` instead) |
+| `audios: { 'vdora': 'audio/vdora-1a2b.mp3' }` | ▶ next to that form wherever it shows (tables, variants, pjesore); keyed by the form's exact spelling, so the same form in several tenses shares one clip (folje, mbiemra: on each word) |
 | `meaning: ['…']` | explanation paragraphs |
 | `variants: ['shtahi']` | variant words |
 | `variantsNote: '…'` | short note next to the "variacion" label |
@@ -220,7 +275,7 @@ Pronouns use `pronoun` and `case` instead of `tense` and `mood`:
 ```
 
 - Persons: `un`, `taj`, `aj` (shown as aj/ajo), `ne`, `ju`, `ato`. Leave out the ones that don't exist.
-- Several forms for one person: give a list, `ju: ['fajknja', 'fajkjani (asaj)']`; each gets its own row.
+- Several forms for one person: give a list, `ju: ['dini', 'dinja']`; each gets its own row.
 - `word` and `std` are both optional (a word with only `std` shows just the standard form).
 - Words that are shown as examples instead of a table (like paskajorja): `{ word: '-për t-', examples: ['për tu bo', …] }`.
 - Pronoun entries with the same `pronoun` and different `case` become the buttons, ordered by `TAXONOMY.variants`.

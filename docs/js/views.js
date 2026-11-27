@@ -8,7 +8,7 @@ import { esc, norm, slug } from './format.js';
 import { blogPost, chipRow, formsFor, gramCard, tenseChoice, wordCard } from './cards.js';
 import { GERUND, NON_FINITE, nonFiniteView, PARTICIPLE, TENSE_IDS, tensePage } from './tense-pages.js';
 
-export const state = { tab: 'gramatike', item: ITEMS[0].id, v: {}, fjalor: 'all', blog: 'all', by: 'date', dir: 'desc' };
+export const state = { tab: 'fjalor', item: ITEMS[0].id, v: {}, fjalor: 'all', blog: 'all', by: 'date', dir: 'desc' };
 const tabsEl = document.getElementById('tabs');
 const panel = document.getElementById('panel');
 export const view = document.getElementById('view');
@@ -24,7 +24,7 @@ export const TAB_OF_TYPE = { gramatike: 'gramatike', fjale: 'fjalor', blog: 'blo
 const renderTabs = () => {
     const w = words();
     const tab = (t) => {
-        const n = w.length ? ENTRIES.filter((e) => e.type === TYPE_OF_TAB[t.id] && matches(e, w)).length : null;
+        const n = w.length && !t.soon ? ENTRIES.filter((e) => e.type === TYPE_OF_TAB[t.id] && matches(e, w)).length : null;
         const count = n === null ? '' : `<span class="n">${n}</span>`;
         return `<button type="button" role="tab" data-tab="${t.id}" aria-selected="${t.id === state.tab}">${t.label}${count}</button>`;
     };
@@ -57,7 +57,9 @@ const sortButtons = () => {
 };
 const renderPanel = () => {
     panel.dataset.tab = state.tab;
-    if (state.tab === 'gramatike') {
+    if (TABS.find((t) => t.id === state.tab).soon) {
+        panel.innerHTML = '';
+    } else if (state.tab === 'gramatike') {
         panel.innerHTML = grammarMenu();
     } else if (state.tab === 'fjalor') {
         const dictionary = ENTRIES.filter((e) => e.type === 'fjale');
@@ -126,6 +128,11 @@ const listOf = (type, filterKey, field, w) => ENTRIES.filter((e) => e.type === t
     && (!state.only || e.id === state.only));
 export const renderView = () => {
     const w = words();
+    if (TABS.find((t) => t.id === state.tab).soon) {
+        view.innerHTML = '<p class="miss-all">Së shpejti.</p>';
+        empty.hidden = true;
+        return;
+    }
     if (state.tab === 'gramatike' && !w.length) {
         const page = grammarItemView();
         view.innerHTML = page;

@@ -88,8 +88,12 @@ These rules live in `docs/taxonomy.js` (`rules`, `stems`, `auxiliaryForms`, `sam
 
     python3 serve.py
 
-then open http://127.0.0.1:8792/admin/. Pick an entry, edit, Ruaj (or Ctrl+S). The right side shows the card as it will look on the site.
+then open http://127.0.0.1:8792/admin/. Pick an entry, edit, Ruaj (or Ctrl+S). The right side shows the card as it will look on the site,
+and under it the entry's JSON (read-only, foldable, with a Kopjo button). Both side panels can be closed.
 Each save keeps the previous file as `entries.bak.json` next to `serve.py`. Ctrl+C stops it.
+
+A save is checked first and refused, with the reason, if an entry is broken (a word with no word, a blog post with no title,
+a tense without its koha or mood, a list that isn't a list…). Entries left completely empty are dropped on save, except the open one.
 The site itself is also at http://127.0.0.1:8792/ while it runs.
 
 `draft: true` (the "fshehur" box) keeps an entry off the site. It is still in `entries.json`, so anyone reading the file can see it.
@@ -133,8 +137,9 @@ recordings, then (verbs only) in the helper verb's (kom), so kom's forms, record
 always wins, and removing it (✕) brings the pieces back. The logic is `SHARED.clipChain` in `docs/shared.js`, used by site and admin alike.
 In the admin such a form shows *▶ pjesët* next to its ●.
 
-**Keeping track:** the admin list and each entry's header show **🎙 own · pjesët built from pieces · pa nothing yet**, counting each
+**Keeping track:** each entry's header in the admin shows **🎙 own · pjesët built from pieces · pa nothing yet**, counting each
 distinct form once. The **Pjesët** filter lists the entries that still have forms built from pieces, i.e. still to record properly.
+(The list itself doesn't show these counts: working them out for every entry made the admin slow.)
 
 **Cleanup:** a save deletes only the clips it stops using (re-recorded or removed), comparing the previous `entries.json` with the new
 one. A clip that was recorded but never saved is never deleted; clear those out of `docs/audio/` by hand if you want.

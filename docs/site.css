@@ -544,6 +544,7 @@ button.btn { border: 0; cursor: pointer; }
     border-top: 2px dotted var(--line);
 }
 
+a.xref { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .entry h3 a { text-decoration: none; }
 .entry h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
 

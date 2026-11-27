@@ -12,7 +12,7 @@ const KOHET = [
     { id: 'ardhmja-perparme-shkuar', label: 'E ardhmja e përparme e së shkuarës', indefinite: 'e ardhme e përparme e së shkuarës' },
 ];
 
-const TAXONOMY = {
+export const TAXONOMY = {
     tenses: KOHET,
     persons: ['un', 'taj', 'aj/ajo', 'ne', 'ju', 'ato'],
     variants: [
@@ -113,6 +113,15 @@ const TAXONOMY = {
         { id: 'emra', label: 'Emra' },
         { id: 'mbiemra', label: 'Mbiemra' },
         { id: 'ndajfolje', label: 'Ndajfolje' },
+    ],
+    // ndajfolje types (an entry's "adverbKinds", one or more); shown as "ndajfolje kohe, vendi"
+    adverbKinds: [
+        { id: 'vendi', label: 'vendi' },
+        { id: 'kohe', label: 'kohe' },
+        { id: 'menyre', label: 'mënyre' },
+        { id: 'sasie', label: 'sasie' },
+        { id: 'shkaku', label: 'shkaku' },
+        { id: 'qellimi', label: 'qëllimi' },
     ],
     blog: [
         { id: 'shprehje', label: 'Shprehje dhe përdorim' },

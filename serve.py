@@ -6,7 +6,8 @@
 Serves docs/ (the site) and admin/ (the editor) on 127.0.0.1 only.
 Saves go to docs/entries.json; the previous version is kept as entries.bak.json (outside docs/, so never published).
 Recordings from the admin go to docs/audio/ (as .mp3 when ffmpeg is installed, so every browser can play them);
-a save deletes the ones it stops pointing to (never a clip that was recorded but not saved yet). GitHub Pages publishes only docs/; the editor itself is never online.
+a save deletes the ones it stops pointing to (never a clip that was recorded but not saved yet).
+GitHub Pages publishes only docs/; the editor itself is never online.
 """
 
 import json
@@ -23,7 +24,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DOCS = ROOT / 'docs'
 ADMIN = ROOT / 'admin' / 'index.html'
-ADMIN_FILES = {'/admin/admin.css': ('admin.css', 'text/css; charset=utf-8'), '/admin/admin.js': ('admin.js', 'text/javascript; charset=utf-8')}
+# the admin's own files: admin/admin.css and the scripts in admin/js/ (nothing else under admin/ is served)
+ADMIN_FILE = re.compile(r'^/admin/(admin\.css|js/[a-z0-9-]+\.js)$')
+ADMIN_TYPES = {'.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8'}
 DATA = DOCS / 'entries.json'
 BACKUP = ROOT / 'entries.bak.json'
 HOST = '127.0.0.1'
@@ -35,7 +38,8 @@ AUDIO_TYPES = {'audio/webm': '.webm', 'audio/ogg': '.ogg', 'audio/mp4': '.m4a', 
 AUDIO_MAX = 8 * 1024 * 1024
 FFMPEG = shutil.which('ffmpeg')
 # trim silence at both ends, then even out the loudness
-TRIM = 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,loudnorm'
+CUT_START = 'silenceremove=start_periods=1:start_threshold=-45dB'
+TRIM = ','.join([CUT_START, 'areverse', CUT_START, 'areverse', 'loudnorm'])   # cut the start, flip, cut the (old) end, flip back
 DATE = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 WIDTH = 120
 
@@ -53,16 +57,106 @@ def dump(v, ind=0):
     return '{\n' + ',\n'.join(items) + '\n' + ' ' * ind + '}'
 
 
+SUBS = {'folje', 'emra', 'mbiemra', 'ndajfolje'}
+TEXT_LISTS = ('meaning', 'examples', 'etymology', 'footnotes', 'text', 'intro', 'adverbKinds')
+
+
+def is_text(v):
+    return isinstance(v, str) and v.strip() != ''
+
+
+def is_text_list(v):
+    return isinstance(v, list) and all(isinstance(x, str) for x in v)
+
+
+def is_declension(v):
+    """{ njejes/shumes: { pashquar/shquar: { case: "form" } } }"""
+    if not isinstance(v, dict):
+        return False
+    for number in v.values():
+        if not isinstance(number, dict):
+            return False
+        for definiteness in number.values():
+            if not isinstance(definiteness, dict) or not all(isinstance(form, str) for form in definiteness.values()):
+                return False
+    return True
+
+
+def name_of(e, i):
+    """How an entry is called in an error message: its word(s) or title, else its position."""
+    words = [w.get('word') or w.get('std') for w in e.get('words') or [] if isinstance(w, dict)]
+    return e.get('word') or ', '.join(filter(None, words)) or e.get('title') or f'hyrja nr. {i + 1}'
+
+
+def word_problem(w, sub):
+    """A word on a folje or mbiemra card."""
+    if not isinstance(w, dict):
+        return 'një fjalë nuk është objekt'
+    if not (is_text(w.get('word')) or is_text(w.get('std'))):
+        return 'një fjalë nuk ka as word as std'
+    if sub == 'folje':
+        conjugation = w.get('conjugation', [])
+        if not isinstance(conjugation, list):
+            return 'conjugation duhet të jetë listë'
+        for tense_mood in conjugation:
+            has_both = isinstance(tense_mood, dict) and is_text(tense_mood.get('tense')) and is_text(tense_mood.get('mood'))
+            if not has_both:
+                return 'çdo kohë te conjugation duhet të ketë tense dhe mood'
+    if sub == 'mbiemra':
+        for number in ('njejes', 'shumes'):
+            if not isinstance(w.get(number, {}), dict):
+                return f'{number} duhet të jetë objekt'
+        variants = w.get('variants', [])
+        if not isinstance(variants, list) or not all(isinstance(v, dict) for v in variants):
+            return 'variantet e mbiemrit duhet të jenë objekte'
+    return None
+
+
+def entry_problem(e):
+    """What is wrong with one entry, in words the admin can show; None if nothing."""
+    if e.get('type') not in TYPES:
+        return f'type duhet të jetë një nga {", ".join(sorted(TYPES))}'
+    if not isinstance(e.get('date'), str) or not DATE.match(e['date']):
+        return 'data duhet të jetë VVVV-MM-DD'
+    for key in TEXT_LISTS:
+        if key in e and not is_text_list(e[key]):
+            return f'{key} duhet të jetë listë tekstesh'
+    if e['type'] == 'fjale':
+        sub = e.get('sub')
+        if sub not in SUBS:
+            return f'sub duhet të jetë një nga {", ".join(sorted(SUBS))}'
+        if sub in ('folje', 'mbiemra'):
+            words = e.get('words')
+            if not isinstance(words, list) or not words:
+                return 'mungon fjala (words është bosh)'
+            for w in words:
+                problem = word_problem(w, sub)
+                if problem:
+                    return problem
+        else:
+            if not is_text(e.get('word')):
+                return 'mungon fjala'
+            if 'variants' in e and not is_text_list(e['variants']):
+                return 'variants duhet të jetë listë tekstesh'
+        if sub == 'emra' and 'declension' in e and not is_declension(e['declension']):
+            return 'declension duhet të jetë { njejes/shumes: { pashquar/shquar: { rasa: "forma" } } }'
+    if e['type'] == 'blog':
+        if not is_text(e.get('title')):
+            return 'mungon titulli'
+        if not isinstance(e.get('body', []), list):
+            return 'body duhet të jetë listë'
+    return None
+
+
 def check(entries):
     if not isinstance(entries, list):
         return 'entries must be a list'
     for i, e in enumerate(entries):
         if not isinstance(e, dict):
-            return f'entry {i} is not an object'
-        if e.get('type') not in TYPES:
-            return f'entry {i}: type must be one of {sorted(TYPES)}'
-        if not isinstance(e.get('date'), str) or not DATE.match(e['date']):
-            return f'entry {i}: date must be YYYY-MM-DD'
+            return f'hyrja nr. {i + 1} nuk është objekt'
+        problem = entry_problem(e)
+        if problem:
+            return f'“{name_of(e, i)}”: {problem}'
     return None
 
 
@@ -102,13 +196,38 @@ def save_audio(data, ctype, name):
     raw.write_bytes(data)
     if FFMPEG and ext != '.mp3':
         mp3 = AUDIO / (stem + '.mp3')
-        r = subprocess.run([FFMPEG, '-y', '-loglevel', 'error', '-i', str(raw), '-af', TRIM, '-ac', '1', '-ar', '44100', '-b:a', '64k', str(mp3)],
-                           capture_output=True, timeout=60)
+        # trimmed and evened out (TRIM), mono, 44.1 kHz, 64 kbps
+        command = [FFMPEG, '-y', '-loglevel', 'error', '-i', str(raw),
+                   '-af', TRIM, '-ac', '1', '-ar', '44100', '-b:a', '64k', str(mp3)]
+        r = subprocess.run(command, capture_output=True, timeout=60)
         if r.returncode == 0 and mp3.exists() and mp3.stat().st_size > 0:
             raw.unlink()
             return f'audio/{mp3.name}'
         mp3.unlink(missing_ok=True)
     return f'audio/{raw.name}'
+
+
+BOOK = DOCS / 'libri'
+BOOK_MAX = 64 * 1024 * 1024
+BOOK_PAGE = re.compile(r'^[a-z]{1,9}\.html$')   # index.html, a.html, sh.html, gramatike.html…
+
+
+def write_book(files):
+    """The static book (docs/libri/): writes the pages the admin built and removes the ones it no longer has."""
+    if not isinstance(files, dict) or 'index.html' not in files:
+        return 'the book needs an index.html'
+    for name, html in files.items():
+        if not BOOK_PAGE.match(name) or not isinstance(html, str):
+            return f'not a book page: {name!r}'
+    BOOK.mkdir(exist_ok=True)
+    for old in BOOK.glob('*.html'):
+        if old.name not in files:
+            old.unlink()
+    for name, html in files.items():
+        tmp = BOOK / (name + '.tmp')
+        tmp.write_text(html, encoding='utf-8')
+        tmp.replace(BOOK / name)
+    return None
 
 
 def write(entries):
@@ -142,21 +261,34 @@ class Handler(SimpleHTTPRequestHandler):
         if path in ('/admin', '/admin/', '/admin/index.html'):
             html = ADMIN.read_text(encoding='utf-8').replace('__TOKEN__', TOKEN)
             return self.reply(200, html, 'text/html; charset=utf-8')
-        if path in ADMIN_FILES:
-            name, ctype = ADMIN_FILES[path]
-            return self.reply(200, (ADMIN.parent / name).read_text(encoding='utf-8'), ctype)
+        if ADMIN_FILE.match(path):
+            f = ADMIN.parent / path[len('/admin/'):]
+            if f.is_file():
+                return self.reply(200, f.read_text(encoding='utf-8'), ADMIN_TYPES[f.suffix])
         if path.startswith('/admin'):
             return self.reply(404, '{"error":"not found"}')
         return super().do_GET()
 
     def do_POST(self):
-        if self.path not in ('/api/save', '/api/audio'):
+        if self.path not in ('/api/save', '/api/audio', '/api/book'):
             return self.reply(404, '{"error":"not found"}')
         origin = self.headers.get('Origin')
         if not self.local_host() or (origin and origin not in (f'http://{HOST}:{PORT}', f'http://localhost:{PORT}')):
             return self.reply(403, '{"error":"origin"}')
         if not secrets.compare_digest(self.headers.get('X-Token', ''), TOKEN):
             return self.reply(403, '{"error":"token"}')
+        if self.path == '/api/book':
+            n = int(self.headers.get('Content-Length', 0))
+            if not 0 < n <= BOOK_MAX:
+                return self.reply(400, '{"error":"size"}')
+            try:
+                files = json.loads(self.rfile.read(n).decode('utf-8'))
+            except (ValueError, UnicodeDecodeError) as err:
+                return self.reply(400, json.dumps({'error': f'bad json: {err}'}))
+            problem = write_book(files)
+            if problem:
+                return self.reply(400, json.dumps({'error': problem}, ensure_ascii=False))
+            return self.reply(200, json.dumps({'ok': True, 'pages': len(files)}))
         if self.path == '/api/audio':
             n = int(self.headers.get('Content-Length', 0))
             if not 0 < n <= AUDIO_MAX:

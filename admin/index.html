@@ -25,7 +25,7 @@
         <span id="status"></span>
         <span class="grow"></span>
         <select id="new" aria-label="Hyrje e re">
-            <option value="">+ hyrje e re</option>
+            <option value="">+ Hyrje e re</option>
             <option value="folje">folje</option>
             <option value="emra">emër</option>
             <option value="mbiemra">mbiemër</option>
@@ -34,24 +34,32 @@
             <option value="blog">blog</option>
         </select>
         <button class="btn" id="theme" type="button" title="Tema"></button>
+        <button class="btn" id="book" type="button" title="Shkruan docs/libri/: e gjithë përmbajtja si faqe pa JavaScript, një për çdo shkronjë">Rigjenero librin statik</button>
         <button class="btn primary" id="save" type="button" title="Ctrl+S">Ruaj</button>
     </header>
     <main class="app">
         <nav class="list">
-            <input id="q" type="search" placeholder="Kërko…" autocomplete="off">
+            <button class="rail" type="button" data-pane="list" title="Hap listën" aria-label="Hap listën">›</button>
+            <div class="list-top">
+                <input id="q" type="search" placeholder="Kërko…" autocomplete="off">
+                <button class="pane-x" type="button" data-pane="list" title="Mbyll listën" aria-label="Mbyll listën">‹</button>
+            </div>
             <div class="filters" id="filters"></div>
             <div id="items"></div>
         </nav>
         <section class="form" id="form"></section>
         <section class="prev">
-            <p>Parapamje, ashtu si del në faqe</p>
+            <button class="rail" type="button" data-pane="prev" title="Hap panelin" aria-label="Hap panelin">‹</button>
+            <p class="pane-head"><button class="fold" type="button" data-fold="preview" aria-expanded="true">Parapamje, ashtu si del në faqe</button>
+                <button class="pane-x" type="button" data-pane="prev" title="Mbyll panelin" aria-label="Mbyll panelin">›</button></p>
             <iframe id="preview" title="Parapamje"></iframe>
+            <p class="pane-head"><button class="fold" type="button" data-fold="json" aria-expanded="true">JSON i hyrjes</button>
+                <button class="btn small copy" id="json-copy" type="button" title="Kopjo JSON-in e hyrjes">Kopjo</button></p>
+            <div class="json-ed" id="json" aria-label="JSON i hyrjes"></div>
         </section>
     </main>
 
-    <script src="/taxonomy.js"></script>
-    <script src="/shared.js"></script>
     <script>const TOKEN = '__TOKEN__';</script>
-    <script src="/admin/admin.js"></script>
+    <script type="module" src="/admin/js/main.js"></script>
 </body>
 </html>

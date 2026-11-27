@@ -68,11 +68,20 @@ These rules live in `docs/taxonomy.js` (`rules`, `stems`, `auxiliaryForms`, `sam
 
 - `docs/` is the site, and the only folder GitHub Pages publishes.
   - `docs/entries.json`: all entries, one object per entry. Order doesn't matter; the page sorts.
-  - `docs/taxonomy.js`: the tabs' structure (tenses, categories, person labels, order of moods/cases).
-  - `docs/index.html`, `docs/site.css`, `docs/site.js`: render them.
+  - `docs/taxonomy.js`: the tabs' structure (tenses, categories, person labels, order of moods/cases). Exports `TAXONOMY`.
+  - `docs/index.html`, `docs/site.css` and `docs/js/`: render them. The scripts are ES modules: `index.html` loads `js/main.js`,
+    and each file's `import` lines say exactly what it uses from which file (it exports only what others use). The files:
+    `labels.js` (tabs, menu items, labels), `data.js` (the entries, link ids, search text), `format.js` (text, links),
+    `tables.js`, `cards.js`, `tense-pages.js` (Gramatikë tense pages), `views.js` (tabs, filters, pages, search),
+    `audio.js`, `share-save.js` (shpërndaj, ruaj as PNG), `theme.js`, and `main.js` (start-up).
+    Modules need a web server: open the site through `serve.py` (or GitHub Pages), not as a file from disk.
   - `docs/shared.js`: logic the site and the admin both use (search matching, "nuk përdoret", the rule text).
 - `docs/audio/`: recordings made in the admin (see Editing). `docs/vendor/`: html2canvas, for the "ruaj" (save as PNG) button.
-- `admin/` (`index.html`, `admin.css`, `admin.js`) and `serve.py`: the editor. Not published.
+- `admin/` (`index.html`, `admin.css`, `js/`) and `serve.py`: the editor. Not published. `admin/js/` holds its ES modules;
+  `admin/index.html` loads `main.js`. `core.js` holds the open state (`entries`, `current`, `dirty`, `filter`) and `changed()`,
+  which every edit goes through; other files read that state through their imports and change it with its setters
+  (`setEntries`, `setCurrent`, …). Then: the JSON panel, recordings, field builders, tenses and their rules, the counts,
+  one `editor-….js` per kind of entry, `form-list.js` (the form and the list), and `main.js` (saving, start-up).
 - `resources/`: reference material (the standard spelling rules). Not published.
 
 ## Editing
@@ -87,7 +96,9 @@ The site itself is also at http://127.0.0.1:8792/ while it runs.
 
 The examples below are written the short way; in `entries.json` keys and strings are in double quotes.
 
-Text anywhere can use `{a}` to highlight letters (red) and `**word**` for bold.
+Text anywhere can use `{a}` to highlight letters (red) and `**word**` for bold, and links:
+`[[vdorë]]` links to that entry (by its title, accents ignored, or its id; a word with no entry, or only a hidden one, stays plain text),
+`[text](#vdore)` links to an entry with your own text, `[text](https://…)` to another site (opens in a new tab).
 
 ## Recordings
 
@@ -159,6 +170,7 @@ Shared optional fields, shown in this order on the card:
 | `variantsNote: '…'` | short note next to the "variacion" label |
 | *(the forms table, per type below)* | |
 | `examples: ['maca e zez']` | example phrases |
+| `etymology: ['…']` | "etimologjia" paragraphs (nouns; optional) |
 | `footnotes: ['…']` | small notes |
 | `text: ['…']` | your caption, at the bottom |
 
@@ -252,17 +264,24 @@ Leave a box empty rather than guess; it shows as **—** on the site.
 {
     type: 'fjale', sub: 'mbiemra', date: '2025-05-26',
     words: [
-        { word: 'i madh', njejes: { m: 'i madh', f: 'e madhe' }, shumes: { m: 't’mdhi', f: 't’mdhoja' },
+        { word: 'madh', njejes: { m: 'madh', f: 'madhe' }, shumes: { m: 'mdhi', f: 'mdhoja' },
           variants: [{ word: '…', njejes: { … }, shumes: { … } }] },
     ],
 }
 ```
 
+Forms and the word are stored **without the article**; the site and the admin add it: *i* (njëjës m, and the word), *e* (njëjës f), *t’* (shumës),
+so this shows as *i madh, e madhe, t’mdhi, t’mdhoja*. For a panyjshëm adjective (*trim*), untick **nyjshëm** in the admin (`panyjshem: true`
+on the word) and nothing is added. Variants follow their word. Recordings are keyed by the form as shown, with its article (*i madh*).
+
 ### Ndajfolje
 
 ```js
-{ type: 'fjale', sub: 'ndajfolje', word: 'shtaj', pos: 'ndajfolje kohe', std: 'tash', variants: ['shtahi'], meaning: ['…'] }
+{ type: 'fjale', sub: 'ndajfolje', word: 'shtaj', adverbKinds: ['kohe'], std: 'tash', variants: ['shtahi'], meaning: ['…'] }
 ```
+
+`adverbKinds`: one or more of the types in `TAXONOMY.adverbKinds` (vendi, kohe, menyre, sasie, shkaku, qellimi); the site shows them as *ndajfolje kohe, vendi*.
+A `pos: '…'` string, if present, is shown instead.
 
 ## Gramatikë: `type: 'gramatike'`
 
@@ -350,6 +369,18 @@ Used in Blog `body` (Fjalor and Gramatikë entries use their own fields instead)
 - `''`: empty
 
 Empty cells in a table are `''`.
+
+## The static book (`docs/libri/`)
+
+The whole site as plain HTML, for readers without JavaScript: no scripts, no styling. The main page links to it in a
+`<noscript>` line, which only shows when JavaScript is off. One page per letter of the Albanian alphabet (`a.html`,
+`sh.html`, `cc.html` for ç, `ee.html` for ë…), plus `gramatike.html`, `blog.html` and the contents, `index.html`.
+Every entry keeps its site link id, so `libri/v.html#vdore` is the site's `#vdore`. Verb tenses are folded in
+`<details>` (the first one open); headword recordings play in the browser's own player.
+
+It is not rebuilt on save: press **Rigjenero librin statik** in the admin (with everything saved; it is built from
+the saved entries, drafts left out). That rewrites `docs/libri/` and removes letter pages that no longer have words.
+Commit it with the rest of `docs/`. The code is `admin/js/book.js`; `serve.py` writes the files (`/api/book`).
 
 ## Links
 

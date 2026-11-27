@@ -3,6 +3,61 @@
         "type": "fjale",
         "sub": "emra",
         "date": "2026-11-27",
+        "word": "saj",
+        "gender": "mashkullore",
+        "std": "sy",
+        "pronunciation": "saj, soj",
+        "declension": {"njejes": {"shquar": {"emerore": "sajvi\nsajni"}}, "shumes": {"pashquar": {"emerore": "saj"}}},
+        "examples": ["Saj zezo!"]
+    },
+    {
+        "type": "fjale",
+        "sub": "emra",
+        "date": "2026-11-27",
+        "word": "thaupër",
+        "gender": "mashkullore",
+        "std": "thupër",
+        "declension": {"njejes": {"shquar": {"emerore": "thaupra"}}, "shumes": {"pashquar": {"emerore": "thaupra"}}},
+        "etymology": ["I gdhenda do thaupra ti frajgi caullët."]
+    },
+    {
+        "type": "fjale",
+        "sub": "emra",
+        "date": "2026-11-27",
+        "word": "partall",
+        "gender": "mashkullore",
+        "std": "leckë / partall",
+        "meaning": ["Send i vjetër, pa vler. Shpesh, rak i vjetër i shndërraum xhi t'përdoret për pastrim."],
+        "declension": {"njejes": {"shquar": {"emerore": "partalli"}}, "shumes": {"pashquar": {"emerore": "partalla"}}},
+        "etymology": ["Kape partallin merri çato pluna!"]
+    },
+    {
+        "type": "fjale",
+        "sub": "mbiemra",
+        "date": "2026-11-27",
+        "words": [{"word": "majr", "std": "mirë", "njejes": {"m": "majr", "f": "majr"}, "shumes": {"m": "majr", "f": "majra"}}]
+    },
+    {
+        "type": "fjale",
+        "sub": "ndajfolje",
+        "date": "2026-11-27",
+        "word": "majr",
+        "adverbKinds": ["menyre"],
+        "std": "mirë"
+    },
+    {
+        "type": "fjale",
+        "sub": "emra",
+        "date": "2026-11-27",
+        "word": "netëll",
+        "gender": "mashkullore",
+        "declension": {"njejes": {"shquar": {"emerore": "nettla"}}, "shumes": {"pashquar": {"emerore": "netlla"}}},
+        "examples": ["Niher dë fshoj me netëll, mapa di bi me [[partall]]."]
+    },
+    {
+        "type": "fjale",
+        "sub": "emra",
+        "date": "2026-11-27",
         "word": "tomël",
         "gender": "mashkullore",
         "std": "tambël/qumësht",
@@ -4859,22 +4914,17 @@
         "gender": "mashkullore",
         "std": "shi",
         "pronunciation": "shæj/shaj/shoj",
-        "declension": {
-            "njejes": {
-                "pashquar": {"emerore": "shaj"},
-                "shquar": {"emerore": "shajvi", "gjinore": "shajvit", "dhanore": "shajvit", "kallezore": "shajvin"}
-            }
-        },
+        "declension": {"njejes": {"shquar": {"emerore": "shajvi\nshajni"}}, "shumes": {"pashquar": {"emerore": "shajna"}}},
         "text": ["Në disa fshatra në kahje të Kosovës haset dhe si “shajni/shajnit” ne trajtën e shquar."]
     },
     {
         "type": "fjale",
         "sub": "emra",
         "date": "2025-08-28",
-        "word": "macë",
+        "word": "mac",
         "gender": "femërore",
         "std": "mace",
-        "declension": {"njejes": {"pashquar": {"emerore": "macë"}, "shquar": {"emerore": "maca"}}},
+        "declension": {"njejes": {"shquar": {"emerore": "maca"}}, "shumes": {"pashquar": {"emerore": "maca"}}},
         "examples": ["maca e zez"],
         "text": ["ka gjasa tjet ene Maçor/Maçok/Dac 🐈‍⬛"]
     },
@@ -4885,7 +4935,7 @@
         "word": "çen",
         "gender": "mashkullore",
         "std": "qen",
-        "declension": {"njejes": {"pashquar": {"emerore": "çen"}, "shquar": {"emerore": "çeni"}}},
+        "declension": {"njejes": {"shquar": {"emerore": "çeni"}}, "shumes": {"pashquar": {"emerore": "çen"}}},
         "examples": ["klishi i çenit"]
     },
     {
@@ -4896,14 +4946,8 @@
         "gender": "femërore",
         "std": "borë",
         "declension": {
-            "njejes": {
-                "pashquar": {"emerore": "vdorë", "rrjedhore": "pi vdore"},
-                "shquar": {"emerore": "vdora", "gjinore": "i/e vdorës", "dhanore": "vdorës", "kallezore": "vdorën"}
-            },
-            "shumes": {
-                "pashquar": {"rrjedhore": "pi vdorve"},
-                "shquar": {"emerore": "vdorat", "gjinore": "i/e vdorave", "dhanore": "vdorave", "kallezore": "vdorët"}
-            }
+            "njejes": {"pashquar": {"emerore": "vdor"}, "shquar": {"emerore": "vdora"}},
+            "shumes": {"pashquar": {"emerore": "vdora\nvdorna"}}
         },
         "examples": ["Ene sa vakët dë shkrohet vdora?"],
         "text": ["Pi atine t’Kilimanxharos"]
@@ -4914,10 +4958,11 @@
         "date": "2025-05-26",
         "words": [
             {
-                "word": "i vogël",
-                "njejes": {"m": "i vogël", "f": "e vogël"},
-                "shumes": {"m": "t’vogli", "f": "t’vogla"},
-                "variants": [{"word": "vëjl", "njejes": {"m": "i vëjl", "f": "e vëjl"}, "shumes": {"m": "t’vëjl", "f": "t’vëjla"}}]
+                "word": "vogël",
+                "std": "vogël",
+                "njejes": {"m": "vogël", "f": "vogël"},
+                "shumes": {"m": "vogli", "f": "vogla"},
+                "variants": [{"word": "vëjl", "njejes": {"m": "vëjl", "f": "vëjl"}, "shumes": {"m": "vëjl", "f": "vëjla"}}]
             }
         ],
         "footnotes": ["gjajti n’zhdukje: i/e vëjl, t’vëjl/t’vëjla"]
@@ -4926,14 +4971,14 @@
         "type": "fjale",
         "sub": "mbiemra",
         "date": "2025-05-26",
-        "words": [{"word": "i madh", "njejes": {"m": "i madh", "f": "e madhe"}, "shumes": {"m": "t’mdhi", "f": "t’mdhoja"}}]
+        "words": [{"word": "madh", "std": "madh", "njejes": {"m": "madh", "f": "madhe"}, "shumes": {"m": "mdhi", "f": "mdhoja"}}]
     },
     {
         "type": "fjale",
         "sub": "ndajfolje",
         "date": "2025-09-10",
         "word": "shtaj",
-        "pos": "ndajfolje kohe",
+        "adverbKinds": ["kohe"],
         "std": "tash",
         "meaning": [
             "Ndajfolje kohe xhi e kallxon veprim xhi ndodhën n’momentin e t’folmes",
@@ -4946,7 +4991,7 @@
         "sub": "ndajfolje",
         "date": "2025-05-26",
         "word": "mapa",
-        "pos": "ndajfolje kohe",
+        "adverbKinds": ["kohe"],
         "std": "pastaj",
         "meaning": ["Fjalë që kanë kuptimin e njejtë me fjalën “pastaj”."],
         "variants": ["ma mrapa", "ma mbrapa", "masaj", "masanej", "masani"],

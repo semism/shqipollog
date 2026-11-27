@@ -47,16 +47,23 @@ const forms = (v, empty = '—') => {
     const all = asList(v).flatMap((f) => String(f).split('\n')).map((f) => f.trim()).filter(Boolean);
     return all.length ? all.map(fmt).join('<br>') : empty;
 };
+// "std", with what it stands for shown on hover or long press
+const STD = '<abbr title="standarde">std</abbr>';
 const paragraphs = (list) => (list || []).map((t) => `<p>${fmt(t)}</p>`).join('\n');
 const italics = (list) => (list || []).map((t) => `<p><em>${fmt(t)}</em></p>`).join('\n');
 const audio = (path) => (path ? `<audio controls preload="none" src="../${esc(path)}"></audio>` : '');
 
 // ---------- tables ----------
-const tableHtml = (head, rows) => {
-    const th = head.map((h) => `<th>${h}</th>`).join('');
-    const row = ([label, cells]) => `<tr><th>${label}</th>${cells.map((c) => `<td>${c}</td>`).join('')}</tr>`;
+// head: the column headers, the first one over the row labels (usually empty). scope tells screen readers which
+// header goes with which cell; caption is the table's own title.
+const tableHtml = (head, rows, caption = '') => {
+    const [corner, ...columns] = head;
+    const th = (corner ? `<th>${corner}</th>` : '<td></td>') + columns.map((h) => `<th scope="col">${h}</th>`).join('');
+    const row = ([label, cells]) => `<tr><th scope="row">${label}</th>${cells.map((c) => `<td>${c}</td>`).join('')}</tr>`;
     const tr = rows.map(row).join('\n');
-    return `<table>\n<tr>${th}</tr>\n${tr}\n</table>`;
+    const title = caption ? `<caption>${caption}</caption>\n` : '';
+    // the old table attributes draw lines without any CSS: border, no gap between cells, a little room inside them
+    return `<table border="1" cellspacing="0" cellpadding="4">\n${title}<tr>${th}</tr>\n${tr}\n</table>`;
 };
 
 // one tense of a verb card: a column per verb (and per variant of it). A variant holds only the forms that differ,
@@ -78,6 +85,7 @@ const formsFor = (w, c) => {
     const [tense, mood] = link ? link.split('|') : [c.tense, c.mood];
     return (w.conjugation || []).find((t) => t.tense === tense && t.mood === mood) || null;
 };
+const slug = (t) => norm(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const TENSE_NAME = Object.fromEntries(TAXONOMY.tenses.map((t) => [t.id, t.indefinite || t.label]));
 const comboName = (c) => `${TENSE_NAME[c.tense] || c.tense} (${c.mood})`;
 // every tense the verb has, each folded in <details>; the first one open. A pair that shares another's forms is named with it.
@@ -94,7 +102,9 @@ const verbTenses = (e) => {
         const notes = e.words.flatMap((w) => (formsFor(w, c) || {}).footnotes || []);
         const summary = comboName(c) + (also.length ? `, njësoj si: ${also.join(', ')}` : '') + review;
         const open = i === 0 ? ' open' : '';
-        return `<details${open}><summary>${esc(summary)}</summary>\n${tenseTable(e.words, c)}\n${paragraphs(notes)}</details>`;
+        const id = `${e.id}-${slug(TENSE_NAME[c.tense] || c.tense)}-${slug(c.mood)}`;   // shkoj-e-kryer-deftore
+        const title = `<summary id="${esc(id)}">${esc(summary)}</summary>`;
+        return `<details${open}>${title}\n${tenseTable(e.words, c)}\n${paragraphs(notes)}</details>`;
     }).join('\n');
 };
 
@@ -105,7 +115,7 @@ const nounTable = (e) => {
     const box = (k) => ([n, d]) => forms((SHARED.nounCell(e, der, n, d, k) || {}).v);
     const rows = CASES.map(([k, label]) => [label, cols.map(box(k))]);
     if (rows.every(([, cells]) => cells.every((c) => c === '—'))) return '';
-    return tableHtml(['', ...cols.map(name)], rows);
+    return tableHtml(['', ...cols.map(name)], rows, 'Lakimi');
 };
 
 const adjectiveTable = (e) => {
@@ -141,9 +151,9 @@ const blockHtml = (b) => {
     }
     if (b.list) return `<ul>${b.list.map((t) => `<li>${fmt(t)}</li>`).join('')}</ul>`;
     if (b.note) return `<p><small>${fmt(b.note)}</small></p>`;
-    if (b.head) return `<h3>${fmt(b.head)}</h3>${b.std ? `<p>std: ${fmt(b.std)}</p>` : ''}`;
+    if (b.head) return `<h3>${fmt(b.head)}</h3>${b.std ? `<p>${STD}: ${fmt(b.std)}</p>` : ''}`;
     if (b.label) return `<p>${fmt(b.label)}</p>`;
-    if (b.std) return `<p>std: ${fmt(b.std)}</p>`;
+    if (b.std) return `<p>${STD}: ${fmt(b.std)}</p>`;
     return '';
 };
 
@@ -164,7 +174,7 @@ const wordEntry = (e) => {
     const participles = words.flatMap((w) => asList(w.participle));
     const about = [
         `<em>${fmt(posOf(e) || '')}</em>`,
-        std && std !== title ? `std: ${fmt(std)}` : '',   // not when it is the same as the word
+        std && std !== title ? `${STD}: ${fmt(std)}` : '',   // not when it is the same as the word
         e.pronunciation ? `shqiptime kryesore: ${fmt(e.pronunciation)}` : '',
     ].filter(Boolean).join('. ');
     const variantsNote = e.variantsNote ? ` (${fmt(e.variantsNote)})` : '';
@@ -176,7 +186,7 @@ const wordEntry = (e) => {
         e.variants ? `<p>variacion${variantsNote}: ${e.variants.map(fmt).join(', ')}</p>` : '',
         participles.length ? `<p>pjesore: ${participles.map(fmt).join(' / ')}</p>` : '',
         e.sub === 'folje' ? verbTenses(e) : '',
-        e.sub === 'emra' && nounTable(e) ? `<p><strong>Lakimi</strong></p>\n${nounTable(e)}` : '',
+        e.sub === 'emra' ? nounTable(e) : '',
         e.sub === 'mbiemra' ? adjectiveTable(e) : '',
         e.examples ? `<p><strong>shembuj</strong></p>\n<ul>${e.examples.map((t) => `<li>${fmt(t)}</li>`).join('')}</ul>` : '',
         e.etymology ? `<p><strong>etimologjia</strong></p>\n${paragraphs(e.etymology)}` : '',
@@ -191,7 +201,7 @@ const grammarEntry = (e) => {
     const title = `${LABELS[e.item] || ''}${e.v ? `, ${e.v}` : ''}`;
     const parts = [
         `<h2>${esc(title)}</h2>`,
-        e.std ? `<p>std: ${fmt(e.std)}</p>` : '',
+        e.std ? `<p>${STD}: ${fmt(e.std)}</p>` : '',
         (e.forms || []).map(blockHtml).join('\n'),
         paragraphs(e.text),
     ];
@@ -203,7 +213,7 @@ const blogEntry = (e) => {
         `<h2>${fmt(e.title)}</h2>`,
         `<p><em>${esc(LABELS[e.cat] || '')}, ${esc(e.date)}</em></p>`,
         e.sub ? `<p>${fmt(e.sub)}</p>` : '',
-        e.std ? `<p>std: ${fmt(e.std)}</p>` : '',
+        e.std ? `<p>${STD}: ${fmt(e.std)}</p>` : '',
         e.video ? `<video controls preload="none" poster="../${src}.jpg" src="../${src}.mp4"></video>` : '',
         (e.body || []).map(blockHtml).join('\n'),
     ];
@@ -211,6 +221,11 @@ const blogEntry = (e) => {
 };
 
 // ---------- pages ----------
+// the kind of a Fjalor word, to tell apart two words spelled the same
+const KIND = { folje: 'folje', emra: 'emër', mbiemra: 'mbiemër', ndajfolje: 'ndajfolje' };
+// after each entry: back to the top of the page, where the word list is
+const UP = '<p><a href="#lart">↑ lart</a></p>';
+const withUpLinks = (articles) => articles.map((a) => `${a}\n${UP}`).join('\n<hr>\n');
 const page = (title, nav, body) => `<!DOCTYPE html>
 <html lang="sq">
 <head>
@@ -219,9 +234,11 @@ const page = (title, nav, body) => `<!DOCTYPE html>
 <title>${esc(title)}</title>
 </head>
 <body>
-${nav}
+<header>${nav}</header>
+<main>
 ${body}
-${nav}
+</main>
+<footer>${nav}</footer>
 </body>
 </html>
 `;
@@ -277,16 +294,19 @@ ${contents}
 </ul>`);
     for (const [letter, list] of letters) {
         const name = letter === OTHER ? 'Të tjera' : letter.toUpperCase();
-        const index = list.map((e) => `<a href="#${esc(e.id)}">${esc(sortWord(e))}</a>`).join(', ');
-        const body = `<h1>${esc(name)}</h1>\n<p>${index}</p>\n${list.map(wordEntry).join('\n<hr>\n')}`;
+        const spelledLike = (e) => list.filter((x) => sortWord(x) === sortWord(e)).length;
+        const listed = (e) => esc(sortWord(e)) + (spelledLike(e) > 1 ? ` (${KIND[e.sub] || e.sub})` : '');
+        const index = list.map((e) => `<a href="#${esc(e.id)}">${listed(e)}</a>`).join(', ');
+        const body = `<h1 id="lart">${esc(name)}</h1>\n<p>${index}</p>\n${withUpLinks(list.map(wordEntry))}`;
         files[fileOf(letter)] = page(`Shqipollog: ${name}`, nav(fileOf(letter)), body);
     }
     if (grammar.length) {
-        const body = `<h1>Gramatikë</h1>\n${grammar.map(grammarEntry).join('\n<hr>\n')}`;
+        const body = `<h1 id="lart">Gramatikë</h1>\n${withUpLinks(grammar.map(grammarEntry))}`;
         files['gramatike.html'] = page('Shqipollog: Gramatikë', nav('gramatike.html'), body);
     }
     if (blog.length) {
-        files['blog.html'] = page('Shqipollog: Blog', nav('blog.html'), `<h1>Blog</h1>\n${blog.map(blogEntry).join('\n<hr>\n')}`);
+        const body = `<h1 id="lart">Blog</h1>\n${withUpLinks(blog.map(blogEntry))}`;
+        files['blog.html'] = page('Shqipollog: Blog', nav('blog.html'), body);
     }
     return files;
 };

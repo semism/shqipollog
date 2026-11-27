@@ -70,16 +70,37 @@ const playChain = (paths) => {
 // the e tashme (dëftore) "un" form of a verb shares the headword's recording (`audio`), not an `audios` entry
 const linkedToHead = (owner, form) => !!owner.conjugation && form === SHARED.headForm(owner);
 // a saved clip's length ("1.4 s"), read from the file itself, so older clips show it too
-const clipLength = (path) => {
-    const tag = el('span', { class: 'clip-len' });
-    const a = new Audio();
-    a.preload = 'metadata';
-    a.onloadedmetadata = () => { if (isFinite(a.duration)) tag.textContent = `${a.duration.toFixed(1)} s`; };
-    a.onerror = () => {
+// Each file is read once (kept by path) and only when its tag scrolls into view: kom has ~200 recordings, and reading
+// them all on every redraw made opening it slow.
+const lengths = new Map();   // path → Promise of "1.4 s", or null when the file is missing
+const readLength = (path) => {
+    if (!lengths.has(path)) {
+        lengths.set(path, new Promise((done) => {
+            const a = new Audio();
+            a.preload = 'metadata';
+            a.onloadedmetadata = () => done(isFinite(a.duration) ? `${a.duration.toFixed(1)} s` : '');
+            a.onerror = () => done(null);
+            a.src = '/' + path;
+        }));
+    }
+    return lengths.get(path);
+};
+const showLength = async (tag) => {
+    const text = await readLength(tag.dataset.path);
+    if (text !== null) tag.textContent = text;
+    else {
         tag.textContent = 'mungon skedari';
-        tag.title = path;
-    };
-    a.src = '/' + path;
+        tag.title = tag.dataset.path;
+    }
+};
+const lengthWatcher = new IntersectionObserver((seen) => seen.forEach((x) => {
+    if (!x.isIntersecting) return;
+    lengthWatcher.unobserve(x.target);
+    showLength(x.target);
+}));
+const clipLength = (path) => {
+    const tag = el('span', { class: 'clip-len', 'data-path': path });
+    lengthWatcher.observe(tag);
     return tag;
 };
 

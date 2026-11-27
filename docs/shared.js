@@ -66,5 +66,46 @@ const SHARED = (() => {
     };
     const isHelper = (w) => !!w && (w.std === TAXONOMY.auxiliary || w.word === TAXONOMY.auxiliary);
 
-    return { headForm, clipsOf, clipChain, isHelper, asList, day, PERSON_KEYS, PERSON_LABEL, personsOf, CASES, comboKey, COMBOS, norm, helperOnly, unusedFor, sourcesOf, sourceText, ruleText, ruleOf, linkText };
+    // Noun cases worked out from three typed forms: the word, the definite singular (njëjës e shquar emërore, or e.def)
+    // and the plural (shumës e pashquar emërore). Nothing derived is stored: a typed box always wins, an empty one shows this.
+    // A box with several forms (one per line) is derived line by line.
+    const NOUN_COLS = [['njejes', 'pashquar'], ['njejes', 'shquar'], ['shumes', 'pashquar'], ['shumes', 'shquar']];
+    const perLine = (src, f) => String(src).split('\n').map((s) => s.trim()).filter(Boolean).map(f).filter(Boolean).join('\n');
+    const nounDerived = (e) => {
+        const L = e.declension || {};
+        const typed = (n, d, k) => ((L[n] || {})[d] || {})[k];
+        const W = e.word, D = typed('njejes', 'shquar', 'emerore') || e.def, P = typed('shumes', 'pashquar', 'emerore');
+        const out = { njejes: { pashquar: {}, shquar: {} }, shumes: { pashquar: {}, shquar: {} } };
+        const put = (n, d, o) => Object.entries(o).forEach(([k, v]) => { if (v) out[n][d][k] = v; });
+        // definite singular: -i → -it/-in, -u → -ut/-un (masculine), -a → -ës/-ën (feminine)
+        const def = (s) => s.match(/^(.+)([iua])$/);
+        const fem = e.gender ? e.gender === 'femërore' : !!D && /a$/.test(D.split('\n')[0].trim());
+        // indefinite singular: the article is optional, written (ni), as standard writes (një)
+        const ni = (s) => '(ni) ' + s;
+        if (W) put('njejes', 'pashquar', { emerore: perLine(W, ni), kallezore: perLine(W, ni) });
+        if (D) {
+            const obl = (s) => { const m = def(s); return m && m[1] + (m[2] === 'a' ? 'ës' : m[2] + 't'); };
+            const acc = (s) => { const m = def(s); return m && m[1] + (m[2] === 'a' ? 'ën' : m[2] + 'n'); };
+            put('njejes', 'shquar', { emerore: D, gjinore: perLine(D, (s) => obl(s) && 'i/e ' + obl(s)), dhanore: perLine(D, obl), kallezore: perLine(D, acc), rrjedhore: perLine(D, (s) => obl(s) && 'pi ' + obl(s)) });
+            // indefinite oblique: vdorë → vdore (feminine, from the word), çeni → çeni (masculine, = the definite)
+            const io = fem ? (W ? perLine(W, (s) => s.replace(/ë$/, '') + 'e') : '') : perLine(D, (s) => (def(s) ? s : ''));
+            if (io) put('njejes', 'pashquar', { gjinore: perLine(io, (s) => 'i/e ' + ni(s)), dhanore: perLine(io, ni), rrjedhore: perLine(io, (s) => 'pi ' + ni(s)) });
+        }
+        if (P) {
+            const dobl = perLine(P, (s) => s + 've');                                 // emna → emnave, çen → çenve (indefinite and definite alike)
+            const PD = typed('shumes', 'shquar', 'emerore') || perLine(P, (s) => s + 't');   // vdora → vdorat
+            put('shumes', 'pashquar', { emerore: P, kallezore: P, gjinore: perLine(dobl, (s) => 'i/e ' + s), dhanore: dobl, rrjedhore: perLine(P, (s) => `pi ${s}ve / ${s}sh`) });   // pi luleve / lulesh (as in çaj lulesh)
+            put('shumes', 'shquar', { emerore: PD, kallezore: PD, gjinore: perLine(dobl, (s) => 'i/e ' + s), dhanore: dobl, rrjedhore: perLine(dobl, (s) => 'pi ' + s) });
+        }
+        return out;
+    };
+    // Every box: the typed form, else the derived one. auto: true when it was derived.
+    const nounCell = (e, der, n, d, k) => {
+        const t = (((e.declension || {})[n] || {})[d] || {})[k];
+        if (t) return { v: t, auto: false };
+        const v = der[n][d][k];
+        return v ? { v, auto: true } : null;
+    };
+
+    return { headForm, clipsOf, clipChain, isHelper, asList, day, PERSON_KEYS, PERSON_LABEL, personsOf, CASES, comboKey, COMBOS, norm, helperOnly, unusedFor, sourcesOf, sourceText, ruleText, ruleOf, linkText, NOUN_COLS, nounDerived, nounCell };
 })();

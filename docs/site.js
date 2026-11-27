@@ -118,7 +118,7 @@ const boot = (ALL, focus, withDrafts) => {
         used.add(id);
         e.id = id;
         e.key = titleOf(e).toLowerCase().replace(/[“”"’']/g, '');
-        e.haystack = norm(texts([titleOf(e), e, LABEL[e.sub], LABEL[e.cat]]).join(' '));
+        e.haystack = norm(texts([titleOf(e), e, LABEL[e.sub], LABEL[e.cat], e.sub === 'emra' ? SHARED.nounDerived(e) : null]).join(' '));
     });
     const byId = Object.fromEntries(ENTRIES.map((e) => [e.id, e]));
 
@@ -232,10 +232,10 @@ const boot = (ALL, focus, withDrafts) => {
     };
 
     const nounSection = (e) => {
-        if (!e.declension) return `<div class="sect"><p class="sect-label">Lakimi</p>${missMsg()}</div>`;
-        const L = e.declension;
-        const cols = [['njejes', 'pashquar'], ['njejes', 'shquar'], ['shumes', 'pashquar'], ['shumes', 'shquar']];
-        const val = (n, d, k) => (L[n] && L[n][d] && L[n][d][k]) || MISS;
+        // typed boxes, else forms derived on the fly (SHARED.nounDerived); nothing derived is stored
+        const der = SHARED.nounDerived(e), cols = SHARED.NOUN_COLS;
+        const val = (n, d, k) => (SHARED.nounCell(e, der, n, d, k) || {}).v || MISS;
+        if (!cols.some(([n, d]) => CASES.some(([k]) => SHARED.nounCell(e, der, n, d, k)))) return `<div class="sect"><p class="sect-label">Lakimi</p>${missMsg()}</div>`;
         const head = `<thead><tr><th></th><th colspan="2">njëjës</th><th colspan="2" class="gs">shumës</th></tr><tr><th></th>${cols.map(([n, d], i) => `<th class="sub${i === 2 ? ' gs' : ''}">${d === 'shquar' ? 'e shquar' : 'e pashquar'}</th>`).join('')}</tr></thead>`;
         const rows = CASES.map(([k, label]) => `<tr><th class="p" scope="row">${label}</th>${cols.map(([n, d], i) => `<td${i === 2 ? ' class="gs"' : ''}>${cell(val(n, d, k), e.audios)}</td>`).join('')}</tr>`).join('');
         return `<div class="sect"><p class="sect-label">Lakimi</p>${wrapTable(`<table class="conj">${head}<tbody>${rows}</tbody></table>`)}</div>`;

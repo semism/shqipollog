@@ -221,6 +221,31 @@ Irregular verbs (jom, kom, vaj …) are typed by hand. Where kam as a helper dif
 Cases: `emerore`, `gjinore`, `dhanore`, `kallezore`, `rrjedhore` (no ë in these keys; pronoun entries' `case` does use it: `emërore`, `kallëzore`).
 The definite singular nominative is shown next to the headword; `def: '…'` on the entry overrides it.
 
+**Derived cases.** Type three forms: the word, the definite singular (njëjës e shquar, emërore) and the plural (shumës e pashquar, emërore).
+Every other box is then worked out on the fly (`SHARED.nounDerived` in `docs/shared.js`) and shown on the site; in the admin it shows as a grey
+placeholder. Nothing derived is saved to `entries.json`: only what you type is. Type in a box to override it; clear the box to bring the derived form back.
+The endings: definite singular *-i → -it/-in*, *-u → -ut/-un*, *-a → -ës/-ën*; indefinite oblique *vdorë → vdore* (feminine) or *= the definite* (masculine, *çeni*);
+plural *+t* (definite), *+ve* for gjinore, dhanore and rrjedhore, indefinite and definite alike (*emna → emnave, pi emnave*; *çen → çenve*); the indefinite plural rrjedhore also gets *+sh* without *pi*, after a slash (*pi luleve / lulesh*, as in *çaj lulesh*, *t’lefme çensh*).
+
+#### Adding noun entries
+
+Each case answers a question. To find the form for a box, ask that question and answer it the way you would naturally say it.
+
+| Case | Question | Role | Example |
+|---|---|---|---|
+| emërore (`emerore`) | kush? (people) / çka? (things) | the subject | ***Vdora** ra.* |
+| gjinore (`gjinore`) | i/e kujt? | whose? | *ngjyra **e vdorës*** |
+| dhanore (`dhanore`) | kujt? | to whom? | *i dha **vdorës*** |
+| kallëzore (`kallezore`) | kë? cilin? cilën? | the direct object | *pash **vdorën*** |
+| rrjedhore (`rrjedhore`) | prej kujt? (dialect: pi kujt?) | from whom/what? | ***pi vdore*** |
+
+Fill each case in four versions, njëjës/shumës (singular/plural) × pashquar/shquar (indefinite/definite):
+*pash vdorë* (indefinite), *pash vdorën* (definite), *pash vdora* (plural), *pash vdorat* (plural, definite).
+A quick check for kallëzore: put the form after *E pash …* / *I pash …* and see if it sounds right.
+
+The plural can't be worked out from the singular (*çen → çen*, *djal → djem*, *mal → male*), so always type it as you say it.
+Leave a box empty rather than guess; it shows as **—** on the site.
+
 ### Mbiemra
 
 ```js

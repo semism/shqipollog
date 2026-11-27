@@ -339,7 +339,8 @@ const adjGrid = (w, owner = w) => {
         h('tbody', {}, [['m', 'mashkullore'], ['f', 'femërore']].map(([g, l]) => h('tr', {}, h('th', {}, l), h('td', {}, inp('njejes', g)), h('td', {}, inp('shumes', g))))));
 };
 
-// declension grid for nouns
+// declension grid for nouns; each case's question (in dialect) under its label, as a reminder for contributors
+const CASE_Q = { emerore: 'kush? xhi?', gjinore: 'i/e kujt?', dhanore: 'kujt?', kallezore: 'kën? cëllin? cëllen?', rrjedhore: 'pi kujt?' };
 const nounGrid = (e) => {
     const cols = [['njejes', 'pashquar'], ['njejes', 'shquar'], ['shumes', 'pashquar'], ['shumes', 'shquar']];
     const get = (n, d, k) => (((e.declension || {})[n] || {})[d] || {})[k] || '';
@@ -353,16 +354,25 @@ const nounGrid = (e) => {
         if (!Object.keys(L).length) delete e.declension;
         changed();
     };
-    return h('div', { class: 'scroll' }, h('table', { class: 'grid' },
+    // Empty boxes show the derived form (SHARED.nounDerived) as a grey placeholder; it is never stored. Typing overrides it,
+    // clearing the box brings it back. Typing the word, the definite singular or the plural updates every placeholder.
+    let der = SHARED.nounDerived(e);
+    const auto = (n, d, k) => der[n][d][k] || '';
+    const cells = [];
+    const refresh = () => { der = SHARED.nounDerived(e); cells.forEach((c) => { c.ta.placeholder = auto(c.n, c.d, c.k); c.mics.redraw(); }); };
+    const box = h('div', { class: 'scroll' }, h('table', { class: 'grid' },
         h('thead', {},
             h('tr', {}, h('th'), h('th', { colspan: 2 }, 'njëjës'), h('th', { colspan: 2, class: 'gs' }, 'shumës')),
             h('tr', {}, h('th'), cols.map(([, d], i) => h('th', { class: i === 2 ? 'gs' : null }, d === 'shquar' ? 'e shquar' : 'e pashquar')))),
-        h('tbody', {}, CASES.map(([k, l]) => h('tr', {}, h('th', {}, l),
+        h('tbody', {}, CASES.map(([k, l]) => h('tr', {}, h('th', {}, l, h('small', {}, CASE_Q[k])),
             cols.map(([n, d], i) => {
-                const mics = formMics(e, () => [get(n, d, k)]);
-                return h('td', { class: i === 2 ? 'gs' : null }, h('div', { class: 'fcell' },
-                    h('textarea', { rows: 1, value: get(n, d, k), oninput: (ev) => { put(n, d, k, ev.target.value); mics.redraw(); } }), mics));
+                const mics = formMics(e, () => [get(n, d, k) || auto(n, d, k)]);
+                const ta = h('textarea', { rows: 1, value: get(n, d, k), placeholder: auto(n, d, k), oninput: (ev) => { put(n, d, k, ev.target.value); refresh(); } });
+                cells.push({ n, d, k, ta, mics });
+                return h('td', { class: i === 2 ? 'gs' : null }, h('div', { class: 'fcell' }, ta, mics));
             }))))));
+    box.refresh = refresh;
+    return box;
 };
 
 const section = (legend, ...kids) => h('fieldset', {}, h('legend', {}, legend), ...kids);
@@ -542,7 +552,8 @@ const formsOf = (e) => {
     }));
     else {
         add(e, e.word);
-        Object.values(e.declension || {}).forEach((a) => Object.values(a).forEach((b) => Object.values(b).forEach((f) => add(e, f))));
+        const der = SHARED.nounDerived(e);
+        SHARED.NOUN_COLS.forEach(([n, d]) => CASES.forEach(([k]) => add(e, (SHARED.nounCell(e, der, n, d, k) || {}).v)));
         (e.variants || []).forEach((v) => add(e, v));
     }
     return out;
@@ -636,18 +647,22 @@ const adjEditor = (e) => {
 
 const fjaleEditor = (e) => {
     const words = STRUCT[e.sub] === 'words';
-    return [
-        section('fjala',
+    const grid = e.sub === 'emra' ? nounGrid(e) : null;
+    const head = section('fjala',
             choose(e, 'sub', 'sub', TAXONOMY.dictionaryCategories.map((x) => [x.id, x.label]), (v) => changeSub(e, v)),
             words ? null : text(e, 'word', 'word'),
             e.sub === 'emra' ? choose(e, 'gender', 'gender', [['', '—'], ['mashkullore', 'mashkullore'], ['femërore', 'femërore'], ['asnjanëse', 'asnjanëse']]) : null,
             e.sub === 'ndajfolje' ? text(e, 'pos', 'pos', 'p.sh. ndajfolje kohe') : null,
             words ? null : text(e, 'std', 'std'),
             words ? null : recorder(e),
-            text(e, 'pronunciation', 'pronunciation')),
+            text(e, 'pronunciation', 'pronunciation'));
+    // the word and the gender feed the derived noun cases: refresh the grid's placeholders as they change
+    if (grid) ['input', 'change'].forEach((t) => head.addEventListener(t, () => grid.refresh()));
+    return [
+        head,
         e.sub === 'folje' ? verbEditor(e) : null,
         e.sub === 'mbiemra' ? adjEditor(e) : null,
-        e.sub === 'emra' ? section('declension', nounGrid(e)) : null,
+        grid ? section('declension', h('p', { class: 'hint' }, 'mbushe tshquarën njëjes ene tpashquarës shumës nihere, mapa dnjo qetër veç nëse sduket sakt'), grid) : null,
         section('tekst',
             lines(e, 'meaning', 'meaning'),
             lines(e, 'variants', 'variants', 'Fjalë variacion (lista nën “variacion”).', e),
@@ -795,12 +810,35 @@ const renderList = () => {
         .sort((a, b) => TYPE_RANK[entries[a].type] - TYPE_RANK[entries[b].type] || (entries[b].date || '').localeCompare(entries[a].date || ''));
     itemsEl.replaceChildren(...idx.map((i) => {
         const e = entries[i];
-        return h('button', { class: 'item', type: 'button', 'aria-current': String(i === cur), onclick: () => select(i) },
+        return h('button', { class: 'item', type: 'button', 'data-i': i, 'aria-current': String(i === cur), onclick: () => select(i) },
             h('b', {}, titleOf(e)), e.draft ? h('span', { class: 'tag-draft' }, 'fshehur') : null, needsReview(e) ? h('span', { class: 'tag-review' }, 'rishikim') : null, progressTag(e), audioTag(e),
             h('small', {}, `${kindOf(e)}, ${day(e.date)}`));
     }));
 };
 qEl.addEventListener('input', renderList);
+
+// keyboard: from the search, ↓ / Tab go to the results (Enter opens the first one); in the results ↑ ↓ move,
+// Enter opens and keeps focus on it, ↑ on the first one or Esc goes back to the search
+const listItems = () => [...itemsEl.querySelectorAll('.item')];
+qEl.addEventListener('keydown', (ev) => {
+    const first = listItems()[0];
+    if (!first) return;
+    if (ev.key === 'ArrowDown' || (ev.key === 'Tab' && !ev.shiftKey)) { ev.preventDefault(); first.focus(); }
+    else if (ev.key === 'Enter') { ev.preventDefault(); select(+first.dataset.i); }
+});
+itemsEl.addEventListener('keydown', (ev) => {
+    const all = listItems(), at = all.indexOf(document.activeElement);
+    if (at < 0) return;
+    if (ev.key === 'ArrowDown') { ev.preventDefault(); (all[at + 1] || all[at]).focus(); }
+    else if (ev.key === 'ArrowUp') { ev.preventDefault(); (at ? all[at - 1] : qEl).focus(); }
+    else if (ev.key === 'Escape') { ev.preventDefault(); qEl.focus(); }
+    else if (ev.key === 'Enter') {
+        ev.preventDefault();
+        select(+all[at].dataset.i);
+        const now = itemsEl.querySelector('.item[aria-current="true"]');
+        if (now) now.focus();
+    }
+});
 
 const select = (i) => { cur = i; renderList(); draw(); preview(); formEl.scrollTop = 0; };
 

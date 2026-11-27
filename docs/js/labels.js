@@ -3,12 +3,11 @@
 import { TAXONOMY } from '../taxonomy.js';
 
 export const verbKey = (w) => w.word || w.std || '';
-// in the order they show; soon: a tab with nothing in it yet ("Së shpejti.")
+// in the order they show
 export const TABS = [
     { id: 'fjalor', label: 'Fjalor' },
     { id: 'gramatike', label: 'Gramatikë' },
     { id: 'blog', label: 'Blog' },
-    { id: 'lojera', label: 'Lojëra', soon: true },
 ];
 export const ITEMS = TAXONOMY.grammarMenu.flatMap((g) => g.items);
 export const LABEL = Object.fromEntries(
